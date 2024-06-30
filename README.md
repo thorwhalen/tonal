@@ -100,3 +100,24 @@ of a partial function to get a translator with a fixed input scale:
 >>> multi_note_names(translated_tracks)
 [['C5', 'E5', 'G#5'], ['B5', 'C6', 'E6']]
 ```
+
+Let's make a four part cycling V-I progression.
+
+```python
+from tonal.counterpoint import translate_in_scale, create_score_from_tracks
+from tonal.util import play_music21_object
+
+motif = [
+    "C4 C4".split(),
+    "E4 E4".split(),
+    "G4 F4".split(),
+    "B4 A4".split(),
+]
+
+tracks = translate_in_scale(motif, range(7, -14, -1), 'C')
+score = create_score_from_tracks(tracks)
+score.show()
+play_music21_object(score)
+```
+
+<img width="653" alt="image" src="https://github.com/thorwhalen/tonal/assets/1906276/95f14372-e711-4fb5-8024-4692cd25956a">
