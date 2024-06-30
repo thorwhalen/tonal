@@ -51,3 +51,52 @@ Sound.from_file(
 
 ![image](https://github.com/thorwhalen/sonify/assets/1906276/0f046317-3965-4544-ae4b-288a0762ec4d)
 
+
+## counterpoint
+
+```python
+The `translate_in_scale` allows you to translate a sequence of notes, or multiple 
+tracks of notes by the given number of steps within the given scale.
+
+>>> stream = translate_in_scale(['C4', 'E4', 'B3', 'C4'], -2, 'C')
+>>> stream  # doctest: +ELLIPSIS
+<music21.stream.Stream ...>
+>>> note_names(stream)
+['A3', 'C4', 'G3', 'A3']
+
+For multiple tracks:
+
+>>> tracks = [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]
+>>> translated_tracks = translate_in_scale(tracks, -2, 'C')
+>>> multi_note_names(translated_tracks)
+[['A3', 'C4', 'E4'], ['F4', 'A4', 'C5']]
+
+Using some other scales:
+
+With a E major scale:
+
+>>> tracks = [['E4', 'G#4', 'B4'], ['C#5', 'E5', 'G#5']]
+>>> translated_tracks = translate_in_scale(tracks, 1, 'E')
+>>> multi_note_names(translated_tracks)
+[['F#4', 'A4', 'C#5'], ['D#5', 'F#5', 'A5']]
+
+With a D flat major scale:
+
+>>> tracks = [['Db4', 'F4', 'Ab4'], ['Bb4', 'Db5', 'F5']]
+>>> translated_tracks = translate_in_scale(tracks, -3, 'Db')
+>>> multi_note_names(translated_tracks)
+[['A-3', 'C4', 'E-4'], ['F4', 'A-4', 'C5']]
+
+Now let's use a different, "custom" scale, as well as demonstrate the use
+of a partial function to get a translator with a fixed input scale:
+
+>>> from functools import partial
+>>> from music21.scale import HarmonicMinorScale
+>>> translate = partial(
+...     translate_in_scale, input_scale='A', scale_creator=HarmonicMinorScale
+... )
+>>> tracks = [['A4', 'C5', 'E5'], ['G#5', 'A5', 'C6']]
+>>> translated_tracks = translate(tracks, 2)
+>>> multi_note_names(translated_tracks)
+[['C5', 'E5', 'G#5'], ['B5', 'C6', 'E6']]
+```
