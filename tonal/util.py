@@ -74,6 +74,45 @@ PartIdx = Union[int, List[int]]
 PartFilterSpec = Optional[Union[PartIdx, PartFilter]]
 
 
+def string_to_note(
+    note_or_notes: Optional[Union[NoteString, Iterable[NoteString]]] = None,
+    egress: Callable=list,
+    **note_kwargs,
+
+) -> Note:
+    """
+    Converts a string representation of a note to a music21 Note object.
+
+    Args:
+        note_or_notes (str or iterable of str): String representation of the note(s).
+
+    Returns:
+        Note: The music21 Note object.
+
+    Examples:
+        >>> string_to_note('C4')
+        <music21.note.Note C>
+
+        If you don't specify a string (only keyword arguments), you get a partial
+        function. This is especially useful when you want to convert multiple strings.
+        Note also, in the example below, that the function is applied to a list of
+        strings.
+
+        >>> my_str_to_note = string_to_note(quarterLength=2, microtone=50)
+        >>> notes = list(my_str_to_note(['C4', 'D4', 'E4']))
+        >>> note = notes[-1]
+        >>> print(f"{note.nameWithOctave=}, {note.duration.type=}, {note.pitch.microtone=}")
+        note.nameWithOctave='E4', note.duration.type='half', note.pitch.microtone=<music21.pitch.Microtone (+50c)>
+
+    """
+    if note_or_notes is None:
+        return partial(string_to_note, **note_kwargs, egress=egress)
+    if isinstance(note_or_notes, str):
+        return Note(note_or_notes, **note_kwargs)
+    elif isinstance(note_or_notes, Iterable):
+        return egress(map(partial(string_to_note, **note_kwargs), note_or_notes))
+
+
 def is_existing_filepath(obj: Any) -> bool:
     """
     Returns True if the input object is a string representing an existing file path.
