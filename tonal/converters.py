@@ -1,7 +1,7 @@
 """Convert music into various formats."""
 
 import os
-from sonify.util import DFLT_MIDI_OUTPUT, DFLT_SOUNDFONT, DFLT_WAV_OUTPUT
+from tonal.util import DFLT_MIDI_OUTPUT, DFLT_SOUNDFONT, DFLT_WAV_OUTPUT
 
 dflt_format_for_extension = {
     '.midi': 'midi',
@@ -83,7 +83,7 @@ def image_to_musicxml(
 
     if remove_teaser_file:
         os.remove(teaser_filepath)
-        
+
     return musicxml_filepath
 
 

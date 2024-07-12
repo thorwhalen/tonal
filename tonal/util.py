@@ -1,6 +1,11 @@
 """Utils for sonify."""
 
+# TODO: The big module (and even package) todo is to refactor everything to do with
+#   the hierarchy of iterables (Score=I[Part]), Part=I[Measure], Measure=I[Note])
+#   to be consistent.
+
 from importlib.resources import files
+from functools import partial
 from config2py import (
     process_path,
     simple_config_getter,
@@ -20,13 +25,15 @@ DFLT_SOUNDFONT = process_path(
     get_config('TONAL_DFLT_SOUNDFONT_PATH'),
 )
 
-from typing import Callable, Iterable, List, Union, Generator
+from typing import Callable, Iterable, List, Union, Generator, Optional, Container, Any
+import os
 from operator import attrgetter
 
-from music21.stream import Score, Stream, Part
+from music21.stream import Score, Stream, Part, Measure
 from music21.midi.realtime import StreamPlayer
 from music21.scale import Scale, MajorScale
 from music21.note import Note
+from music21 import converter
 
 
 def play_music21_object(music21_obj):
@@ -55,7 +62,101 @@ NotesSpec = Iterable[NoteSpec]
 TrackSpec = Union[Stream, NotesSpec]
 TracksSpec = List[TrackSpec]
 ScaleCreator = Callable[[str], Scale]
+StreamSpec = Union[str, Iterable[str], List[Note], Stream]
 Streams = Iterable[Stream]
+
+StrToNote = Callable[[str], Note]
+
+Filepath = str
+ScoreSpec = Union[Filepath, Score]
+PartFilter = Callable[[Part], bool]
+PartIdx = Union[int, List[int]]
+PartFilterSpec = Optional[Union[PartIdx, PartFilter]]
+
+
+def is_existing_filepath(obj: Any) -> bool:
+    """
+    Returns True if the input object is a string representing an existing file path.
+    """
+    return isinstance(obj, str) and os.path.isfile(obj)
+
+
+def mk_score(obj: ScoreSpec, **kwargs) -> Score:
+    """
+    Creates a music21 Score object from the input object.
+
+    Args:
+        obj (ScoreSpec): The input object.
+        **kwargs: Additional keyword arguments to pass to the Score constructor.
+
+    Returns:
+        Score: The corresponding Score object.
+
+    >>> score = mk_score([['C4 B4'], ['E4'], ['G4']])
+    >>> score.show('text')  # doctest: +ELLIPSIS
+    {0.0} <music21.stream.Part 0x...>
+        {0.0} <music21.note.Note C>
+        {1.0} <music21.note.Note B>
+    {2.0} <music21.stream.Part 0x...>
+        {0.0} <music21.note.Note E>
+    {3.0} <music21.stream.Part 0x...>
+        {0.0} <music21.note.Note G>
+    """
+    if is_existing_filepath(obj):
+        return converter.parse(obj)
+    if isinstance(obj, list) and obj:
+        # assume we have a list of lists, i.e. we have multiple parts
+        parts = obj
+        score = Score(**kwargs)
+        if not parts:  # empty list
+            return score
+        if not isinstance(obj[0], list):
+            parts = [parts]
+        for stream_spec in parts:
+            part = Part()
+            if isinstance(stream_spec, list):
+                for note_spec in stream_spec:
+                    for note_name in note_spec.split():
+                        note = Note(note_name)
+                        part.append(note)
+            else:
+                stream = mk_stream(stream_spec)
+                part.append(stream)
+            score.append(part)
+        return score
+    else:
+        raise ValueError(f"Cannot create a Score from {obj=}")
+
+
+def mk_stream(obj: StreamSpec, **kwargs) -> Stream:
+    """
+    Creates a music21 Stream object from the input object.
+
+    Args:
+        obj (StreamSpec): The input object.
+        **kwargs: Additional keyword arguments to pass to the Stream constructor.
+
+    Returns:
+        Stream: The corresponding Stream object.
+
+    >>> stream = mk_stream('C4 E4 G4')
+    >>> note_names(stream)
+    ['C4', 'E4', 'G4']
+    """
+    if isinstance(obj, list) and len(obj) == 1 and isinstance(obj[0], str):
+        # if the list has a single string, assume it's a list of note names
+        obj = obj[0]  # get the single string of the list (process it in the next step)
+    if isinstance(obj, str):
+        # first argument is a string, split into list of note names
+        obj = obj.split()
+    if isinstance(obj, list) and obj:
+        if isinstance(obj[0], str):
+            # first argument is a list of note names, convert to list of Note objs
+            list_of_note_names = obj
+            list_of_note_objs = [Note(n) for n in list_of_note_names]
+            obj = list_of_note_objs
+
+    return Stream(obj, **kwargs)
 
 
 def ensure_scale(
@@ -94,12 +195,14 @@ def get_scale_notes(input_note: Note, input_scale: Scale) -> List[str]:
         List[str]: A list of pitch names within the scale.
     """
     scale_notes = input_scale.getPitches(
-        input_note.pitch.transpose(-12), input_note.pitch.transpose(12)
+        input_note.pitch.transpose(-48), input_note.pitch.transpose(48)
     )
     return [p.nameWithOctave for p in scale_notes]
 
 
-def ensure_iterable_of_notes(notes: TrackSpec) -> Generator[Note, None, None]:
+def ensure_iterable_of_notes(
+    notes: TrackSpec, str_to_note: StrToNote = Note
+) -> Generator[Note, None, None]:
     """
     Ensures the input is an iterable of Note objects.
 
@@ -108,6 +211,15 @@ def ensure_iterable_of_notes(notes: TrackSpec) -> Generator[Note, None, None]:
 
     Returns:
         Generator[Note, None, None]: A generator of Note objects.
+
+    Examples:
+
+    >>> list(ensure_iterable_of_notes(['C4', 'E4', 'G4']))
+    [<music21.note.Note C>, <music21.note.Note E>, <music21.note.Note G>]
+    >>> s = Stream([Note('C4'), Note('E4'), Note('G4')])
+    >>> list(ensure_iterable_of_notes(s))
+    [<music21.note.Note C>, <music21.note.Note E>, <music21.note.Note G>]
+
     """
     if isinstance(notes, Stream):
         return (n for n in notes.notes)
@@ -115,13 +227,13 @@ def ensure_iterable_of_notes(notes: TrackSpec) -> Generator[Note, None, None]:
     def _notes():
         for n in notes:
             if isinstance(n, str):
-                n = Note(n)
+                n = str_to_note(n)
             yield n
 
     return _notes()
 
 
-def note_names(notes: TrackSpec) -> List[str]:
+def note_names(notes: TrackSpec, name_attr='nameWithOctave') -> List[str]:
     """
     Returns the names of the notes in the input iterable.
 
@@ -137,8 +249,40 @@ def note_names(notes: TrackSpec) -> List[str]:
         >>> s = Stream([Note('C4'), Note('E4'), Note('G4')])
         >>> note_names(s)
         ['C4', 'E4', 'G4']
+        >>> score = mk_score([['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']])
+        >>> note_names(score)
+        [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]
+
+    See Also:
+        multi_note_names
+
     """
-    return list(map(attrgetter('nameWithOctave'), ensure_iterable_of_notes(notes)))
+    if isinstance(notes, Score):
+        return list(map(partial(note_names, name_attr=name_attr), notes.parts))
+    else:
+        return list(map(attrgetter(name_attr), ensure_iterable_of_notes(notes)))
+
+
+def multi_note_names(tracks: TracksSpec) -> List[List[NoteString]]:
+    """
+    Returns the names of the notes in the input iterable.
+
+    Args:
+        tracks (TracksSpec): The input tracks.
+
+    Returns:
+        List[List[NoteString]]: A list of lists of note names.
+
+    Examples:
+        >>> tracks = [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]
+        >>> multi_note_names(tracks)
+        [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]
+        >>> stream1 = Stream([Note('C4'), Note('E4'), Note('G4')])
+        >>> stream2 = Stream([Note('A4'), Note('C5'), Note('E5')])
+        >>> multi_note_names([stream1, stream2])
+        [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]
+    """
+    return [note_names(track) for track in tracks]
 
 
 def add_streams(list_of_streams: Streams) -> Stream:
@@ -152,11 +296,12 @@ def add_streams(list_of_streams: Streams) -> Stream:
         Stream: A single stream containing all the concatenated streams.
 
     Examples:
-        >>> s1 = Stream([Note('C4'), Note('E4'), Note('G4')])
-        >>> s2 = Stream([Note('A4'), Note('C5'), Note('E5')])
-        >>> result_stream = add_streams([s1, s2])
-        >>> note_names(result_stream)
-        ['C4', 'E4', 'G4', 'A4', 'C5', 'E5']
+
+    >>> s1 = Stream([Note('C4'), Note('E4'), Note('G4')])
+    >>> s2 = Stream([Note('A4'), Note('C5'), Note('E5')])
+    >>> result_stream = add_streams([s1, s2])
+    >>> note_names(result_stream)
+    ['C4', 'E4', 'G4', 'A4', 'C5', 'E5']
     """
     combined_stream = Stream()
     for stream in list_of_streams:
@@ -208,32 +353,113 @@ def create_score_from_tracks(tracks: List[Stream]) -> Score:
         >>> len(score.parts)
         2
     """
-    score = Score()
-    for track in tracks:
-        part = Part()
-        for element in track:
-            part.append(element)
-        score.append(part)
-    return score
+    parts = [Part(iter(track)) for track in tracks]
+    return Score(parts)
 
 
-def multi_note_names(tracks: TracksSpec) -> List[List[NoteString]]:
+def ensure_part_filter(part_filter: PartFilterSpec) -> PartFilter:
+    if isinstance(part_filter, int):
+        part_filter = [part_filter]
+    if isinstance(part_filter, Container):
+        # make it into a PartFilter function
+        desired_parts = part_filter
+        part_filter = lambda i, part: i in desired_parts
+    elif part_filter is None:
+        part_filter = lambda i, part: True
+    elif not callable(part_filter):
+        raise TypeError(
+            "part_filter must be an int, list of ints, a callable, or None."
+            f"Was: {part_filter}"
+        )
+    return part_filter
+
+
+def filter_parts(
+    part_filter: PartFilterSpec,
+    score_input: ScoreSpec,
+    *,
+    save_to_filepath: Filepath = None,
+) -> Score:
     """
-    Returns the names of the notes in the input iterable.
+    Filter parts from a score based on the provided filter function or part indices.
 
-    Args:
-        tracks (TracksSpec): The input tracks.
+    Parameters:
+        part_filter: PartFilterSpec
+            A function that takes a music21 Part object and returns a boolean value.
+            If an integer or list of integers is provided, the function will filter in
+            parts based on the indices.
+        score_input: Union[str, Score]
+            The input score, either as a file path or a music21 Score instance.
+        save_to_filepath: str
+            The file path to save the modified score. Default is None.
 
     Returns:
-        List[List[NoteString]]: A list of lists of note names.
+        Score: The score with the subset of parts that were filtered in.
+
+    >>> s = mk_score([['C4'], ['D4'], ['E4']])
+    >>> # Test filtering by index
+    >>> filtered_score = filter_parts([0, 2], s)
+    >>> note_names(filtered_score)
+    [['C4'], ['E4']]
+    >>> # Test filtering by function
+    >>> filtered_score = filter_parts(lambda i, part: part.notes[0].name != 'D', s)
+    >>> note_names(filtered_score)
+    [['C4'], ['E4']]
+    >>> # Test no filtering (return all parts)
+    >>> filtered_score = filter_parts(None, s)
+    >>> note_names(filtered_score)
+    [['C4'], ['D4'], ['E4']]
+    """
+    filter_func = ensure_part_filter(part_filter)
+
+    # Load the score if a file path is provided
+    if isinstance(score_input, str):
+        score = converter.parse(score_input)
+    else:
+        score = score_input
+
+    # Create a new score and add the remaining parts
+    new_score = Score()
+    for i, part in enumerate(score.parts):
+        if filter_func(i, part):
+            new_score.append(part)
+
+    # Save the modified score if a file path is provided
+    if save_to_filepath:
+        new_score.write(fp=save_to_filepath)
+
+    return new_score
+
+
+def delete_parts(
+    part_idx: PartIdx, score_input: ScoreSpec, *, save_to_filepath: Filepath = None
+) -> Score:
+    """
+    Delete parts from a score based on the provided part indices.
+
+    Parameters:
+        part_idx: Union[int, List[int]]
+            An integer or a list of integers representing the indices of parts to be deleted.
+        score_input: Union[str, Score]
+            The input score, either as a file path or a music21 Score instance.
+        save_to_filepath: str
+            The file path to save the modified score. Default is None.
+
+    Returns:
+        Score: The score with specified parts deleted.
 
     Examples:
-        >>> tracks = [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]
-        >>> multi_note_names(tracks)
-        [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]
-        >>> stream1 = Stream([Note('C4'), Note('E4'), Note('G4')])
-        >>> stream2 = Stream([Note('A4'), Note('C5'), Note('E5')])
-        >>> multi_note_names([stream1, stream2])
-        [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]
+        >>> score = mk_score([['C4'], ['D4'], ['E4']])
+        >>> modified_score = delete_parts([1], score)
+        >>> note_names(modified_score)
+        [['C4'], ['E4']]
+        >>> modified_score = delete_parts([0, 2], score)
+        >>> note_names(modified_score)
+        [['D4']]
     """
-    return [note_names(track) for track in tracks]
+    if isinstance(part_idx, int):
+        part_idx = [part_idx]
+
+    part_filter = lambda i, part: i not in part_idx
+
+    return filter_parts(part_filter, score_input, save_to_filepath=save_to_filepath)

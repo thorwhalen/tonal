@@ -1,0 +1,2 @@
+# Override language detection for Jupyter Notebooks
+*.ipynb linguist-language=Python

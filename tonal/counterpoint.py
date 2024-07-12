@@ -164,9 +164,10 @@ def translate_notes_in_scale(
         Stream: A stream of translated notes.
 
     Examples:
-        >>> result_stream = translate_notes_in_scale(['C4', 'E4', 'B3', 'C4'], -2, 'C')
-        >>> note_names(result_stream)
-        ['A3', 'C4', 'G3', 'A3']
+
+    >>> result_stream = translate_notes_in_scale(['C4', 'E4', 'B3', 'C4'], -2, 'C')
+    >>> note_names(result_stream)
+    ['A3', 'C4', 'G3', 'A3']
     """
     input_notes = ensure_iterable_of_notes(input_notes)
     return Stream(

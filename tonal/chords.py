@@ -6,7 +6,7 @@ from typing import Sequence, Tuple, Callable, Mapping, Dict
 import os
 import re
 from config2py import process_path
-from sonify.util import (
+from tonal.util import (
     DFLT_OUTPUT_NAME,
     DFLT_MIDI_OUTPUT,
     DFLT_SOUNDFONT,
