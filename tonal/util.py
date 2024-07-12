@@ -374,6 +374,25 @@ def ensure_part_filter(part_filter: PartFilterSpec) -> PartFilter:
     return part_filter
 
 
+def resolve_format_from_filepath(filepath: Filepath) -> str:
+    """
+    Resolves the format of a file from the file extension.
+
+    Args:
+        filepath (Filepath): The file path.
+
+    Returns:
+        str: The format of the file.
+
+    Examples:
+        >>> resolve_format_from_filepath('output.mid')
+        'mid'
+        >>> resolve_format_from_filepath('output.wav')
+        'wav'
+    """
+    return os.path.splitext(filepath)[1][1:]
+
+
 def filter_parts(
     part_filter: PartFilterSpec,
     score_input: ScoreSpec,
@@ -426,7 +445,9 @@ def filter_parts(
 
     # Save the modified score if a file path is provided
     if save_to_filepath:
-        new_score.write(fp=save_to_filepath)
+        # resolve the fmt from the file extension
+        fmt = resolve_format_from_filepath(save_to_filepath)
+        new_score.write(fmt=fmt, fp=save_to_filepath)
 
     return new_score
 
@@ -459,6 +480,11 @@ def delete_parts(
     """
     if isinstance(part_idx, int):
         part_idx = [part_idx]
+
+    if isinstance(part_idx, str) or not isinstance(part_idx, (Container, Callable)):
+        raise ValueError(
+            f"part_idx must be an integer or a list of integers. Was: {part_idx}"
+        )
 
     part_filter = lambda i, part: i not in part_idx
 
