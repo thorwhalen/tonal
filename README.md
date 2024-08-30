@@ -35,7 +35,7 @@ from hum import Sound
 Sound.from_file(wav_filepath).display()
 ```
 
-![image](https://github.com/thorwhalen/sonify/assets/1906276/49e1002c-fbb6-47d8-b642-aaf46b218e0b)
+![image](https://github.com/thorwhalen/sonification/assets/1906276/49e1002c-fbb6-47d8-b642-aaf46b218e0b)
 
 
 Change the way the chords are played, and what the name (really, filepath) of the 
@@ -49,7 +49,7 @@ Sound.from_file(
 ).display()
 ```
 
-![image](https://github.com/thorwhalen/sonify/assets/1906276/0f046317-3965-4544-ae4b-288a0762ec4d)
+![image](https://github.com/thorwhalen/sonification/assets/1906276/0f046317-3965-4544-ae4b-288a0762ec4d)
 
 
 ## counterpoint

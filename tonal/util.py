@@ -1,4 +1,4 @@
-"""Utils for sonify."""
+"""Utils for sonification."""
 
 # TODO: The big module (and even package) todo is to refactor everything to do with
 #   the hierarchy of iterables (Score=I[Part]), Part=I[Measure], Measure=I[Note])
@@ -76,9 +76,8 @@ PartFilterSpec = Optional[Union[PartIdx, PartFilter]]
 
 def string_to_note(
     note_or_notes: Optional[Union[NoteString, Iterable[NoteString]]] = None,
-    egress: Callable=list,
+    egress: Callable = list,
     **note_kwargs,
-
 ) -> Note:
     """
     Converts a string representation of a note to a music21 Note object.
