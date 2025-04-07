@@ -10,6 +10,8 @@ from config2py import (
     process_path,
     simple_config_getter,
 )
+from dol import written_bytes
+
 
 pkg_name = 'tonal'
 
@@ -34,6 +36,10 @@ from music21.midi.realtime import StreamPlayer
 from music21.scale import Scale, MajorScale
 from music21.note import Note
 from music21 import converter
+
+
+def identity_func(x):
+    return x
 
 
 def play_music21_object(music21_obj):
