@@ -212,7 +212,7 @@ def process_chord_sequence(
 def chords_to_midi(
     chord_sequence: ChordSequence = DFLT_CHORD_SEQUENCE,
     *,
-    output_file: str = DFLT_MIDI_OUTPUT,
+    output_file: str = None, # DFLT_MIDI_OUTPUT,
     render_chord: ChordRenderer = play_simultaneously,
     chord_definitions: ChordDefinitions = chord_to_notes,
 ):
