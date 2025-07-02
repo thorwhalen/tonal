@@ -4,14 +4,17 @@
 #   the hierarchy of iterables (Score=I[Part]), Part=I[Measure], Measure=I[Note])
 #   to be consistent.
 
-
+import os
 from typing import Callable
 from importlib.resources import files
 from functools import partial
 from config2py import (
     process_path,
     simple_config_getter,
+    get_app_data_folder,
 )
+from config2py.errors import ConfigNotFound
+
 from dol import written_bytes
 
 
@@ -26,6 +29,11 @@ from dol import written_bytes
 
 pkg_name = 'tonal'
 
+app_data_dir = process_path(get_app_data_folder('tonal'))
+soundfonts_dir = process_path(
+    os.path.join(app_data_dir, 'soundfonts'), ensure_dir_exists=True
+)
+
 data_files = files(pkg_name) / 'data'
 
 get_config = simple_config_getter(pkg_name)
@@ -34,9 +42,16 @@ get_config = simple_config_getter(pkg_name)
 DFLT_OUTPUT_NAME = 'audio_output'
 DFLT_MIDI_OUTPUT = f"{DFLT_OUTPUT_NAME}.mid"
 DFLT_WAV_OUTPUT = f"{DFLT_OUTPUT_NAME}.wav"
-DFLT_SOUNDFONT = process_path(
-    get_config('TONAL_DFLT_SOUNDFONT_PATH'),
-)
+
+# TODO: The DFLT_SOUNDFONT is horribly unclean. Revise. config2py should have an easy default mechanism
+try:
+    DFLT_SOUNDFONT = process_path(
+        get_config('TONAL_DFLT_SOUNDFONT_PATH'),
+    )
+except ConfigNotFound:
+    # soundfont_url = "https://archive.org/download/free-soundfonts-sf2-2019-04/Arachno_SoundFont_Version_1.0.sf2" # 148.2 MB !!!
+    # acquired from https://musical-artifacts.com/artifacts/2877/CT1MBGMRSV1.06.sf2
+    DFLT_SOUNDFONT = str(data_files / 'Caeds Small Trash GM v1.06.sf2')
 
 from typing import (
     Callable,

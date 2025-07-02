@@ -207,16 +207,20 @@ scale_quality_alias = {
 }
 
 
+# TODO: Separate base and aliases
 # TODO: Verify completeness and more chord definitions if needed
 # TODO: See if defs can be infered from parsing the chord names
 # Define quality and extension intervals
 chord_quality: Dict[str, Sequence[int]] = {
     '': (0, 4, 7),  # Major triad, 'C' -> 'Cmaj
     'maj': (0, 4, 7),  # Major triad
+    'M': (0, 4, 7),  # Major triad
+    'm': (0, 3, 7),  # Minor triad
     'min': (0, 3, 7),  # Minor triad
     'dim': (0, 3, 6),  # Diminished triad
     'aug': (0, 4, 8),  # Augmented triad
     '7': (0, 4, 7, 10),  # Dominant 7th
+    '7M': (0, 4, 7, 11),  # Major 7th
     'maj7': (0, 4, 7, 11),  # Major 7th
     'min7': (0, 3, 7, 10),  # Minor 7th
     'minmaj7': (0, 3, 7, 11),  # Minor major 7th
