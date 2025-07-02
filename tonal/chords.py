@@ -10,18 +10,12 @@ from tonal.util import (
     DFLT_OUTPUT_NAME,
     DFLT_MIDI_OUTPUT,
     DFLT_SOUNDFONT,
+    note_name_pattern,
+    parse_note_name,
+    add_pattern_aliases,
 )
-
-
-Note = int
-Notes = Sequence[Note]
-Chord = str
-ChordTimed = Tuple[Chord, Notes]
-ChordSequence = Sequence[ChordTimed]
-# ChordDefinitions = Mapping[Chord, Notes]
-ChordDefinitions = Callable[[Chord], Notes]
-ChordRenderer = Callable[[Notes, MidiTrack, int], None]
-
+from tonal.notes import root_notes, chord_quality
+from music21.note import Note
 
 DFLT_CHORD_SEQUENCE = [
     ('Bdim', 120),
@@ -32,85 +26,13 @@ DFLT_CHORD_SEQUENCE = [
     'Cmaj7',
 ]
 
-
-# Define root notes to MIDI note numbers
-root_notes: Dict[str, int] = {
-    'C': 60,
-    'C#': 61,
-    'Db': 61,
-    'D': 62,
-    'D#': 63,
-    'Eb': 63,
-    'E': 64,
-    'F': 65,
-    'F#': 66,
-    'Gb': 66,
-    'G': 67,
-    'G#': 68,
-    'Ab': 68,
-    'A': 69,
-    'A#': 70,
-    'Bb': 70,
-    'B': 71,
-}
-
-# TODO: Verify completeness and more chord definitions if needed
-# TODO: See if defs can be infered from parsing the chord names
-# Define quality and extension intervals
-quality_extensions: Dict[str, Sequence[int]] = {
-    '': [0, 4, 7],  # Major triad, 'C' -> 'Cmaj
-    'maj': [0, 4, 7],  # Major triad
-    'min': [0, 3, 7],  # Minor triad
-    'dim': [0, 3, 6],  # Diminished triad
-    'aug': [0, 4, 8],  # Augmented triad
-    '7': [0, 4, 7, 10],  # Dominant 7th
-    'maj7': [0, 4, 7, 11],  # Major 7th
-    'min7': [0, 3, 7, 10],  # Minor 7th
-    'minmaj7': [0, 3, 7, 11],  # Minor major 7th
-    'dim7': [0, 3, 6, 9],  # Diminished 7th
-    'hdim7': [0, 3, 6, 10],  # Half-diminished 7th
-    'aug7': [0, 4, 8, 10],  # Augmented 7th
-    '6': [0, 4, 7, 9],  # Major 6th
-    'min6': [0, 3, 7, 9],  # Minor 6th
-    '9': [0, 4, 7, 10, 14],  # Dominant 9th
-    'maj9': [0, 4, 7, 11, 14],  # Major 9th
-    'min9': [0, 3, 7, 10, 14],  # Minor 9th
-    '11': [0, 4, 7, 10, 14, 17],  # Dominant 11th
-    'maj11': [0, 4, 7, 11, 14, 17],  # Major 11th
-    'min11': [0, 3, 7, 10, 14, 17],  # Minor 11th
-    '13': [0, 4, 7, 10, 14, 17, 21],  # Dominant 13th
-    'maj13': [0, 4, 7, 11, 14, 17, 21],  # Major 13th
-    'min13': [0, 3, 7, 10, 14, 17, 21],  # Minor 13th
-}
-
-# add aliases
-# TODO: Make a framework for user-defined aliases
-
-
-def add_aliases(quality_extensions):
-    for _qe in quality_extensions:
-        if _qe.startswith('maj'):
-            yield _qe.replace('maj', 'M'), quality_extensions[_qe]
-        elif _qe.startswith('min'):
-            yield _qe.replace('min', 'm'), quality_extensions[_qe]
-        elif _qe.startswith('dim'):
-            yield _qe.replace('dim', '°'), quality_extensions[_qe]
-
-
-quality_extensions.update(dict(add_aliases(quality_extensions)))
-
-# TODO: Change extension definitions to base one, and define chord inversions on top
-
-# chord_pattern = re.compile(r'([A-Ga-g][#b]?)(maj|min|dim|aug)?([0-9]*)')
-chord_note_pattern = re.compile(r'([A-Ga-g][#b]?)')
-
-
-def parse_root(chord: str) -> str:
-    match = chord_note_pattern.match(chord)
-    if match:
-        return match.group(1)
-    else:
-        raise ValueError(f"Invalid chord: {chord}")
+# Type aliases for this module
+Chord = str
+Notes = Sequence[Note]
+ChordTimed = Tuple[Chord, Notes]
+ChordSequence = Sequence[ChordTimed]
+ChordDefinitions = Callable[[Chord], Notes]
+ChordRenderer = Callable[[Notes, any, int], None]
 
 
 def chord_to_notes(chord: Chord) -> Notes:
@@ -120,7 +42,7 @@ def chord_to_notes(chord: Chord) -> Notes:
     :param chord: The chord string (e.g., 'Cmaj7').
     :return: A sequence of MIDI note numbers representing the chord.
     """
-    root = parse_root(chord)
+    root = parse_note_name(chord)
     quality_extension = chord[len(root) :]
     root_midi = root_notes.get(root)
     # print(root, root_midi, quality_extension)
@@ -128,7 +50,7 @@ def chord_to_notes(chord: Chord) -> Notes:
     if root_midi is None:
         raise ValueError(f"Unknown root note: {root}")
 
-    intervals = quality_extensions.get(quality_extension)
+    intervals = chord_quality.get(quality_extension)
 
     if intervals is None:
         raise ValueError(f"Unknown quality/extension: {quality_extension}")
@@ -212,7 +134,7 @@ def process_chord_sequence(
 def chords_to_midi(
     chord_sequence: ChordSequence = DFLT_CHORD_SEQUENCE,
     *,
-    output_file: str = None, # DFLT_MIDI_OUTPUT,
+    output_file: str = None,  # DFLT_MIDI_OUTPUT,
     render_chord: ChordRenderer = play_simultaneously,
     chord_definitions: ChordDefinitions = chord_to_notes,
 ):

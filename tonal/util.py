@@ -27,9 +27,23 @@ DFLT_SOUNDFONT = process_path(
     get_config('TONAL_DFLT_SOUNDFONT_PATH'),
 )
 
-from typing import Callable, Iterable, List, Union, Generator, Optional, Container, Any
+from typing import (
+    Callable,
+    Iterable,
+    List,
+    Union,
+    Generator,
+    Optional,
+    Container,
+    Any,
+    Sequence,
+    Tuple,
+    Mapping,
+    Dict,
+)
 import os
 from operator import attrgetter
+import re
 
 from music21.stream import Score, Stream, Part, Measure
 from music21.midi.realtime import StreamPlayer
@@ -78,6 +92,28 @@ ScoreSpec = Union[Filepath, Score]
 PartFilter = Callable[[Part], bool]
 PartIdx = Union[int, List[int]]
 PartFilterSpec = Optional[Union[PartIdx, PartFilter]]
+
+# Regex for note names (e.g., C, C#, Db, etc.)
+note_name_pattern = re.compile(r'([A-Ga-g][#b]?)')
+
+
+def parse_note_name(note_str: str) -> str:
+    match = note_name_pattern.match(note_str)
+    if match:
+        return match.group(1)
+    else:
+        raise ValueError(f"Invalid note string: {note_str}")
+
+
+# General utility to add pattern-based aliases to a dictionary
+def add_pattern_aliases(quality_extensions):
+    for _qe in quality_extensions:
+        if _qe.startswith('maj'):
+            yield _qe.replace('maj', 'M'), quality_extensions[_qe]
+        elif _qe.startswith('min'):
+            yield _qe.replace('min', 'm'), quality_extensions[_qe]
+        elif _qe.startswith('dim'):
+            yield _qe.replace('dim', '°'), quality_extensions[_qe]
 
 
 def string_to_note(
