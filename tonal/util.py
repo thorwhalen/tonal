@@ -27,31 +27,31 @@ from dol import written_bytes
 # ChordDefinitions = Callable[[Chord], Notes]
 # ChordRenderer = Callable[[Notes, any, int], None]
 
-pkg_name = 'tonal'
+pkg_name = "tonal"
 
-app_data_dir = process_path(get_app_data_folder('tonal'))
+app_data_dir = process_path(get_app_data_folder("tonal"))
 soundfonts_dir = process_path(
-    os.path.join(app_data_dir, 'soundfonts'), ensure_dir_exists=True
+    os.path.join(app_data_dir, "soundfonts"), ensure_dir_exists=True
 )
 
-data_files = files(pkg_name) / 'data'
+data_files = files(pkg_name) / "data"
 
 get_config = simple_config_getter(pkg_name)
 
 
-DFLT_OUTPUT_NAME = 'audio_output'
+DFLT_OUTPUT_NAME = "audio_output"
 DFLT_MIDI_OUTPUT = f"{DFLT_OUTPUT_NAME}.mid"
 DFLT_WAV_OUTPUT = f"{DFLT_OUTPUT_NAME}.wav"
 
 # TODO: The DFLT_SOUNDFONT is horribly unclean. Revise. config2py should have an easy default mechanism
 try:
     DFLT_SOUNDFONT = process_path(
-        get_config('TONAL_DFLT_SOUNDFONT_PATH'),
+        get_config("TONAL_DFLT_SOUNDFONT_PATH"),
     )
 except ConfigNotFound:
     # soundfont_url = "https://archive.org/download/free-soundfonts-sf2-2019-04/Arachno_SoundFont_Version_1.0.sf2" # 148.2 MB !!!
     # acquired from https://musical-artifacts.com/artifacts/2877/CT1MBGMRSV1.06.sf2
-    DFLT_SOUNDFONT = str(data_files / 'Caeds Small Trash GM v1.06.sf2')
+    DFLT_SOUNDFONT = str(data_files / "Caeds Small Trash GM v1.06.sf2")
 
 from typing import (
     Callable,
@@ -120,7 +120,7 @@ PartIdx = Union[int, List[int]]
 PartFilterSpec = Optional[Union[PartIdx, PartFilter]]
 
 # Regex for note names (e.g., C, C#, Db, etc.)
-note_name_pattern = re.compile(r'([A-Ga-g][#b]?)')
+note_name_pattern = re.compile(r"([A-Ga-g][#b]?)")
 
 
 def parse_note_name(note_str: str) -> str:
@@ -134,12 +134,12 @@ def parse_note_name(note_str: str) -> str:
 # General utility to add pattern-based aliases to a dictionary
 def add_pattern_aliases(quality_extensions):
     for _qe in quality_extensions:
-        if _qe.startswith('maj'):
-            yield _qe.replace('maj', 'M'), quality_extensions[_qe]
-        elif _qe.startswith('min'):
-            yield _qe.replace('min', 'm'), quality_extensions[_qe]
-        elif _qe.startswith('dim'):
-            yield _qe.replace('dim', '°'), quality_extensions[_qe]
+        if _qe.startswith("maj"):
+            yield _qe.replace("maj", "M"), quality_extensions[_qe]
+        elif _qe.startswith("min"):
+            yield _qe.replace("min", "m"), quality_extensions[_qe]
+        elif _qe.startswith("dim"):
+            yield _qe.replace("dim", "°"), quality_extensions[_qe]
 
 
 def string_to_note(
@@ -339,7 +339,7 @@ def ensure_iterable_of_notes(
     return _notes()
 
 
-def note_names(notes: TrackSpec, name_attr='nameWithOctave') -> List[str]:
+def note_names(notes: TrackSpec, name_attr="nameWithOctave") -> List[str]:
     """
     Returns the names of the notes in the input iterable.
 

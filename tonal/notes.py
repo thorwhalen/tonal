@@ -27,27 +27,27 @@ import re
 
 # Define root notes to MIDI note numbers
 root_notes: Dict[str, int] = {
-    'C': 60,
-    'C#': 61,
-    'Db': 61,
-    'D': 62,
-    'D#': 63,
-    'Eb': 63,
-    'E': 64,
-    'F': 65,
-    'F#': 66,
-    'Gb': 66,
-    'G': 67,
-    'G#': 68,
-    'Ab': 68,
-    'A': 69,
-    'A#': 70,
-    'Bb': 70,
-    'B': 71,
+    "C": 60,
+    "C#": 61,
+    "Db": 61,
+    "D": 62,
+    "D#": 63,
+    "Eb": 63,
+    "E": 64,
+    "F": 65,
+    "F#": 66,
+    "Gb": 66,
+    "G": 67,
+    "G#": 68,
+    "Ab": 68,
+    "A": 69,
+    "A#": 70,
+    "Bb": 70,
+    "B": 71,
 }
 
 # Regex to match root note at the start of a scale string (e.g., 'C', 'C#', 'Db', etc.), followed by space or end
-root_note_re = re.compile(r'^([A-Ga-g][#b]?)(?=\s|$)')
+root_note_re = re.compile(r"^([A-Ga-g][#b]?)(?=\s|$)")
 
 scale_quality = {
     # Western Diatonic & Common Scales (retained as before)
@@ -212,32 +212,32 @@ scale_quality_alias = {
 # TODO: See if defs can be infered from parsing the chord names
 # Define quality and extension intervals
 chord_quality: Dict[str, Sequence[int]] = {
-    '': (0, 4, 7),  # Major triad, 'C' -> 'Cmaj
-    'maj': (0, 4, 7),  # Major triad
-    'M': (0, 4, 7),  # Major triad
-    'm': (0, 3, 7),  # Minor triad
-    'min': (0, 3, 7),  # Minor triad
-    'dim': (0, 3, 6),  # Diminished triad
-    'aug': (0, 4, 8),  # Augmented triad
-    '7': (0, 4, 7, 10),  # Dominant 7th
-    '7M': (0, 4, 7, 11),  # Major 7th
-    'maj7': (0, 4, 7, 11),  # Major 7th
-    'min7': (0, 3, 7, 10),  # Minor 7th
-    'minmaj7': (0, 3, 7, 11),  # Minor major 7th
-    'dim7': (0, 3, 6, 9),  # Diminished 7th
-    'hdim7': (0, 3, 6, 10),  # Half-diminished 7th
-    'aug7': (0, 4, 8, 10),  # Augmented 7th
-    '6': (0, 4, 7, 9),  # Major 6th
-    'min6': (0, 3, 7, 9),  # Minor 6th
-    '9': (0, 4, 7, 10, 14),  # Dominant 9th
-    'maj9': (0, 4, 7, 11, 14),  # Major 9th
-    'min9': (0, 3, 7, 10, 14),  # Minor 9th
-    '11': (0, 4, 7, 10, 14, 17),  # Dominant 11th
-    'maj11': (0, 4, 7, 11, 14, 17),  # Major 11th
-    'min11': (0, 3, 7, 10, 14, 17),  # Minor 11th
-    '13': (0, 4, 7, 10, 14, 17, 21),  # Dominant 13th
-    'maj13': (0, 4, 7, 11, 14, 17, 21),  # Major 13th
-    'min13': (0, 3, 7, 10, 14, 17, 21),  # Minor 13th
+    "": (0, 4, 7),  # Major triad, 'C' -> 'Cmaj
+    "maj": (0, 4, 7),  # Major triad
+    "M": (0, 4, 7),  # Major triad
+    "m": (0, 3, 7),  # Minor triad
+    "min": (0, 3, 7),  # Minor triad
+    "dim": (0, 3, 6),  # Diminished triad
+    "aug": (0, 4, 8),  # Augmented triad
+    "7": (0, 4, 7, 10),  # Dominant 7th
+    "7M": (0, 4, 7, 11),  # Major 7th
+    "maj7": (0, 4, 7, 11),  # Major 7th
+    "min7": (0, 3, 7, 10),  # Minor 7th
+    "minmaj7": (0, 3, 7, 11),  # Minor major 7th
+    "dim7": (0, 3, 6, 9),  # Diminished 7th
+    "hdim7": (0, 3, 6, 10),  # Half-diminished 7th
+    "aug7": (0, 4, 8, 10),  # Augmented 7th
+    "6": (0, 4, 7, 9),  # Major 6th
+    "min6": (0, 3, 7, 9),  # Minor 6th
+    "9": (0, 4, 7, 10, 14),  # Dominant 9th
+    "maj9": (0, 4, 7, 11, 14),  # Major 9th
+    "min9": (0, 3, 7, 10, 14),  # Minor 9th
+    "11": (0, 4, 7, 10, 14, 17),  # Dominant 11th
+    "maj11": (0, 4, 7, 11, 14, 17),  # Major 11th
+    "min11": (0, 3, 7, 10, 14, 17),  # Minor 11th
+    "13": (0, 4, 7, 10, 14, 17, 21),  # Dominant 13th
+    "maj13": (0, 4, 7, 11, 14, 17, 21),  # Major 13th
+    "min13": (0, 3, 7, 10, 14, 17, 21),  # Minor 13th
 }
 
 # -----------------------------------------------------------------------------
@@ -508,11 +508,11 @@ def scale_params(scale: str, midi_notes: bool = False):
         root = m.group(1).capitalize()
         quality = s[len(root) :].strip()
     else:
-        root = ''
+        root = ""
         quality = s.strip()
     # If only root is given, quality is empty string
-    if quality == '' and root:
-        quality = ''
+    if quality == "" and root:
+        quality = ""
     # Validate root
     if root and root.upper() not in (k.upper() for k in root_notes):
         raise ValueError(f"Unknown root note: {root}")
@@ -525,10 +525,10 @@ def scale_params(scale: str, midi_notes: bool = False):
 
 
 def scale_midi_notes(
-    scale: str = 'C major',
+    scale: str = "C major",
     midi_range: Tuple[int, int] = (0, 127),
     *,
-    default_root: str = 'C',
+    default_root: str = "C",
 ) -> tuple:
     """
     Return a tuple of all MIDI note numbers in the given range that belong to the specified scale.

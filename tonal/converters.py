@@ -15,14 +15,14 @@ FilePath = str
 BytesData = bytes
 
 dflt_format_for_extension = {
-    '.midi': 'midi',
-    '.mid': 'midi',
-    '.xml': 'musicxml',
-    '.musicxml': 'musicxml',
-    '.wav': 'wav',
-    '.png': 'image',
-    '.jpg': 'image',
-    '.jpeg': 'image',
+    ".midi": "midi",
+    ".mid": "midi",
+    ".xml": "musicxml",
+    ".musicxml": "musicxml",
+    ".wav": "wav",
+    ".png": "image",
+    ".jpg": "image",
+    ".jpeg": "image",
     # '.ipy_audio': 'audio',  # TODO: Handle IPython.display.Audio objects
     # '.ipy_audio': 'ipython',
 }
@@ -31,12 +31,12 @@ dflt_extension_for_format = {v: k for k, v in dflt_format_for_extension.items()}
 
 # Define magic number signatures for common file formats
 FORMAT_SIGNATURES: Dict[bytes, str] = {
-    b'MThd': 'midi',  # MIDI files start with MThd
-    b'RIFF': 'wav',  # WAV files start with RIFF
-    b'<?xml': 'musicxml',  # XML files often start with <?xml
-    b'<score-partwise': 'musicxml',  # MusicXML specific identifier
-    b'\xff\xd8': 'image',  # JPEG files start with FF D8
-    b'\x89PNG': 'image',  # PNG files start with 89 PNG
+    b"MThd": "midi",  # MIDI files start with MThd
+    b"RIFF": "wav",  # WAV files start with RIFF
+    b"<?xml": "musicxml",  # XML files often start with <?xml
+    b"<score-partwise": "musicxml",  # MusicXML specific identifier
+    b"\xff\xd8": "image",  # JPEG files start with FF D8
+    b"\x89PNG": "image",  # PNG files start with 89 PNG
 }
 
 
@@ -184,24 +184,24 @@ def guess_format_from_bytes(data: bytes) -> Optional[str]:
             return format_name
 
     # Check for MusicXML by looking for common tags if it's likely XML
-    if data.startswith(b'<') or b'<?xml' in data[:100]:
-        if b'<score-partwise' in data[:1000] or b'<score-timewise' in data[:1000]:
-            return 'musicxml'
+    if data.startswith(b"<") or b"<?xml" in data[:100]:
+        if b"<score-partwise" in data[:1000] or b"<score-timewise" in data[:1000]:
+            return "musicxml"
 
     # Check for MIDI by looking for track chunks if the file starts with MThd
-    if len(data) > 14 and data[:4] == b'MThd' and b'MTrk' in data[:1000]:
-        return 'midi'
+    if len(data) > 14 and data[:4] == b"MThd" and b"MTrk" in data[:1000]:
+        return "midi"
 
     return None
 
 
 def _get_conversion_func(src_format: str, dest_format: str) -> Callable:
     """Get the appropriate conversion function based on formats."""
-    if src_format == 'musicxml' and dest_format == 'midi':
+    if src_format == "musicxml" and dest_format == "midi":
         return musicxml_to_midi
-    elif src_format == 'midi' and dest_format == 'wav':
+    elif src_format == "midi" and dest_format == "wav":
         return midi_to_wav
-    elif src_format == 'image' and dest_format == 'musicxml':
+    elif src_format == "image" and dest_format == "musicxml":
         return image_to_musicxml
     else:
         raise ValueError(f"Unsupported conversion: {src_format} -> {dest_format}")
@@ -213,7 +213,7 @@ def _convert_from_bytes(
     """Handle conversions where the source is bytes."""
     # Write bytes to a temporary file with the correct extension
     with tempfile.NamedTemporaryFile(
-        suffix=dflt_extension_for_format.get(src_format, f'.{src_format}'), delete=False
+        suffix=dflt_extension_for_format.get(src_format, f".{src_format}"), delete=False
     ) as temp_file:
         temp_src = temp_file.name
         temp_file.write(src_bytes)
@@ -225,11 +225,11 @@ def _convert_from_bytes(
             # Return bytes
             temp_dest = temp_src.replace(
                 os.path.splitext(temp_src)[1],
-                dflt_extension_for_format.get(dest_format, f'.{dest_format}'),
+                dflt_extension_for_format.get(dest_format, f".{dest_format}"),
             )
             conversion_func(temp_src, temp_dest)
 
-            with open(temp_dest, 'rb') as f:
+            with open(temp_dest, "rb") as f:
                 result = f.read()
 
             try:
@@ -253,13 +253,13 @@ def _convert_file_to_bytes(
 ) -> bytes:
     """Convert a file to bytes using the specified conversion function."""
     # Create a temporary output file
-    ext = dflt_extension_for_format.get(dest_format, f'.{dest_format}')
+    ext = dflt_extension_for_format.get(dest_format, f".{dest_format}")
     with tempfile.NamedTemporaryFile(suffix=ext, delete=False) as temp_file:
         temp_dest = temp_file.name
 
     try:
         conversion_func(src_file, temp_dest)
-        with open(temp_dest, 'rb') as f:
+        with open(temp_dest, "rb") as f:
             return f.read()
     finally:
         try:
@@ -289,9 +289,9 @@ def musicxml_to_midi(musicxml_path, midi_path=None):
     from music21 import converter
 
     if midi_path is None:
-        midi_path = musicxml_path.replace('.musicxml', '.mid')
+        midi_path = musicxml_path.replace(".musicxml", ".mid")
     score = converter.parse(musicxml_path)
-    score.write('midi', fp=midi_path)
+    score.write("midi", fp=midi_path)
     return midi_path
 
 
@@ -311,10 +311,10 @@ def midi_to_wav(
     """
     import subprocess
 
-    output_wav = ensure_dest_filepath(midi_file, output_wav, dest_format='wav')
+    output_wav = ensure_dest_filepath(midi_file, output_wav, dest_format="wav")
 
     subprocess.run(
-        ['fluidsynth', '-ni', soundfont, midi_file, '-F', output_wav, '-r', '44100']
+        ["fluidsynth", "-ni", soundfont, midi_file, "-F", output_wav, "-r", "44100"]
     )
 
     return output_wav

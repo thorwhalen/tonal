@@ -18,12 +18,12 @@ from tonal.notes import root_notes, chord_quality
 from music21.note import Note
 
 DFLT_CHORD_SEQUENCE = [
-    ('Bdim', 120),
-    ('Em11', 120),
-    ('Amin9', 120),
-    ('Dm7', 120),
-    'G7',
-    'Cmaj7',
+    ("Bdim", 120),
+    ("Em11", 120),
+    ("Amin9", 120),
+    ("Dm7", 120),
+    "G7",
+    "Cmaj7",
 ]
 
 # Type aliases for this module
@@ -80,11 +80,11 @@ def play_simultaneously(
 ):
     v = velocity
     for note in notes:
-        track.append(Message('note_on', note=note, velocity=v, time=0))
+        track.append(Message("note_on", note=note, velocity=v, time=0))
     _notes = iter(notes)
-    track.append(Message('note_off', note=next(_notes), velocity=v, time=duration))
+    track.append(Message("note_off", note=next(_notes), velocity=v, time=duration))
     for note in _notes:
-        track.append(Message('note_off', note=note, velocity=v, time=0))
+        track.append(Message("note_off", note=note, velocity=v, time=0))
 
 
 # TODO: Need a better implementation for arpeggios.
@@ -96,9 +96,9 @@ def play_arpeggio(
     note_duration = duration // len(notes)
     current_time = 0
     for note in notes:
-        track.append(Message('note_on', note=note, velocity=v, time=current_time))
+        track.append(Message("note_on", note=note, velocity=v, time=current_time))
         current_time += note_duration
-        track.append(Message('note_off', note=note, velocity=v, time=current_time))
+        track.append(Message("note_off", note=note, velocity=v, time=current_time))
 
 
 def resolve_chord_render(chord_renderer: ChordRenderer) -> ChordRenderer:
@@ -107,9 +107,9 @@ def resolve_chord_render(chord_renderer: ChordRenderer) -> ChordRenderer:
         chord_renderer = chord_renders.get(name)
         if chord_renderer is None:
             raise ValueError(
-                f'Unknown chord renderer: {name}. '
+                f"Unknown chord renderer: {name}. "
                 '(Available: {", ".join(chord_renders)}). '
-                'You can register a new chord renderer with `register_chord_render`.'
+                "You can register a new chord renderer with `register_chord_render`."
             )
         return chord_renderer
     return chord_renderer
@@ -153,7 +153,7 @@ def chords_to_midi(
     render_chord = resolve_chord_render(render_chord)
     chord_sequence = process_chord_sequence(chord_sequence)
 
-    track.append(Message('program_change', program=0, time=0))  # Acoustic Grand Piano
+    track.append(Message("program_change", program=0, time=0))  # Acoustic Grand Piano
 
     for chord, duration in chord_sequence:
         pattern = chord_definitions(chord)
@@ -186,8 +186,8 @@ def chords_to_wav(
     """
     from sonification.converters import midi_to_wav
 
-    midi_file = f'{name}.mid'
-    wav_file = f'{name}.wav'
+    midi_file = f"{name}.mid"
+    wav_file = f"{name}.wav"
 
     chords_to_midi(
         chord_sequence,

@@ -1,7 +1,7 @@
 """
 Tools for counterpoint.
 
-The `translate_in_scale` allows you to translate a sequence of notes, or multiple 
+The `translate_in_scale` allows you to translate a sequence of notes, or multiple
 tracks of notes by the given number of steps within the given scale.
 
 >>> stream = translate_in_scale(['C4', 'E4', 'B3', 'C4'], -2, 'C')
