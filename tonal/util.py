@@ -4,6 +4,8 @@
 #   the hierarchy of iterables (Score=I[Part]), Part=I[Measure], Measure=I[Note])
 #   to be consistent.
 
+
+from typing import Callable
 from importlib.resources import files
 from functools import partial
 from config2py import (
@@ -12,6 +14,15 @@ from config2py import (
 )
 from dol import written_bytes
 
+
+# from typing import Sequence, Callable, Tuple
+# from music21.note import Note
+# Chord = str
+# Notes = Sequence[Note]
+# ChordTimed = Tuple[Chord, Notes]
+# ChordSequence = Sequence[ChordTimed]
+# ChordDefinitions = Callable[[Chord], Notes]
+# ChordRenderer = Callable[[Notes, any, int], None]
 
 pkg_name = 'tonal'
 

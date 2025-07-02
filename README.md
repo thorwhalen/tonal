@@ -8,6 +8,65 @@ To install:	```pip install tonal```
 
 # Examples
 
+## notes
+
+The `notes` module provides tools for working with musical scales, notes, and MIDI data.
+
+### Key Concepts
+
+**Scale Quality**: The characteristic sound or "flavor" of a scale, determined by its specific pattern of intervals (semitones) from the root note. Examples include major, minor, pentatonic, blues, or whole-tone.
+
+**Semitone Pattern**: A numerical representation of a musical scale, showing the precise distance in semitones (half-steps) of each note from the starting (root) note. For example, the semitone pattern for a major scale is `(0, 2, 4, 5, 7, 9, 11)`.
+
+### Working with Scales and MIDI Notes
+
+The `scale_midi_notes` function converts scale specifications into MIDI note numbers:
+
+```python
+from tonal.notes import scale_midi_notes
+
+# Get all C major notes in the middle octave range
+notes = scale_midi_notes('C major', midi_range=(60, 72))
+print(notes)  # (60, 62, 64, 65, 67, 69, 71, 72)
+
+# Minor pentatonic scale
+notes = scale_midi_notes('A minor pentatonic', midi_range=(57, 70))
+print(notes)  # (57, 60, 62, 64, 67, 69)
+
+# If no root is specified, defaults to C
+notes = scale_midi_notes('dorian', midi_range=(60, 72))
+print(notes)  # (60, 62, 63, 65, 67, 69, 70, 72)
+```
+
+### Other Utilities
+
+The module also provides:
+
+- **`semitone_pattern(quality)`**: Get the semitone intervals for any scale quality
+- **`scale_params(scale_string)`**: Parse scale strings into root note and quality components
+- **Registration functions**: Dynamically add new scales, chords, and aliases:
+  - `register_scale_quality()`, `register_chord_quality()`
+  - `register_root_note()`, `register_scale_quality_alias()`
+- **Listing functions**: Explore available musical elements:
+  - `list_scale_qualities()`, `list_chord_qualities()`
+  - `list_root_notes()`, `list_scale_quality_aliases()`
+
+```python
+from tonal.notes import semitone_pattern, scale_params, list_scale_qualities
+
+# Get the interval pattern for blues scale
+pattern = semitone_pattern('blues')
+print(pattern)  # (0, 3, 5, 6, 7, 10)
+
+# Parse a scale string
+root, quality = scale_params('F# harmonic minor')
+print(f"Root: {root}, Quality: {quality}")  # Root: F#, Quality: harmonic minor
+
+# See all available scale qualities
+qualities = list_scale_qualities()
+print(f"Available scales: {len(qualities)} total")
+```
+
 ## chords
 
 
