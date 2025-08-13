@@ -211,7 +211,8 @@
     <span class="s2">&quot;melodic&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic minor ascending&quot;</span><span class="p">,</span>
     <span class="s2">&quot;penta major&quot;</span><span class="p">:</span> <span class="s2">&quot;major pentatonic&quot;</span><span class="p">,</span>
     <span class="s2">&quot;penta min&quot;</span><span class="p">:</span> <span class="s2">&quot;minor pentatonic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;penta&quot;</span><span class="p">:</span> <span class="s2">&quot;minor pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pentatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;major pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;penta&quot;</span><span class="p">:</span> <span class="s2">&quot;major pentatonic&quot;</span><span class="p">,</span>
     <span class="s2">&quot;minor penta&quot;</span><span class="p">:</span> <span class="s2">&quot;minor pentatonic&quot;</span><span class="p">,</span>
     <span class="s2">&quot;major penta&quot;</span><span class="p">:</span> <span class="s2">&quot;major pentatonic&quot;</span><span class="p">,</span>
     <span class="s2">&quot;whl tone&quot;</span><span class="p">:</span> <span class="s2">&quot;whole tone&quot;</span><span class="p">,</span>
@@ -658,7 +659,9 @@
         <span class="n">valid_roots</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_roots</span><span class="p">)</span>
 
         <span class="n">valid_qualities</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">list_scale_qualities</span><span class="p">(</span><span class="n">include_aliases</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-        <span class="n">valid_qualities</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">if</span> <span class="n">q</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="s2">&quot;&lt;empty string&gt;&quot;</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">valid_qualities</span><span class="p">]</span>
+        <span class="n">valid_qualities</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">if</span> <span class="n">q</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="s2">&quot;&lt;empty string&gt;&quot;</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">valid_qualities</span>
+        <span class="p">]</span>
         <span class="n">valid_qualities</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_qualities</span><span class="p">)</span>
 
         <span class="n">problems</span> <span class="o">=</span> <span class="p">[]</span>
