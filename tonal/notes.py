@@ -403,6 +403,11 @@ def list_chord_qualities() -> Dict[str, Sequence[int]]:
 # -----------------------------------------------------------------------------
 
 
+# Define a specific error for incorrect scale specifications
+class IncorrectScaleSpecification(ValueError):
+    """Raised when a scale string cannot be parsed/validated into root and quality."""
+
+
 def validate_scale_semitone_pattern_uniquness(scale_quality: dict) -> bool:
     """
     Validates that all scale qualities have unique semitone patterns.
@@ -510,15 +515,51 @@ def scale_params(scale: str, midi_notes: bool = False):
     else:
         root = ""
         quality = s.strip()
-    # If only root is given, quality is empty string
+
+    # If only root is given, quality is empty string (defaults to major via alias '')
     if quality == "" and root:
         quality = ""
-    # Validate root
+
+    # Validate root and quality; build helpful error if invalid
+    invalid_root = False
     if root and root.upper() not in (k.upper() for k in root_notes):
-        raise ValueError(f"Unknown root note: {root}")
+        invalid_root = True
+
+    try:
+        pattern = semitone_pattern(quality)
+    except ValueError:
+        pattern = None
+        invalid_quality = True
+    else:
+        invalid_quality = False
+
+    if invalid_root or invalid_quality:
+        valid_roots = sorted(list_root_notes().keys())
+        valid_roots = [f"'{r}'" if r != "" else "<empty string>" for r in valid_roots]
+        valid_roots = ', '.join(valid_roots)
+
+        valid_qualities = sorted(list_scale_qualities(include_aliases=True).keys())
+        valid_qualities = [f"'{q}'" if q != "" else "<empty string>" for q in valid_qualities]
+        valid_qualities = '\n\t' + '\n\t'.join(valid_qualities)
+
+        problems = []
+        if invalid_root:
+            problems.append(f"unknown root '{root}'")
+        if invalid_quality:
+            problems.append(f"unknown scale quality '{quality}'")
+        problems_text = "; ".join(problems) if problems else "invalid specification"
+
+        raise IncorrectScaleSpecification(
+            (
+                f"Incorrect scale specification: '{scale}' ({problems_text}).\n"
+                f"Anatomy: '<root> <quality>' (case-insensitive). Root is optional; quality can be omitted to mean 'major'.\n"
+                f"Valid roots: {valid_roots}.\n"
+                f"Valid qualities (including aliases): {valid_qualities}.\n"
+            )
+        )
+
     if midi_notes:
         root_midi = root_notes[root] if root else None
-        pattern = semitone_pattern(quality)
         return root_midi, pattern
     else:
         return root, quality
