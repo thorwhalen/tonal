@@ -1,0 +1,788 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tonal.notes &mdash; tonal 0.0.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=bbaf98b3"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            tonal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal.html">tonal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/chords.html">tonal.chords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/converters.html">tonal.converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/counterpoint.html">tonal.counterpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/notes.html">tonal.notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/util.html">tonal.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tonal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tonal.notes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tonal.notes</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Notes, scales, and chords definitions.</span>
+
+<span class="sd">A few definitions:</span>
+
+<span class="sd">* Scale Quality: The characteristic sound or &quot;flavor&quot; of a scale, determined by its</span>
+<span class="sd">specific pattern of intervals (semitones) from the root note.</span>
+<span class="sd">Examples include major, minor, pentatonic, blues, or whole-tone.</span>
+<span class="sd">* Chord Quality: The characteristic sound or &quot;flavor&quot; of a chord, determined by its</span>
+<span class="sd">specific combination of intervals (semitones) above its root note.</span>
+<span class="sd">Common examples include major, minor, diminished, augmented, or dominant 7th.</span>
+<span class="sd">* Semitone Pattern: A numerical representation of a musical scale or chord, showing</span>
+<span class="sd">the precise distance in semitones (half-steps) of each note from the starting (root)</span>
+<span class="sd">note. For example, the semitone pattern for a major scale is [0, 2, 4, 5, 7, 9, 11].</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tonal.util</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">note_name_pattern</span><span class="p">,</span>
+    <span class="n">parse_note_name</span><span class="p">,</span>
+    <span class="n">add_pattern_aliases</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+
+<span class="c1"># Define root notes to MIDI note numbers</span>
+<span class="n">root_notes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="s2">&quot;C#&quot;</span><span class="p">:</span> <span class="mi">61</span><span class="p">,</span>
+    <span class="s2">&quot;Db&quot;</span><span class="p">:</span> <span class="mi">61</span><span class="p">,</span>
+    <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="mi">62</span><span class="p">,</span>
+    <span class="s2">&quot;D#&quot;</span><span class="p">:</span> <span class="mi">63</span><span class="p">,</span>
+    <span class="s2">&quot;Eb&quot;</span><span class="p">:</span> <span class="mi">63</span><span class="p">,</span>
+    <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+    <span class="s2">&quot;F&quot;</span><span class="p">:</span> <span class="mi">65</span><span class="p">,</span>
+    <span class="s2">&quot;F#&quot;</span><span class="p">:</span> <span class="mi">66</span><span class="p">,</span>
+    <span class="s2">&quot;Gb&quot;</span><span class="p">:</span> <span class="mi">66</span><span class="p">,</span>
+    <span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="mi">67</span><span class="p">,</span>
+    <span class="s2">&quot;G#&quot;</span><span class="p">:</span> <span class="mi">68</span><span class="p">,</span>
+    <span class="s2">&quot;Ab&quot;</span><span class="p">:</span> <span class="mi">68</span><span class="p">,</span>
+    <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="mi">69</span><span class="p">,</span>
+    <span class="s2">&quot;A#&quot;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span>
+    <span class="s2">&quot;Bb&quot;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span>
+    <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="mi">71</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Regex to match root note at the start of a scale string (e.g., &#39;C&#39;, &#39;C#&#39;, &#39;Db&#39;, etc.), followed by space or end</span>
+<span class="n">root_note_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^([A-Ga-g][#b]?)(?=\s|$)&quot;</span><span class="p">)</span>
+
+<span class="n">scale_quality</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Western Diatonic &amp; Common Scales (retained as before)</span>
+    <span class="s2">&quot;major&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+    <span class="s2">&quot;natural minor&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;harmonic minor&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+    <span class="s2">&quot;melodic minor ascending&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+    <span class="s2">&quot;melodic minor descending&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;major pentatonic&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+    <span class="s2">&quot;minor pentatonic&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;blues&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;chromatic&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+    <span class="s2">&quot;whole tone&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;diminished (whole-half)&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+    <span class="s2">&quot;diminished (half-whole)&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;augmented&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+    <span class="s2">&quot;lydian&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+    <span class="s2">&quot;mixolydian&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;dorian&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;phrygian&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;locrian&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;aeolian&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;ionian&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+    <span class="c1"># Major Jazz Scales (distinct or commonly named in jazz)</span>
+    <span class="s2">&quot;bebop dominant&quot;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span>
+        <span class="mi">2</span><span class="p">,</span>
+        <span class="mi">4</span><span class="p">,</span>
+        <span class="mi">5</span><span class="p">,</span>
+        <span class="mi">7</span><span class="p">,</span>
+        <span class="mi">9</span><span class="p">,</span>
+        <span class="mi">10</span><span class="p">,</span>
+        <span class="mi">11</span><span class="p">,</span>
+    <span class="p">),</span>  <span class="c1"># Mixolydian with added M7 (or b7, M7)</span>
+    <span class="s2">&quot;bebop major&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Major with added b6 (or M6, b6)</span>
+    <span class="s2">&quot;bebop minor&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Dorian with added M3 (or m3, M3)</span>
+    <span class="s2">&quot;bebop melodic minor&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Melodic Minor with added b6</span>
+    <span class="s2">&quot;altered&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># 7th mode of Melodic Minor, aka Super Locrian</span>
+    <span class="s2">&quot;lydian dominant&quot;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span>
+        <span class="mi">2</span><span class="p">,</span>
+        <span class="mi">4</span><span class="p">,</span>
+        <span class="mi">6</span><span class="p">,</span>
+        <span class="mi">7</span><span class="p">,</span>
+        <span class="mi">9</span><span class="p">,</span>
+        <span class="mi">10</span><span class="p">,</span>
+    <span class="p">),</span>  <span class="c1"># 4th mode of Melodic Minor, aka Mixolydian #11</span>
+    <span class="s2">&quot;phrygian dominant&quot;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span>
+        <span class="mi">1</span><span class="p">,</span>
+        <span class="mi">4</span><span class="p">,</span>
+        <span class="mi">5</span><span class="p">,</span>
+        <span class="mi">7</span><span class="p">,</span>
+        <span class="mi">8</span><span class="p">,</span>
+        <span class="mi">10</span><span class="p">,</span>
+    <span class="p">),</span>  <span class="c1"># 5th mode of Harmonic Minor (also common in Middle Eastern music)</span>
+    <span class="c1"># Indian Ragas (distinct from Western scales, or now canonical here)</span>
+    <span class="c1"># Re-checking semitone patterns and prioritizing jazz names</span>
+    <span class="s2">&quot;todi&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Hindustani Todi Thaat</span>
+    <span class="s2">&quot;poorvi&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Hindustani Poorvi Thaat</span>
+    <span class="s2">&quot;marwa&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Hindustani Marwa Thaat</span>
+    <span class="s2">&quot;chalanata&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Melakarta 36</span>
+    <span class="s2">&quot;hamsadhwani&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Pentatonic raga</span>
+    <span class="c1"># Potential clashes:</span>
+    <span class="s2">&quot;bhairav&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Hindustani Bhairav Thaat</span>
+    <span class="s2">&quot;chakravakam&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Melakarta 16</span>
+    <span class="s2">&quot;malkauns&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Pentatonic raga</span>
+<span class="p">}</span>
+
+
+<span class="n">scale_quality_alias</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Western Aliases (retained and expanded slightly)</span>
+    <span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;maj&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="s2">&quot;natural minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="s2">&quot;natural minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;minor&quot;</span><span class="p">:</span> <span class="s2">&quot;natural minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harmonic&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melodic&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic minor ascending&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;penta major&quot;</span><span class="p">:</span> <span class="s2">&quot;major pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;penta min&quot;</span><span class="p">:</span> <span class="s2">&quot;minor pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;penta&quot;</span><span class="p">:</span> <span class="s2">&quot;minor pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;minor penta&quot;</span><span class="p">:</span> <span class="s2">&quot;minor pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;major penta&quot;</span><span class="p">:</span> <span class="s2">&quot;major pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;whl tone&quot;</span><span class="p">:</span> <span class="s2">&quot;whole tone&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished (whole-half)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;aug&quot;</span><span class="p">:</span> <span class="s2">&quot;augmented&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;chrom&quot;</span><span class="p">:</span> <span class="s2">&quot;chromatic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blues scale&quot;</span><span class="p">:</span> <span class="s2">&quot;blues&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dor&quot;</span><span class="p">:</span> <span class="s2">&quot;dorian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phr&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lyd&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mix&quot;</span><span class="p">:</span> <span class="s2">&quot;mixolydian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;aeo&quot;</span><span class="p">:</span> <span class="s2">&quot;aeolian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ion&quot;</span><span class="p">:</span> <span class="s2">&quot;ionian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nat min&quot;</span><span class="p">:</span> <span class="s2">&quot;natural minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harm min&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mel min asc&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic minor ascending&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mel min desc&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic minor descending&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;w-h dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished (whole-half)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;h-w dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished (half-whole)&quot;</span><span class="p">,</span>
+    <span class="c1"># Jazz Aliases</span>
+    <span class="s2">&quot;bebop dom&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bebop maj&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop major&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bebop min&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bebop dorian&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop minor&quot;</span><span class="p">,</span>  <span class="c1"># Common alias for bebop minor</span>
+    <span class="s2">&quot;bebop melodic&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop melodic minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;alt&quot;</span><span class="p">:</span> <span class="s2">&quot;altered&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;super locrian&quot;</span><span class="p">:</span> <span class="s2">&quot;altered&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lyd dom&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mixolydian #11&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;acoustic scale&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian dominant&quot;</span><span class="p">,</span>  <span class="c1"># Also sometimes called this</span>
+    <span class="s2">&quot;phryg dom&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dominant phrygian&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mixolydian b2 b6&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian dominant&quot;</span><span class="p">,</span>  <span class="c1"># If you want to get descriptive</span>
+    <span class="c1"># Indian Raga Aliases</span>
+    <span class="c1"># Aliases for Ragas whose patterns match Western/Jazz scales:</span>
+    <span class="s2">&quot;bilawal&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Thaat for Major</span>
+    <span class="s2">&quot;ionian raga&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;shankarabharanam&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 29 for Major</span>
+    <span class="s2">&quot;dheerasankarabharanam&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 29 for Major</span>
+    <span class="s2">&quot;kharaharapriya&quot;</span><span class="p">:</span> <span class="s2">&quot;dorian&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 22 for Dorian</span>
+    <span class="s2">&quot;melakarta 22&quot;</span><span class="p">:</span> <span class="s2">&quot;dorian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kafi&quot;</span><span class="p">:</span> <span class="s2">&quot;dorian&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Thaat for Dorian</span>
+    <span class="s2">&quot;harikambhoji&quot;</span><span class="p">:</span> <span class="s2">&quot;mixolydian&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 28 for Mixolydian</span>
+    <span class="s2">&quot;melakarta 28&quot;</span><span class="p">:</span> <span class="s2">&quot;mixolydian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;khamaj&quot;</span><span class="p">:</span> <span class="s2">&quot;mixolydian&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Thaat for Mixolydian</span>
+    <span class="s2">&quot;natabhairavi&quot;</span><span class="p">:</span> <span class="s2">&quot;natural minor&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 20 for Natural Minor</span>
+    <span class="s2">&quot;melakarta 20&quot;</span><span class="p">:</span> <span class="s2">&quot;natural minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;asavari&quot;</span><span class="p">:</span> <span class="s2">&quot;natural minor&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Thaat for Natural Minor / Aeolian</span>
+    <span class="s2">&quot;aeolian raga&quot;</span><span class="p">:</span> <span class="s2">&quot;natural minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hanumatodi&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 8 for Phrygian</span>
+    <span class="s2">&quot;melakarta 8&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phrygian raga&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kalyan&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Thaat for Lydian</span>
+    <span class="s2">&quot;kirwani&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic minor&quot;</span><span class="p">,</span>  <span class="c1"># Melakarta 21, identical to Harmonic Minor</span>
+    <span class="s2">&quot;melakarta 21&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mayamalavagowla&quot;</span><span class="p">:</span> <span class="s2">&quot;bhairav&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 15</span>
+    <span class="s2">&quot;melakarta 15&quot;</span><span class="p">:</span> <span class="s2">&quot;bhairav&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bhupali&quot;</span><span class="p">:</span> <span class="s2">&quot;major pentatonic&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Raga identical to Major Pentatonic</span>
+    <span class="s2">&quot;mohnam&quot;</span><span class="p">:</span> <span class="s2">&quot;major pentatonic&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic equivalent of Bhupali / Major Pentatonic</span>
+    <span class="s2">&quot;durga&quot;</span><span class="p">:</span> <span class="s2">&quot;major pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deshkar&quot;</span><span class="p">:</span> <span class="s2">&quot;major pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;carnatic major&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>  <span class="c1"># Common reference for the Carnatic major scale</span>
+    <span class="s2">&quot;carnatic minor&quot;</span><span class="p">:</span> <span class="s2">&quot;natural minor&quot;</span><span class="p">,</span>  <span class="c1"># Common reference for the Carnatic natural minor scale</span>
+    <span class="c1"># Aliases for Ragas unique to scale_quality (or now canonical here)</span>
+    <span class="s2">&quot;bhairav thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;bhairav&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;todi thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;todi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;poorvi thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;poorvi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;marwa thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;marwa&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melakarta 36&quot;</span><span class="p">:</span> <span class="s2">&quot;chalanata&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melakarta 16&quot;</span><span class="p">:</span> <span class="s2">&quot;chakravakam&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hansadhwani raga&quot;</span><span class="p">:</span> <span class="s2">&quot;hamsadhwani&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;malkauns raga&quot;</span><span class="p">:</span> <span class="s2">&quot;malkauns&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;indian m minor&quot;</span><span class="p">:</span> <span class="s2">&quot;malkauns&quot;</span><span class="p">,</span>  <span class="c1"># A less common, but sometimes used, description</span>
+<span class="p">}</span>
+
+
+<span class="c1"># TODO: Separate base and aliases</span>
+<span class="c1"># TODO: Verify completeness and more chord definitions if needed</span>
+<span class="c1"># TODO: See if defs can be infered from parsing the chord names</span>
+<span class="c1"># Define quality and extension intervals</span>
+<span class="n">chord_quality</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>  <span class="c1"># Major triad, &#39;C&#39; -&gt; &#39;Cmaj</span>
+    <span class="s2">&quot;maj&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>  <span class="c1"># Major triad</span>
+    <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>  <span class="c1"># Major triad</span>
+    <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>  <span class="c1"># Minor triad</span>
+    <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>  <span class="c1"># Minor triad</span>
+    <span class="s2">&quot;dim&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>  <span class="c1"># Diminished triad</span>
+    <span class="s2">&quot;aug&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>  <span class="c1"># Augmented triad</span>
+    <span class="s2">&quot;7&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Dominant 7th</span>
+    <span class="s2">&quot;7M&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Major 7th</span>
+    <span class="s2">&quot;maj7&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Major 7th</span>
+    <span class="s2">&quot;min7&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Minor 7th</span>
+    <span class="s2">&quot;minmaj7&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Minor major 7th</span>
+    <span class="s2">&quot;dim7&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>  <span class="c1"># Diminished 7th</span>
+    <span class="s2">&quot;hdim7&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Half-diminished 7th</span>
+    <span class="s2">&quot;aug7&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Augmented 7th</span>
+    <span class="s2">&quot;6&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>  <span class="c1"># Major 6th</span>
+    <span class="s2">&quot;min6&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>  <span class="c1"># Minor 6th</span>
+    <span class="s2">&quot;9&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span>  <span class="c1"># Dominant 9th</span>
+    <span class="s2">&quot;maj9&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span>  <span class="c1"># Major 9th</span>
+    <span class="s2">&quot;min9&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span>  <span class="c1"># Minor 9th</span>
+    <span class="s2">&quot;11&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span>  <span class="c1"># Dominant 11th</span>
+    <span class="s2">&quot;maj11&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span>  <span class="c1"># Major 11th</span>
+    <span class="s2">&quot;min11&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span>  <span class="c1"># Minor 11th</span>
+    <span class="s2">&quot;13&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span>  <span class="c1"># Dominant 13th</span>
+    <span class="s2">&quot;maj13&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span>  <span class="c1"># Major 13th</span>
+    <span class="s2">&quot;min13&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span>  <span class="c1"># Minor 13th</span>
+<span class="p">}</span>
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="c1"># Registration</span>
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="register_root_note">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.register_root_note">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_root_note</span><span class="p">(</span><span class="n">note_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">midi_value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Register a new root note with its MIDI value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        note_name: The name of the note (e.g., &#39;C&#39;, &#39;C#&#39;, &#39;Db&#39;)</span>
+<span class="sd">        midi_value: The MIDI note number (0-127)</span>
+
+<span class="sd">    &gt;&gt;&gt; register_root_note(&#39;H&#39;, 71)  # German notation for B</span>
+<span class="sd">    &gt;&gt;&gt; root_notes[&#39;H&#39;]</span>
+<span class="sd">    71</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">midi_value</span> <span class="o">&lt;=</span> <span class="mi">127</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MIDI value must be between 0 and 127, got </span><span class="si">{</span><span class="n">midi_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">root_notes</span><span class="p">[</span><span class="n">note_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">midi_value</span></div>
+
+
+
+<div class="viewcode-block" id="register_scale_quality">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.register_scale_quality">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_scale_quality</span><span class="p">(</span><span class="n">quality_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">semitone_pattern</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Register a new scale quality with its semitone pattern.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        quality_name: The name of the scale quality</span>
+<span class="sd">        semitone_pattern: Sequence of semitone intervals from root</span>
+
+<span class="sd">    &gt;&gt;&gt; register_scale_quality(&#39;custom_scale&#39;, (0, 2, 5, 7, 10))</span>
+<span class="sd">    &gt;&gt;&gt; scale_quality[&#39;custom_scale&#39;]</span>
+<span class="sd">    (0, 2, 5, 7, 10)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern_tuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">semitone_pattern</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">11</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pattern_tuple</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Semitone pattern must contain integers between 0 and 11&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="mi">0</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pattern_tuple</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Semitone pattern must include 0 (the root note)&quot;</span><span class="p">)</span>
+    <span class="n">scale_quality</span><span class="p">[</span><span class="n">quality_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pattern_tuple</span></div>
+
+
+
+<div class="viewcode-block" id="register_scale_quality_alias">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.register_scale_quality_alias">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_scale_quality_alias</span><span class="p">(</span><span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">canonical_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Register an alias for an existing scale quality.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        alias: The alias name</span>
+<span class="sd">        canonical_name: The existing scale quality name or alias</span>
+
+<span class="sd">    &gt;&gt;&gt; register_scale_quality_alias(&#39;my_major&#39;, &#39;major&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; scale_quality_alias[&#39;my_major&#39;]</span>
+<span class="sd">    &#39;major&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Verify that the canonical name exists (either in scale_quality or as an alias)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">semitone_pattern</span><span class="p">(</span><span class="n">canonical_name</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Canonical name &#39;</span><span class="si">{</span><span class="n">canonical_name</span><span class="si">}</span><span class="s2">&#39; is not a valid scale quality&quot;</span>
+        <span class="p">)</span>
+    <span class="n">scale_quality_alias</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span> <span class="o">=</span> <span class="n">canonical_name</span></div>
+
+
+
+<div class="viewcode-block" id="register_chord_quality">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.register_chord_quality">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_chord_quality</span><span class="p">(</span><span class="n">quality_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">semitone_pattern</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Register a new chord quality with its semitone pattern.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        quality_name: The name of the chord quality</span>
+<span class="sd">        semitone_pattern: Sequence of semitone intervals from root</span>
+
+<span class="sd">    &gt;&gt;&gt; register_chord_quality(&#39;my_chord&#39;, (0, 4, 7, 10, 13))</span>
+<span class="sd">    &gt;&gt;&gt; chord_quality[&#39;my_chord&#39;]</span>
+<span class="sd">    (0, 4, 7, 10, 13)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern_tuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">semitone_pattern</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pattern_tuple</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Semitone pattern must contain non-negative integers&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="mi">0</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pattern_tuple</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Semitone pattern must include 0 (the root note)&quot;</span><span class="p">)</span>
+    <span class="n">chord_quality</span><span class="p">[</span><span class="n">quality_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pattern_tuple</span></div>
+
+
+
+<div class="viewcode-block" id="list_root_notes">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.list_root_notes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_root_notes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;List all registered root notes.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary mapping note names to MIDI values</span>
+
+<span class="sd">    &gt;&gt;&gt; notes = list_root_notes()</span>
+<span class="sd">    &gt;&gt;&gt; &#39;C&#39; in notes</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; notes[&#39;C&#39;]</span>
+<span class="sd">    60</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">root_notes</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="list_scale_qualities">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.list_scale_qualities">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_scale_qualities</span><span class="p">(</span><span class="n">include_aliases</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;List all registered scale qualities.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        include_aliases: If True, include aliases in the listing</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary mapping quality names to semitone patterns</span>
+
+<span class="sd">    &gt;&gt;&gt; qualities = list_scale_qualities()</span>
+<span class="sd">    &gt;&gt;&gt; &#39;major&#39; in qualities</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; qualities[&#39;major&#39;]</span>
+<span class="sd">    (0, 2, 4, 5, 7, 9, 11)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">scale_quality</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">include_aliases</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">alias</span><span class="p">,</span> <span class="n">canonical</span> <span class="ow">in</span> <span class="n">scale_quality_alias</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">canonical</span> <span class="ow">in</span> <span class="n">scale_quality</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale_quality</span><span class="p">[</span><span class="n">canonical</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">canonical</span> <span class="ow">in</span> <span class="n">scale_quality_alias</span><span class="p">:</span>
+                <span class="c1"># Handle alias chains</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">pattern</span> <span class="o">=</span> <span class="n">semitone_pattern</span><span class="p">(</span><span class="n">canonical</span><span class="p">)</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span> <span class="o">=</span> <span class="n">pattern</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="k">pass</span>  <span class="c1"># Skip invalid aliases</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="list_scale_quality_aliases">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.list_scale_quality_aliases">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_scale_quality_aliases</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;List all registered scale quality aliases.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary mapping aliases to canonical names</span>
+
+<span class="sd">    &gt;&gt;&gt; aliases = list_scale_quality_aliases()</span>
+<span class="sd">    &gt;&gt;&gt; &#39;maj&#39; in aliases</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; aliases[&#39;maj&#39;]</span>
+<span class="sd">    &#39;major&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">scale_quality_alias</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="list_chord_qualities">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.list_chord_qualities">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_chord_qualities</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;List all registered chord qualities.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary mapping quality names to semitone patterns</span>
+
+<span class="sd">    &gt;&gt;&gt; qualities = list_chord_qualities()</span>
+<span class="sd">    &gt;&gt;&gt; &#39;maj&#39; in qualities</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; qualities[&#39;maj&#39;]</span>
+<span class="sd">    (0, 4, 7)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">chord_quality</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># TODO: Make a framework for user-defined aliases</span>
+
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="c1"># Validation</span>
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+
+<span class="c1"># Define a specific error for incorrect scale specifications</span>
+<div class="viewcode-block" id="IncorrectScaleSpecification">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.IncorrectScaleSpecification">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IncorrectScaleSpecification</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when a scale string cannot be parsed/validated into root and quality.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="validate_scale_semitone_pattern_uniquness">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.validate_scale_semitone_pattern_uniquness">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_scale_semitone_pattern_uniquness</span><span class="p">(</span><span class="n">scale_quality</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validates that all scale qualities have unique semitone patterns.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">seen</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">scale_quality</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">pattern_tuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pattern_tuple</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Scale quality &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; has a non-unique semitone pattern. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Duplicates: </span><span class="si">{</span><span class="n">seen</span><span class="p">[</span><span class="n">pattern_tuple</span><span class="p">]</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="n">seen</span><span class="p">[</span><span class="n">pattern_tuple</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="validate_scale_aliases">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.validate_scale_aliases">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_scale_aliases</span><span class="p">(</span><span class="n">scale_quality</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">scale_aliases</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validates that all values in the scale_aliases dictionary are valid keys</span>
+<span class="sd">    in the scale_qualities dictionary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        scale_quality (dict): The dictionary of canonical scale qualities and patterns.</span>
+<span class="sd">        scale_aliases (dict): The dictionary of scale aliases.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if all aliases are valid, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">all_valid</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">invalid_aliases</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">alias_key</span><span class="p">,</span> <span class="n">canonical_name</span> <span class="ow">in</span> <span class="n">scale_aliases</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">canonical_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">scale_quality</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Validation Error: Alias &#39;</span><span class="si">{</span><span class="n">alias_key</span><span class="si">}</span><span class="s2">&#39; points to &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;non-existent scale quality &#39;</span><span class="si">{</span><span class="n">canonical_name</span><span class="si">}</span><span class="s2">&#39; in scale_quality.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">invalid_aliases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alias_key</span><span class="p">)</span>
+            <span class="n">all_valid</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">all_valid</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid aliases found: </span><span class="si">{</span><span class="n">invalid_aliases</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># validate_scale_semitone_pattern_uniquness(scale_quality)  # Disabled: duplicate patterns are allowed for now  # TODO: move duplicates to aliases</span>
+<span class="n">validate_scale_aliases</span><span class="p">(</span><span class="n">scale_quality</span><span class="p">,</span> <span class="n">scale_quality_alias</span><span class="p">)</span>
+
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="c1"># Access and Usage</span>
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="semitone_pattern">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.semitone_pattern">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">semitone_pattern</span><span class="p">(</span><span class="n">quality</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the semitone pattern for a given scale quality string.</span>
+<span class="sd">    Looks in scale_quality, then in scale_quality_alias (using the alias to look in scale_quality).</span>
+<span class="sd">    Raises ValueError if not found.</span>
+
+<span class="sd">    &gt;&gt;&gt; semitone_pattern(&#39;major&#39;)</span>
+<span class="sd">    (0, 2, 4, 5, 7, 9, 11)</span>
+<span class="sd">    &gt;&gt;&gt; semitone_pattern(&#39;maj&#39;)</span>
+<span class="sd">    (0, 2, 4, 5, 7, 9, 11)</span>
+<span class="sd">    &gt;&gt;&gt; semitone_pattern(&#39;&#39;)</span>
+<span class="sd">    (0, 2, 4, 5, 7, 9, 11)</span>
+<span class="sd">    &gt;&gt;&gt; semitone_pattern(&#39;dorian&#39;)</span>
+<span class="sd">    (0, 2, 3, 5, 7, 9, 10)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">quality</span> <span class="ow">in</span> <span class="n">scale_quality</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">scale_quality</span><span class="p">[</span><span class="n">quality</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">quality</span> <span class="ow">in</span> <span class="n">scale_quality_alias</span><span class="p">:</span>
+        <span class="n">alias</span> <span class="o">=</span> <span class="n">scale_quality_alias</span><span class="p">[</span><span class="n">quality</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">alias</span> <span class="ow">in</span> <span class="n">scale_quality</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">scale_quality</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">alias</span> <span class="ow">in</span> <span class="n">scale_quality_alias</span><span class="p">:</span>
+            <span class="c1"># Handle alias chaining (e.g., &#39;&#39; -&gt; &#39;major&#39; -&gt; scale_quality)</span>
+            <span class="k">return</span> <span class="n">semitone_pattern</span><span class="p">(</span><span class="n">alias</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown scale quality: </span><span class="si">{</span><span class="n">quality</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="scale_params">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.scale_params">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">scale_params</span><span class="p">(</span><span class="n">scale</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">midi_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parse a scale specification string and return (root_note, scale_quality).</span>
+<span class="sd">    If midi_notes is True, returns (root_note_midi, semitone_pattern).</span>
+<span class="sd">    If midi_notes is False, returns (root_note_str, scale_quality_str).</span>
+<span class="sd">    The root_note can be an empty string (meaning default root).</span>
+
+<span class="sd">    &gt;&gt;&gt; scale_params(&#39;C major&#39;)</span>
+<span class="sd">    (&#39;C&#39;, &#39;major&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; scale_params(&#39;dorian&#39;)</span>
+<span class="sd">    (&#39;&#39;, &#39;dorian&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; scale_params(&#39;C&#39;)</span>
+<span class="sd">    (&#39;C&#39;, &#39;&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; scale_params(&#39;C&#39;, midi_notes=True)</span>
+<span class="sd">    (60, (0, 2, 4, 5, 7, 9, 11))</span>
+<span class="sd">    &gt;&gt;&gt; scale_params(&#39;dorian&#39;, midi_notes=True)</span>
+<span class="sd">    (None, (0, 2, 3, 5, 7, 9, 10))</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">scale</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">root_note_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">root_notes</span><span class="p">):</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+        <span class="n">quality</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">quality</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="c1"># If only root is given, quality is empty string (defaults to major via alias &#39;&#39;)</span>
+    <span class="k">if</span> <span class="n">quality</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">and</span> <span class="n">root</span><span class="p">:</span>
+        <span class="n">quality</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># Validate root and quality; build helpful error if invalid</span>
+    <span class="n">invalid_root</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">root</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">root_notes</span><span class="p">):</span>
+        <span class="n">invalid_root</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="n">semitone_pattern</span><span class="p">(</span><span class="n">quality</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">invalid_quality</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">invalid_quality</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="n">invalid_root</span> <span class="ow">or</span> <span class="n">invalid_quality</span><span class="p">:</span>
+        <span class="n">valid_roots</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">list_root_notes</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">valid_roots</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">if</span> <span class="n">r</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="s2">&quot;&lt;empty string&gt;&quot;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">valid_roots</span><span class="p">]</span>
+        <span class="n">valid_roots</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_roots</span><span class="p">)</span>
+
+        <span class="n">valid_qualities</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">list_scale_qualities</span><span class="p">(</span><span class="n">include_aliases</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">valid_qualities</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">if</span> <span class="n">q</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="s2">&quot;&lt;empty string&gt;&quot;</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">valid_qualities</span><span class="p">]</span>
+        <span class="n">valid_qualities</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_qualities</span><span class="p">)</span>
+
+        <span class="n">problems</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">invalid_root</span><span class="p">:</span>
+            <span class="n">problems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown root &#39;</span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">invalid_quality</span><span class="p">:</span>
+            <span class="n">problems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown scale quality &#39;</span><span class="si">{</span><span class="n">quality</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="n">problems_text</span> <span class="o">=</span> <span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">problems</span><span class="p">)</span> <span class="k">if</span> <span class="n">problems</span> <span class="k">else</span> <span class="s2">&quot;invalid specification&quot;</span>
+
+        <span class="k">raise</span> <span class="n">IncorrectScaleSpecification</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Incorrect scale specification: &#39;</span><span class="si">{</span><span class="n">scale</span><span class="si">}</span><span class="s2">&#39; (</span><span class="si">{</span><span class="n">problems_text</span><span class="si">}</span><span class="s2">).</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Anatomy: &#39;&lt;root&gt; &lt;quality&gt;&#39; (case-insensitive). Root is optional; quality can be omitted to mean &#39;major&#39;.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Valid roots: </span><span class="si">{</span><span class="n">valid_roots</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Valid qualities (including aliases): </span><span class="si">{</span><span class="n">valid_qualities</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">midi_notes</span><span class="p">:</span>
+        <span class="n">root_midi</span> <span class="o">=</span> <span class="n">root_notes</span><span class="p">[</span><span class="n">root</span><span class="p">]</span> <span class="k">if</span> <span class="n">root</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">root_midi</span><span class="p">,</span> <span class="n">pattern</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">root</span><span class="p">,</span> <span class="n">quality</span></div>
+
+
+
+<div class="viewcode-block" id="scale_midi_notes">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.scale_midi_notes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">scale_midi_notes</span><span class="p">(</span>
+    <span class="n">scale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;C major&quot;</span><span class="p">,</span>
+    <span class="n">midi_range</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">127</span><span class="p">),</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">default_root</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a tuple of all MIDI note numbers in the given range that belong to the specified scale.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        scale (str): The scale string, e.g., &#39;C major&#39;, &#39;D# minor pentatonic&#39;.</span>
+<span class="sd">        midi_range (tuple): The (min, max) MIDI note numbers to include.</span>
+<span class="sd">        default_root (str): The root note to use if not found in the scale string (default &#39;C&#39;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: MIDI note numbers in the scale within the specified range.</span>
+
+
+<span class="sd">    &gt;&gt;&gt; scale_midi_notes(&#39;E&#39;)  # doctest: +ELLIPSIS</span>
+<span class="sd">    (1, 3, 4, 6, 8, 9, 11, 13, 15, 16, ...114, 116, 117, 119, 121, 123, 124, 126)</span>
+
+<span class="sd">    If it&#39;s suprising that it starts at 1, because you were expecting &#39;E&#39; (major)</span>
+<span class="sd">    to start with 4, remember that scale_midi_notes is designed to return all notes in the scale</span>
+<span class="sd">    within the MIDI range, not just the notes starting from the root note.</span>
+<span class="sd">    The first note in that range that is in E major is actually a C#, which the</span>
+<span class="sd">    midi note 1 is. You can control the range through:</span>
+
+<span class="sd">    &gt;&gt;&gt; scale_midi_notes(&#39;E&#39;, midi_range=(4, 30))  # doctest: +ELLIPSIS</span>
+<span class="sd">    (4, 6, 8, 9, 11, 13, 15, 16, 18, 20, 21, 23, 25, 27, 28, 30)</span>
+
+<span class="sd">    You see that if no scale quality is specified, it defaults to &#39;major&#39;.</span>
+<span class="sd">    On the other hand, if no root note is specified, it defaults to &#39;C&#39;, or what ever</span>
+<span class="sd">    you tell `default_root` is should be.</span>
+
+<span class="sd">    &gt;&gt;&gt; assert (</span>
+<span class="sd">    ...     scale_midi_notes(&#39;&#39;, midi_range=(60, 72))</span>
+<span class="sd">    ...     == scale_midi_notes(&#39;C&#39;, midi_range=(60, 72))</span>
+<span class="sd">    ...     == scale_midi_notes(&#39;major&#39;, midi_range=(60, 72))</span>
+<span class="sd">    ...     == scale_midi_notes(&#39;C major&#39;, midi_range=(60, 72))</span>
+<span class="sd">    ...     == (60, 62, 64, 65, 67, 69, 71, 72)</span>
+<span class="sd">    ... )</span>
+
+<span class="sd">    &gt;&gt;&gt; scale_midi_notes(&#39;Db minor pentatonic&#39;, midi_range=(60, 72))</span>
+<span class="sd">    (61, 64, 66, 68, 71)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Parse root and pattern</span>
+    <span class="n">root</span><span class="p">,</span> <span class="n">quality</span> <span class="o">=</span> <span class="n">scale_params</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">root</span><span class="p">:</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">default_root</span>
+    <span class="k">if</span> <span class="n">root</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">root_notes</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown root note: </span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">root_midi</span> <span class="o">=</span> <span class="n">root_notes</span><span class="p">[</span><span class="n">root</span><span class="p">]</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">semitone_pattern</span><span class="p">(</span><span class="n">quality</span><span class="p">)</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Find the first root note in the midi_range</span>
+    <span class="n">first_root</span> <span class="o">=</span> <span class="n">root_midi</span>
+    <span class="k">while</span> <span class="n">first_root</span> <span class="o">&lt;</span> <span class="n">midi_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">first_root</span> <span class="o">+=</span> <span class="mi">12</span>
+    <span class="k">while</span> <span class="n">first_root</span> <span class="o">&gt;</span> <span class="n">midi_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">first_root</span> <span class="o">-=</span> <span class="mi">12</span>
+    <span class="c1"># Generate all scale notes in the range</span>
+    <span class="k">for</span> <span class="n">midi_note</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">first_root</span><span class="p">,</span> <span class="n">midi_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">pattern</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">midi_note</span> <span class="o">+</span> <span class="n">interval</span>
+            <span class="k">if</span> <span class="n">midi_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="n">midi_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">notes</span><span class="p">)))</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

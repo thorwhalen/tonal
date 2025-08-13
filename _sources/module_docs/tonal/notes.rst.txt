@@ -1,0 +1,4 @@
+tonal.notes
+===========
+.. automodule:: tonal.notes
+   :members:

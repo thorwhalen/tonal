@@ -1,0 +1,4 @@
+tonal.chords
+============
+.. automodule:: tonal.chords
+   :members:

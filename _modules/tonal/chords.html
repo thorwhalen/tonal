@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tonal.chords &mdash; tonal 0.0.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=bbaf98b3"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            tonal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal.html">tonal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/chords.html">tonal.chords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/converters.html">tonal.converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/counterpoint.html">tonal.counterpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/notes.html">tonal.notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/util.html">tonal.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tonal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tonal.chords</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tonal.chords</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Tools for chords and chord progressions.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mido</span><span class="w"> </span><span class="kn">import</span> <span class="n">MidiFile</span><span class="p">,</span> <span class="n">MidiTrack</span><span class="p">,</span> <span class="n">Message</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">config2py</span><span class="w"> </span><span class="kn">import</span> <span class="n">process_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tonal.util</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DFLT_OUTPUT_NAME</span><span class="p">,</span>
+    <span class="n">DFLT_MIDI_OUTPUT</span><span class="p">,</span>
+    <span class="n">DFLT_SOUNDFONT</span><span class="p">,</span>
+    <span class="n">note_name_pattern</span><span class="p">,</span>
+    <span class="n">parse_note_name</span><span class="p">,</span>
+    <span class="n">add_pattern_aliases</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tonal.notes</span><span class="w"> </span><span class="kn">import</span> <span class="n">root_notes</span><span class="p">,</span> <span class="n">chord_quality</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">music21.note</span><span class="w"> </span><span class="kn">import</span> <span class="n">Note</span>
+
+<span class="n">DFLT_CHORD_SEQUENCE</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;Bdim&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Em11&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Amin9&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Dm7&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span>
+    <span class="s2">&quot;G7&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Cmaj7&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># Type aliases for this module</span>
+<span class="n">Chord</span> <span class="o">=</span> <span class="nb">str</span>
+<span class="n">Notes</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Note</span><span class="p">]</span>
+<span class="n">ChordTimed</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Chord</span><span class="p">,</span> <span class="n">Notes</span><span class="p">]</span>
+<span class="n">ChordSequence</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ChordTimed</span><span class="p">]</span>
+<span class="n">ChordDefinitions</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Chord</span><span class="p">],</span> <span class="n">Notes</span><span class="p">]</span>
+<span class="n">ChordRenderer</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Notes</span><span class="p">,</span> <span class="nb">any</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="chord_to_notes">
+<a class="viewcode-back" href="../../module_docs/tonal/chords.html#tonal.chords.chord_to_notes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">chord_to_notes</span><span class="p">(</span><span class="n">chord</span><span class="p">:</span> <span class="n">Chord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Notes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parse a chord string and return the corresponding sequence of MIDI note numbers.</span>
+
+<span class="sd">    :param chord: The chord string (e.g., &#39;Cmaj7&#39;).</span>
+<span class="sd">    :return: A sequence of MIDI note numbers representing the chord.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">parse_note_name</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+    <span class="n">quality_extension</span> <span class="o">=</span> <span class="n">chord</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="p">:]</span>
+    <span class="n">root_midi</span> <span class="o">=</span> <span class="n">root_notes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="c1"># print(root, root_midi, quality_extension)</span>
+
+    <span class="k">if</span> <span class="n">root_midi</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown root note: </span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">intervals</span> <span class="o">=</span> <span class="n">chord_quality</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">quality_extension</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">intervals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown quality/extension: </span><span class="si">{</span><span class="n">quality_extension</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">root_midi</span> <span class="o">+</span> <span class="n">interval</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">]</span></div>
+
+
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">DFLT_SOUNDFONT</span><span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">warnings</span><span class="w"> </span><span class="kn">import</span> <span class="n">warn</span>
+
+    <span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Soundfont not found at </span><span class="si">{</span><span class="n">DFLT_SOUNDFONT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="n">chord_renders</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">register_chord_render</span><span class="p">(</span><span class="n">chord_renderer</span><span class="p">:</span> <span class="n">ChordRenderer</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">chord_renderer</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="n">chord_renders</span><span class="p">[</span><span class="n">chord_renderer</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">chord_renderer</span>
+    <span class="k">return</span> <span class="n">chord_renderer</span>
+
+
+<span class="nd">@register_chord_render</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">play_simultaneously</span><span class="p">(</span>
+    <span class="n">notes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">track</span><span class="p">:</span> <span class="n">MidiTrack</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">64</span>
+<span class="p">):</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">velocity</span>
+    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
+        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;note_on&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">_notes</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+    <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;note_off&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">_notes</span><span class="p">),</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">duration</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">_notes</span><span class="p">:</span>
+        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;note_off&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+
+<span class="c1"># TODO: Need a better implementation for arpeggios.</span>
+<span class="nd">@register_chord_render</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">play_arpeggio</span><span class="p">(</span>
+    <span class="n">notes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">track</span><span class="p">:</span> <span class="n">MidiTrack</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">64</span>
+<span class="p">):</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">velocity</span>
+    <span class="n">note_duration</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+    <span class="n">current_time</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
+        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;note_on&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">current_time</span><span class="p">))</span>
+        <span class="n">current_time</span> <span class="o">+=</span> <span class="n">note_duration</span>
+        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;note_off&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">current_time</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">resolve_chord_render</span><span class="p">(</span><span class="n">chord_renderer</span><span class="p">:</span> <span class="n">ChordRenderer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ChordRenderer</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chord_renderer</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">chord_renderer</span>
+        <span class="n">chord_renderer</span> <span class="o">=</span> <span class="n">chord_renders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">chord_renderer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unknown chord renderer: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="s1">&#39;(Available: {&quot;, &quot;.join(chord_renders)}). &#39;</span>
+                <span class="s2">&quot;You can register a new chord renderer with `register_chord_render`.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">chord_renderer</span>
+    <span class="k">return</span> <span class="n">chord_renderer</span>
+
+
+<span class="n">DFLT_DURATION</span> <span class="o">=</span> <span class="mi">240</span> <span class="o">*</span> <span class="mi">4</span>
+
+
+<div class="viewcode-block" id="process_chord_sequence">
+<a class="viewcode-back" href="../../module_docs/tonal/chords.html#tonal.chords.process_chord_sequence">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">process_chord_sequence</span><span class="p">(</span>
+    <span class="n">chord_sequence</span><span class="p">:</span> <span class="n">ChordSequence</span><span class="p">,</span> <span class="n">default_duration</span><span class="o">=</span><span class="n">DFLT_DURATION</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Preprocess a chord sequence, to make sure to add time, etc.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">chord</span> <span class="ow">in</span> <span class="n">chord_sequence</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chord</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">chord</span><span class="p">,</span> <span class="n">default_duration</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chord</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">chord</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid chord: </span><span class="si">{</span><span class="n">chord</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="chords_to_midi">
+<a class="viewcode-back" href="../../module_docs/tonal/chords.html#tonal.chords.chords_to_midi">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">chords_to_midi</span><span class="p">(</span>
+    <span class="n">chord_sequence</span><span class="p">:</span> <span class="n">ChordSequence</span> <span class="o">=</span> <span class="n">DFLT_CHORD_SEQUENCE</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># DFLT_MIDI_OUTPUT,</span>
+    <span class="n">render_chord</span><span class="p">:</span> <span class="n">ChordRenderer</span> <span class="o">=</span> <span class="n">play_simultaneously</span><span class="p">,</span>
+    <span class="n">chord_definitions</span><span class="p">:</span> <span class="n">ChordDefinitions</span> <span class="o">=</span> <span class="n">chord_to_notes</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a MIDI file from a chord sequence.</span>
+
+<span class="sd">    :param chord_sequence: List of tuples containing chords and their duration.</span>
+<span class="sd">    :param chord_definitions: Dictionary mapping chords to MIDI note patterns.</span>
+<span class="sd">    :param output_file: Name of the output MIDI file.</span>
+<span class="sd">    :param render_chord: Function defining how the chords should be played.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">midi</span> <span class="o">=</span> <span class="n">MidiFile</span><span class="p">()</span>
+    <span class="n">track</span> <span class="o">=</span> <span class="n">MidiTrack</span><span class="p">()</span>
+    <span class="n">midi</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">)</span>
+
+    <span class="n">render_chord</span> <span class="o">=</span> <span class="n">resolve_chord_render</span><span class="p">(</span><span class="n">render_chord</span><span class="p">)</span>
+    <span class="n">chord_sequence</span> <span class="o">=</span> <span class="n">process_chord_sequence</span><span class="p">(</span><span class="n">chord_sequence</span><span class="p">)</span>
+
+    <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">&quot;program_change&quot;</span><span class="p">,</span> <span class="n">program</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># Acoustic Grand Piano</span>
+
+    <span class="k">for</span> <span class="n">chord</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">chord_sequence</span><span class="p">:</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="n">chord_definitions</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pattern</span><span class="p">:</span>
+            <span class="n">render_chord</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">output_file</span><span class="p">:</span>
+        <span class="n">midi</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output_file</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">midi</span></div>
+
+
+
+<div class="viewcode-block" id="chords_to_wav">
+<a class="viewcode-back" href="../../module_docs/tonal/chords.html#tonal.chords.chords_to_wav">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">chords_to_wav</span><span class="p">(</span>
+    <span class="n">chord_sequence</span><span class="p">:</span> <span class="n">ChordSequence</span> <span class="o">=</span> <span class="n">DFLT_CHORD_SEQUENCE</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_OUTPUT_NAME</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">chord_definitions</span><span class="p">:</span> <span class="n">ChordDefinitions</span> <span class="o">=</span> <span class="n">chord_to_notes</span><span class="p">,</span>
+    <span class="n">soundfont</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_SOUNDFONT</span><span class="p">,</span>
+    <span class="n">render_chord</span><span class="p">:</span> <span class="n">ChordRenderer</span> <span class="o">=</span> <span class="n">play_simultaneously</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a WAV file directly from a chord sequence.</span>
+
+<span class="sd">    :param chord_sequence: List of tuples containing chords and their duration.</span>
+<span class="sd">    :param name: Base name for the output MIDI and WAV files.</span>
+<span class="sd">    :param chord_definitions: Dictionary mapping chords to MIDI note patterns.</span>
+<span class="sd">    :param soundfont: Path to the SoundFont file.</span>
+<span class="sd">    :param render_chord: Function defining how the chords should be played.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sonification.converters</span><span class="w"> </span><span class="kn">import</span> <span class="n">midi_to_wav</span>
+
+    <span class="n">midi_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.mid&quot;</span>
+    <span class="n">wav_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.wav&quot;</span>
+
+    <span class="n">chords_to_midi</span><span class="p">(</span>
+        <span class="n">chord_sequence</span><span class="p">,</span>
+        <span class="n">chord_definitions</span><span class="o">=</span><span class="n">chord_definitions</span><span class="p">,</span>
+        <span class="n">output_file</span><span class="o">=</span><span class="n">midi_file</span><span class="p">,</span>
+        <span class="n">render_chord</span><span class="o">=</span><span class="n">render_chord</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">midi_to_wav</span><span class="p">(</span><span class="n">midi_file</span><span class="o">=</span><span class="n">midi_file</span><span class="p">,</span> <span class="n">output_wav</span><span class="o">=</span><span class="n">wav_file</span><span class="p">,</span> <span class="n">soundfont</span><span class="o">=</span><span class="n">soundfont</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wav_file</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

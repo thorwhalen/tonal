@@ -1,0 +1,226 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tonal.converters &mdash; tonal 0.0.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=bbaf98b3"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="tonal.counterpoint" href="counterpoint.html" />
+    <link rel="prev" title="tonal.chords" href="chords.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            tonal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tonal.html">tonal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chords.html">tonal.chords</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tonal.converters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.converters.convert"><code class="docutils literal notranslate"><span class="pre">convert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.converters.ensure_dest_filepath"><code class="docutils literal notranslate"><span class="pre">ensure_dest_filepath()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.converters.format_of_filepath"><code class="docutils literal notranslate"><span class="pre">format_of_filepath()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.converters.guess_format_from_bytes"><code class="docutils literal notranslate"><span class="pre">guess_format_from_bytes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.converters.image_to_musicxml"><code class="docutils literal notranslate"><span class="pre">image_to_musicxml()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.converters.midi_to_wav"><code class="docutils literal notranslate"><span class="pre">midi_to_wav()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.converters.musicxml_to_midi"><code class="docutils literal notranslate"><span class="pre">musicxml_to_midi()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.converters.replace_extension"><code class="docutils literal notranslate"><span class="pre">replace_extension()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="counterpoint.html">tonal.counterpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes.html">tonal.notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">tonal.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tonal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">tonal.converters</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/tonal/converters.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-tonal.converters">
+<span id="tonal-converters"></span><h1>tonal.converters<a class="headerlink" href="#module-tonal.converters" title="Link to this heading"></a></h1>
+<p>Convert music into various formats.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.converters.convert">
+<span class="sig-prename descclassname"><span class="pre">tonal.converters.</span></span><span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_for_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'.jpeg':</span> <span class="pre">'image',</span> <span class="pre">'.jpg':</span> <span class="pre">'image',</span> <span class="pre">'.mid':</span> <span class="pre">'midi',</span> <span class="pre">'.midi':</span> <span class="pre">'midi',</span> <span class="pre">'.musicxml':</span> <span class="pre">'musicxml',</span> <span class="pre">'.png':</span> <span class="pre">'image',</span> <span class="pre">'.wav':</span> <span class="pre">'wav',</span> <span class="pre">'.xml':</span> <span class="pre">'musicxml'}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span></span></span><a class="reference internal" href="../../_modules/tonal/converters.html#convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.converters.convert" title="Link to this definition"></a></dt>
+<dd><p>Convert between different music formats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> – Source as a filepath or bytes data</p></li>
+<li><p><strong>dest</strong> – Destination filepath, format string, or None to return bytes</p></li>
+<li><p><strong>src_format</strong> – Source format, inferred from filepath extension if None</p></li>
+<li><p><strong>dest_format</strong> – Destination format, inferred from dest if None</p></li>
+<li><p><strong>format_for_extension</strong> – Mapping of file extensions to format names</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>returns the destination filepath
+If dest is None or a format string or src is bytes: returns the converted bytes</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If dest is a filepath</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p># File to file conversion
+convert(‘my_score.musicxml’, ‘my_score.mid’)</p>
+<p># File to bytes with specified format
+midi_bytes = convert(‘my_score.musicxml’, dest_format=’midi’)</p>
+<p># File to bytes using format string shorthand
+midi_bytes = convert(‘my_score.musicxml’, ‘midi’)</p>
+<p># Bytes to file
+convert(midi_bytes, ‘output.wav’, src_format=’midi’)</p>
+<p># Bytes to bytes
+wav_bytes = convert(midi_bytes, src_format=’midi’, dest_format=’wav’)</p>
+<p># Bytes to bytes with format string shorthand
+wav_bytes = convert(midi_bytes, ‘wav’, src_format=’midi’)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.converters.ensure_dest_filepath">
+<span class="sig-prename descclassname"><span class="pre">tonal.converters.</span></span><span class="sig-name descname"><span class="pre">ensure_dest_filepath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension_for_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'image':</span> <span class="pre">'.jpeg',</span> <span class="pre">'midi':</span> <span class="pre">'.mid',</span> <span class="pre">'musicxml':</span> <span class="pre">'.musicxml',</span> <span class="pre">'wav':</span> <span class="pre">'.wav'}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/tonal/converters.html#ensure_dest_filepath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.converters.ensure_dest_filepath" title="Link to this definition"></a></dt>
+<dd><p>Ensure that a destination filepath is given.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.converters.format_of_filepath">
+<span class="sig-prename descclassname"><span class="pre">tonal.converters.</span></span><span class="sig-name descname"><span class="pre">format_of_filepath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_for_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'.jpeg':</span> <span class="pre">'image',</span> <span class="pre">'.jpg':</span> <span class="pre">'image',</span> <span class="pre">'.mid':</span> <span class="pre">'midi',</span> <span class="pre">'.midi':</span> <span class="pre">'midi',</span> <span class="pre">'.musicxml':</span> <span class="pre">'musicxml',</span> <span class="pre">'.png':</span> <span class="pre">'image',</span> <span class="pre">'.wav':</span> <span class="pre">'wav',</span> <span class="pre">'.xml':</span> <span class="pre">'musicxml'}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/tonal/converters.html#format_of_filepath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.converters.format_of_filepath" title="Link to this definition"></a></dt>
+<dd><p>Return the format of a file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.converters.guess_format_from_bytes">
+<span class="sig-prename descclassname"><span class="pre">tonal.converters.</span></span><span class="sig-name descname"><span class="pre">guess_format_from_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/tonal/converters.html#guess_format_from_bytes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.converters.guess_format_from_bytes" title="Link to this definition"></a></dt>
+<dd><p>Attempt to guess the format of a file from its bytes content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – The bytes data to analyze</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The format string or None if the format couldn’t be determined</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.converters.image_to_musicxml">
+<span class="sig-prename descclassname"><span class="pre">tonal.converters.</span></span><span class="sig-name descname"><span class="pre">image_to_musicxml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_teaser_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/tonal/converters.html#image_to_musicxml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.converters.image_to_musicxml" title="Link to this definition"></a></dt>
+<dd><p>Convert and image of a music score into a musicxml file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.converters.midi_to_wav">
+<span class="sig-prename descclassname"><span class="pre">tonal.converters.</span></span><span class="sig-name descname"><span class="pre">midi_to_wav</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_wav</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soundfont</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/home/runner/work/tonal/tonal/tonal/data/Caeds</span> <span class="pre">Small</span> <span class="pre">Trash</span> <span class="pre">GM</span> <span class="pre">v1.06.sf2'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/tonal/converters.html#midi_to_wav"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.converters.midi_to_wav" title="Link to this definition"></a></dt>
+<dd><p>Synthesize audio from a MIDI file using FluidSynth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>midi_file</strong> – Name of the input MIDI file.</p></li>
+<li><p><strong>output_wav</strong> – Name of the output WAV file.</p></li>
+<li><p><strong>soundfont</strong> – Path to the SoundFont file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.converters.musicxml_to_midi">
+<span class="sig-prename descclassname"><span class="pre">tonal.converters.</span></span><span class="sig-name descname"><span class="pre">musicxml_to_midi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">musicxml_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">midi_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/tonal/converters.html#musicxml_to_midi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.converters.musicxml_to_midi" title="Link to this definition"></a></dt>
+<dd><p>Convert a MusicXML file to MIDI.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.converters.replace_extension">
+<span class="sig-prename descclassname"><span class="pre">tonal.converters.</span></span><span class="sig-name descname"><span class="pre">replace_extension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_extension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/tonal/converters.html#replace_extension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.converters.replace_extension" title="Link to this definition"></a></dt>
+<dd><p>Replace the extension of a filepath with a new one.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="chords.html" class="btn btn-neutral float-left" title="tonal.chords" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="counterpoint.html" class="btn btn-neutral float-right" title="tonal.counterpoint" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

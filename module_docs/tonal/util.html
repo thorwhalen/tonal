@@ -1,0 +1,549 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tonal.util &mdash; tonal 0.0.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=bbaf98b3"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="tonal.notes" href="notes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            tonal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tonal.html">tonal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chords.html">tonal.chords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="converters.html">tonal.converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="counterpoint.html">tonal.counterpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes.html">tonal.notes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tonal.util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.add_streams"><code class="docutils literal notranslate"><span class="pre">add_streams()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.concatenate_streams"><code class="docutils literal notranslate"><span class="pre">concatenate_streams()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.create_score_from_tracks"><code class="docutils literal notranslate"><span class="pre">create_score_from_tracks()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.delete_parts"><code class="docutils literal notranslate"><span class="pre">delete_parts()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.ensure_iterable_of_notes"><code class="docutils literal notranslate"><span class="pre">ensure_iterable_of_notes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.ensure_scale"><code class="docutils literal notranslate"><span class="pre">ensure_scale()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.filter_parts"><code class="docutils literal notranslate"><span class="pre">filter_parts()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.get_scale_notes"><code class="docutils literal notranslate"><span class="pre">get_scale_notes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.is_existing_filepath"><code class="docutils literal notranslate"><span class="pre">is_existing_filepath()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.mk_score"><code class="docutils literal notranslate"><span class="pre">mk_score()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.mk_stream"><code class="docutils literal notranslate"><span class="pre">mk_stream()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.multi_note_names"><code class="docutils literal notranslate"><span class="pre">multi_note_names()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.note_names"><code class="docutils literal notranslate"><span class="pre">note_names()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.play_music21_object"><code class="docutils literal notranslate"><span class="pre">play_music21_object()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.resolve_format_from_filepath"><code class="docutils literal notranslate"><span class="pre">resolve_format_from_filepath()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.util.string_to_note"><code class="docutils literal notranslate"><span class="pre">string_to_note()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tonal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">tonal.util</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/tonal/util.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-tonal.util">
+<span id="tonal-util"></span><h1>tonal.util<a class="headerlink" href="#module-tonal.util" title="Link to this heading"></a></h1>
+<p>Utils for sonification.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.add_streams">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">add_streams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_of_streams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Stream</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Stream</span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#add_streams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.add_streams" title="Link to this definition"></a></dt>
+<dd><p>Concatenates multiple streams into a single stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>list_of_streams</strong> (<em>List</em><em>[</em><em>Stream</em><em>]</em>) – The list of streams to concatenate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single stream containing all the concatenated streams.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Stream</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s1</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;C4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;E4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;G4&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;A4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;C5&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;E5&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result_stream</span> <span class="o">=</span> <span class="n">add_streams</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">result_stream</span><span class="p">)</span>
+<span class="go">[&#39;C4&#39;, &#39;E4&#39;, &#39;G4&#39;, &#39;A4&#39;, &#39;C5&#39;, &#39;E5&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.concatenate_streams">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">concatenate_streams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">streams_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Stream</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Stream</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#concatenate_streams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.concatenate_streams" title="Link to this definition"></a></dt>
+<dd><p>Concatenates corresponding streams from a list of lists of streams.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>streams_list</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>Stream</em><em>]</em><em>]</em>) – The list of lists of streams to concatenate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of concatenated streams.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[Stream]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s11</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;C4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;E4&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s12</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;G4&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s21</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;A4&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s22</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;C5&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;E5&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result_streams</span> <span class="o">=</span> <span class="n">concatenate_streams</span><span class="p">([[</span><span class="n">s11</span><span class="p">,</span> <span class="n">s12</span><span class="p">],</span> <span class="p">[</span><span class="n">s21</span><span class="p">,</span> <span class="n">s22</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">result_streams</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">result_streams</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">[&#39;C4&#39;, &#39;E4&#39;, &#39;A4&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">result_streams</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">[&#39;G4&#39;, &#39;C5&#39;, &#39;E5&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.create_score_from_tracks">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">create_score_from_tracks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tracks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Stream</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Score</span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#create_score_from_tracks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.create_score_from_tracks" title="Link to this definition"></a></dt>
+<dd><p>Creates a music21 Score from a list of tracks (Stream objects).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tracks</strong> (<em>List</em><em>[</em><em>Stream</em><em>]</em>) – A list of Stream objects, each representing a track (voice).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Score object containing the tracks as separate parts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Score</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stream1</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;C4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;E4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;G4&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream2</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;A4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;C5&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;E5&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">create_score_from_tracks</span><span class="p">([</span><span class="n">stream1</span><span class="p">,</span> <span class="n">stream2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">score</span><span class="o">.</span><span class="n">parts</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.delete_parts">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">delete_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Score</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to_filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Score</span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#delete_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.delete_parts" title="Link to this definition"></a></dt>
+<dd><p>Delete parts from a score based on the provided part indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>part_idx</strong> – Union[int, List[int]]
+An integer or a list of integers representing the indices of parts to be deleted.</p></li>
+<li><p><strong>score_input</strong> – Union[str, Score]
+The input score, either as a file path or a music21 Score instance.</p></li>
+<li><p><strong>save_to_filepath</strong> – str
+The file path to save the modified score. Default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The score with specified parts deleted.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Score</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mk_score</span><span class="p">([[</span><span class="s1">&#39;C4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;D4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;E4&#39;</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modified_score</span> <span class="o">=</span> <span class="n">delete_parts</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">score</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">modified_score</span><span class="p">)</span>
+<span class="go">[[&#39;C4&#39;], [&#39;E4&#39;]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modified_score</span> <span class="o">=</span> <span class="n">delete_parts</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">score</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">modified_score</span><span class="p">)</span>
+<span class="go">[[&#39;D4&#39;]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.ensure_iterable_of_notes">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">ensure_iterable_of_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">notes:</span> <span class="pre">~music21.stream.base.Stream</span> <span class="pre">|</span> <span class="pre">~typing.Iterable[str</span> <span class="pre">|</span> <span class="pre">~music21.note.Note],</span> <span class="pre">str_to_note:</span> <span class="pre">~typing.Callable[[str],</span> <span class="pre">~music21.note.Note]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'music21.note.Note'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">Note</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#ensure_iterable_of_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.ensure_iterable_of_notes" title="Link to this definition"></a></dt>
+<dd><p>Ensures the input is an iterable of Note objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>notes</strong> (<em>TrackSpec</em>) – The input notes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of Note objects.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Generator[Note, None, None]</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">ensure_iterable_of_notes</span><span class="p">([</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">]))</span>
+<span class="go">[&lt;music21.note.Note C&gt;, &lt;music21.note.Note E&gt;, &lt;music21.note.Note G&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;C4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;E4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;G4&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">ensure_iterable_of_notes</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+<span class="go">[&lt;music21.note.Note C&gt;, &lt;music21.note.Note E&gt;, &lt;music21.note.Note G&gt;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.ensure_scale">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">ensure_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">input_scale:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">~music21.scale.Scale,</span> <span class="pre">scale_creator:</span> <span class="pre">~typing.Callable[[str],</span> <span class="pre">~music21.scale.Scale]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'music21.scale.MajorScale'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Scale</span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#ensure_scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.ensure_scale" title="Link to this definition"></a></dt>
+<dd><p>Ensures the input is a Scale object. Converts a string to a Scale using the provided scale creator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_scale</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Scale</em><em>]</em>) – The input scale.</p></li>
+<li><p><strong>scale_creator</strong> (<em>Callable</em><em>[</em><em>[</em><em>str</em><em>]</em><em>, </em><em>Scale</em><em>]</em>) – A function to create a Scale from a string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding Scale object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Scale</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If the input cannot be converted to a Scale.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.filter_parts">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">filter_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Part</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Score</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to_filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Score</span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#filter_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.filter_parts" title="Link to this definition"></a></dt>
+<dd><p>Filter parts from a score based on the provided filter function or part indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>part_filter</strong> – PartFilterSpec
+A function that takes a music21 Part object and returns a boolean value.
+If an integer or list of integers is provided, the function will filter in
+parts based on the indices.</p></li>
+<li><p><strong>score_input</strong> – Union[str, Score]
+The input score, either as a file path or a music21 Score instance.</p></li>
+<li><p><strong>save_to_filepath</strong> – str
+The file path to save the modified score. Default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The score with the subset of parts that were filtered in.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Score</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">mk_score</span><span class="p">([[</span><span class="s1">&#39;C4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;D4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;E4&#39;</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Test filtering by index</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filtered_score</span> <span class="o">=</span> <span class="n">filter_parts</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">s</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">filtered_score</span><span class="p">)</span>
+<span class="go">[[&#39;C4&#39;], [&#39;E4&#39;]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Test filtering by function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filtered_score</span> <span class="o">=</span> <span class="n">filter_parts</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="n">part</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">filtered_score</span><span class="p">)</span>
+<span class="go">[[&#39;C4&#39;], [&#39;E4&#39;]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Test no filtering (return all parts)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filtered_score</span> <span class="o">=</span> <span class="n">filter_parts</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">filtered_score</span><span class="p">)</span>
+<span class="go">[[&#39;C4&#39;], [&#39;D4&#39;], [&#39;E4&#39;]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.get_scale_notes">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">get_scale_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_note</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Note</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scale</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#get_scale_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.get_scale_notes" title="Link to this definition"></a></dt>
+<dd><p>Returns the names of the pitches in the scale within one octave around the input note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_note</strong> (<em>Note</em>) – The input note.</p></li>
+<li><p><strong>input_scale</strong> (<em>Scale</em>) – The scale in which to find the pitches.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of pitch names within the scale.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.is_existing_filepath">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">is_existing_filepath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#is_existing_filepath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.is_existing_filepath" title="Link to this definition"></a></dt>
+<dd><p>Returns True if the input object is a string representing an existing file path.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.mk_score">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">mk_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Score</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Score</span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#mk_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.mk_score" title="Link to this definition"></a></dt>
+<dd><p>Creates a music21 Score object from the input object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>ScoreSpec</em>) – The input object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the Score constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding Score object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Score</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mk_score</span><span class="p">([[</span><span class="s1">&#39;C4 B4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;E4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;G4&#39;</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>  
+<span class="go">{0.0} &lt;music21.stream.Part 0x...&gt;</span>
+<span class="go">    {0.0} &lt;music21.note.Note C&gt;</span>
+<span class="go">    {1.0} &lt;music21.note.Note B&gt;</span>
+<span class="go">{2.0} &lt;music21.stream.Part 0x...&gt;</span>
+<span class="go">    {0.0} &lt;music21.note.Note E&gt;</span>
+<span class="go">{3.0} &lt;music21.stream.Part 0x...&gt;</span>
+<span class="go">    {0.0} &lt;music21.note.Note G&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.mk_stream">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">mk_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Note</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Stream</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Stream</span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#mk_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.mk_stream" title="Link to this definition"></a></dt>
+<dd><p>Creates a music21 Stream object from the input object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>StreamSpec</em>) – The input object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the Stream constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding Stream object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Stream</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span> <span class="o">=</span> <span class="n">mk_stream</span><span class="p">(</span><span class="s1">&#39;C4 E4 G4&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+<span class="go">[&#39;C4&#39;, &#39;E4&#39;, &#39;G4&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.multi_note_names">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">multi_note_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tracks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Stream</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Note</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#multi_note_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.multi_note_names" title="Link to this definition"></a></dt>
+<dd><p>Returns the names of the notes in the input iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tracks</strong> (<em>TracksSpec</em>) – The input tracks.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of lists of note names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[List[NoteString]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tracks</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;E5&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">tracks</span><span class="p">)</span>
+<span class="go">[[&#39;C4&#39;, &#39;E4&#39;, &#39;G4&#39;], [&#39;A4&#39;, &#39;C5&#39;, &#39;E5&#39;]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream1</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;C4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;E4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;G4&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream2</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;A4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;C5&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;E5&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">([</span><span class="n">stream1</span><span class="p">,</span> <span class="n">stream2</span><span class="p">])</span>
+<span class="go">[[&#39;C4&#39;, &#39;E4&#39;, &#39;G4&#39;], [&#39;A4&#39;, &#39;C5&#39;, &#39;E5&#39;]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.note_names">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">note_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Stream</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Note</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_attr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nameWithOctave'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#note_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.note_names" title="Link to this definition"></a></dt>
+<dd><p>Returns the names of the notes in the input iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>notes</strong> (<em>TrackSpec</em>) – The input notes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of note names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">([</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">])</span>
+<span class="go">[&#39;C4&#39;, &#39;E4&#39;, &#39;G4&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">&#39;C4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;E4&#39;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">&#39;G4&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">[&#39;C4&#39;, &#39;E4&#39;, &#39;G4&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mk_score</span><span class="p">([[</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;E5&#39;</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+<span class="go">[[&#39;C4&#39;, &#39;E4&#39;, &#39;G4&#39;], [&#39;A4&#39;, &#39;C5&#39;, &#39;E5&#39;]]</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>multi_note_names</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.play_music21_object">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">play_music21_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">music21_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/tonal/util.html#play_music21_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.play_music21_object" title="Link to this definition"></a></dt>
+<dd><p>Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>music21_obj</strong> – A music21 object (Chord, Part, Stream, etc.) to be played.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.resolve_format_from_filepath">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">resolve_format_from_filepath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#resolve_format_from_filepath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.resolve_format_from_filepath" title="Link to this definition"></a></dt>
+<dd><p>Resolves the format of a file from the file extension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>Filepath</em>) – The file path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The format of the file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">resolve_format_from_filepath</span><span class="p">(</span><span class="s1">&#39;output.mid&#39;</span><span class="p">)</span>
+<span class="go">&#39;mid&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resolve_format_from_filepath</span><span class="p">(</span><span class="s1">&#39;output.wav&#39;</span><span class="p">)</span>
+<span class="go">&#39;wav&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.string_to_note">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">string_to_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_or_notes:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">~typing.Iterable[str]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egress:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**note_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Note</span></span></span><a class="reference internal" href="../../_modules/tonal/util.html#string_to_note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.util.string_to_note" title="Link to this definition"></a></dt>
+<dd><p>Converts a string representation of a note to a music21 Note object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>note_or_notes</strong> (<em>str</em><em> or </em><em>iterable</em><em> of </em><em>str</em>) – String representation of the note(s).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The music21 Note object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Note</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string_to_note</span><span class="p">(</span><span class="s1">&#39;C4&#39;</span><span class="p">)</span>
+<span class="go">&lt;music21.note.Note C&gt;</span>
+</pre></div>
+</div>
+<p>If you don’t specify a string (only keyword arguments), you get a partial
+function. This is especially useful when you want to convert multiple strings.
+Note also, in the example below, that the function is applied to a list of
+strings.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_str_to_note</span> <span class="o">=</span> <span class="n">string_to_note</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">microtone</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">my_str_to_note</span><span class="p">([</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">note</span><span class="o">.</span><span class="n">nameWithOctave</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">note</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">type</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">note</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">microtone</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">note.nameWithOctave=&#39;E4&#39;, note.duration.type=&#39;half&#39;, note.pitch.microtone=&lt;music21.pitch.Microtone (+50c)&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="notes.html" class="btn btn-neutral float-left" title="tonal.notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tonal.counterpoint &mdash; tonal 0.0.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=bbaf98b3"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="tonal.notes" href="notes.html" />
+    <link rel="prev" title="tonal.converters" href="converters.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            tonal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tonal.html">tonal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chords.html">tonal.chords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="converters.html">tonal.converters</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tonal.counterpoint</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.counterpoint.translate_in_scale"><code class="docutils literal notranslate"><span class="pre">translate_in_scale()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.counterpoint.translate_notes_in_scale"><code class="docutils literal notranslate"><span class="pre">translate_notes_in_scale()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes.html">tonal.notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">tonal.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tonal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">tonal.counterpoint</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/tonal/counterpoint.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-tonal.counterpoint">
+<span id="tonal-counterpoint"></span><h1>tonal.counterpoint<a class="headerlink" href="#module-tonal.counterpoint" title="Link to this heading"></a></h1>
+<p>Tools for counterpoint.</p>
+<p>The <cite>translate_in_scale</cite> allows you to translate a sequence of notes, or multiple
+tracks of notes by the given number of steps within the given scale.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span> <span class="o">=</span> <span class="n">translate_in_scale</span><span class="p">([</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">],</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span>  
+<span class="go">&lt;music21.stream.Stream ...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+<span class="go">[&#39;A3&#39;, &#39;C4&#39;, &#39;G3&#39;, &#39;A3&#39;]</span>
+</pre></div>
+</div>
+<p>For multiple tracks:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">motif</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;E5&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">translated_tracks</span> <span class="o">=</span> <span class="n">translate_in_scale</span><span class="p">(</span><span class="n">motif</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">translated_tracks</span><span class="p">)</span>
+<span class="go">[[&#39;A3&#39;, &#39;C4&#39;, &#39;E4&#39;], [&#39;F4&#39;, &#39;A4&#39;, &#39;C5&#39;]]</span>
+</pre></div>
+</div>
+<p>Using some other scales:</p>
+<p>With a E major scale:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">motif</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;G#4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;C#5&#39;</span><span class="p">,</span> <span class="s1">&#39;E5&#39;</span><span class="p">,</span> <span class="s1">&#39;G#5&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">translated_tracks</span> <span class="o">=</span> <span class="n">translate_in_scale</span><span class="p">(</span><span class="n">motif</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">translated_tracks</span><span class="p">)</span>
+<span class="go">[[&#39;F#4&#39;, &#39;A4&#39;, &#39;C#5&#39;], [&#39;D#5&#39;, &#39;F#5&#39;, &#39;A5&#39;]]</span>
+</pre></div>
+</div>
+<p>With a D flat major scale:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">motif</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Db4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;Ab4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bb4&#39;</span><span class="p">,</span> <span class="s1">&#39;Db5&#39;</span><span class="p">,</span> <span class="s1">&#39;F5&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">translated_tracks</span> <span class="o">=</span> <span class="n">translate_in_scale</span><span class="p">(</span><span class="n">motif</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Db&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">translated_tracks</span><span class="p">)</span>
+<span class="go">[[&#39;A-3&#39;, &#39;C4&#39;, &#39;E-4&#39;], [&#39;F4&#39;, &#39;A-4&#39;, &#39;C5&#39;]]</span>
+</pre></div>
+</div>
+<p>Now let’s use a different, “custom” scale, as well as demonstrate the use
+of a partial function to get a translator with a fixed input scale:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">music21.scale</span><span class="w"> </span><span class="kn">import</span> <span class="n">HarmonicMinorScale</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">translate</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">translate_in_scale</span><span class="p">,</span> <span class="n">input_scale</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">scale_creator</span><span class="o">=</span><span class="n">HarmonicMinorScale</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">motif</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;E5&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;G#5&#39;</span><span class="p">,</span> <span class="s1">&#39;A5&#39;</span><span class="p">,</span> <span class="s1">&#39;C6&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">translated_tracks</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span><span class="n">motif</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">translated_tracks</span><span class="p">)</span>
+<span class="go">[[&#39;C5&#39;, &#39;E5&#39;, &#39;G#5&#39;], [&#39;B5&#39;, &#39;C6&#39;, &#39;E6&#39;]]</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.counterpoint.translate_in_scale">
+<span class="sig-prename descclassname"><span class="pre">tonal.counterpoint.</span></span><span class="sig-name descname"><span class="pre">translate_in_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">motif:</span> <span class="pre">~music21.stream.base.Stream</span> <span class="pre">|</span> <span class="pre">~typing.Iterable[str</span> <span class="pre">|</span> <span class="pre">~music21.note.Note]</span> <span class="pre">|</span> <span class="pre">~typing.List[~music21.stream.base.Stream</span> <span class="pre">|</span> <span class="pre">~typing.Iterable[str</span> <span class="pre">|</span> <span class="pre">~music21.note.Note]],</span> <span class="pre">translation:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">~typing.Iterable[int],</span> <span class="pre">input_scale:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">~music21.scale.Scale,</span> <span class="pre">*,</span> <span class="pre">scale_creator:</span> <span class="pre">~typing.Callable[[str],</span> <span class="pre">~music21.scale.Scale]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'music21.scale.MajorScale'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Stream</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Stream</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/counterpoint.html#translate_in_scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.counterpoint.translate_in_scale" title="Link to this definition"></a></dt>
+<dd><p>Translates the input notes or tracks by the given number of steps within the given scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>motif</strong> (<em>Union</em><em>[</em><em>TrackSpec</em><em>, </em><em>TracksSpec</em><em>]</em>) – The motif; input notes or tracks.</p></li>
+<li><p><strong>translation</strong> (<em>int</em>) – The number of steps to translate the notes.</p></li>
+<li><p><strong>input_scale</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Scale</em><em>]</em>) – The scale in which to perform the translation.</p></li>
+<li><p><strong>scale_creator</strong> (<em>ScaleCreator</em>) – A function to create a Scale from a string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A stream of translated notes or a list of streams of translated notes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[Stream, List[Stream]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>For a single track of notes:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span> <span class="o">=</span> <span class="n">translate_in_scale</span><span class="p">([</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">],</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span>  
+<span class="go">&lt;music21.stream.Stream ...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+<span class="go">[&#39;A3&#39;, &#39;C4&#39;, &#39;G3&#39;, &#39;A3&#39;]</span>
+</pre></div>
+</div>
+<p>For multiple tracks:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">motif</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;E5&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">translated_tracks</span> <span class="o">=</span> <span class="n">translate_in_scale</span><span class="p">(</span><span class="n">motif</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">translated_tracks</span><span class="p">)</span>
+<span class="go">[[&#39;A3&#39;, &#39;C4&#39;, &#39;E4&#39;], [&#39;F4&#39;, &#39;A4&#39;, &#39;C5&#39;]]</span>
+</pre></div>
+</div>
+<p>Using some other scales:</p>
+<p>With a E major scale, and two translations:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">motif</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;G#4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;C#5&#39;</span><span class="p">,</span> <span class="s1">&#39;E5&#39;</span><span class="p">,</span> <span class="s1">&#39;G#5&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">translated_tracks</span> <span class="o">=</span> <span class="n">translate_in_scale</span><span class="p">(</span><span class="n">motif</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">translated_tracks</span><span class="p">)</span>  
+<span class="go">[[&#39;F#4&#39;, &#39;A4&#39;, &#39;C#5&#39;, &#39;G#4&#39;, &#39;B4&#39;, &#39;D#5&#39;],</span>
+<span class="go">[&#39;D#5&#39;, &#39;F#5&#39;, &#39;A5&#39;, &#39;E5&#39;, &#39;G#5&#39;, &#39;B5&#39;]]</span>
+</pre></div>
+</div>
+<p>With a D flat major scale:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">motif</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Db4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;Ab4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Bb4&#39;</span><span class="p">,</span> <span class="s1">&#39;Db5&#39;</span><span class="p">,</span> <span class="s1">&#39;F5&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">translated_tracks</span> <span class="o">=</span> <span class="n">translate_in_scale</span><span class="p">(</span><span class="n">motif</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Db&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">translated_tracks</span><span class="p">)</span>
+<span class="go">[[&#39;A-3&#39;, &#39;C4&#39;, &#39;E-4&#39;], [&#39;F4&#39;, &#39;A-4&#39;, &#39;C5&#39;]]</span>
+</pre></div>
+</div>
+<p>Now let’s use a different, “custom” scale, as well as demonstrate the use
+of a partial function to get a translator with a fixed input scale:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">music21.scale</span><span class="w"> </span><span class="kn">import</span> <span class="n">HarmonicMinorScale</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">translate</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">translate_in_scale</span><span class="p">,</span> <span class="n">input_scale</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">scale_creator</span><span class="o">=</span><span class="n">HarmonicMinorScale</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">motif</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;E5&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;G#5&#39;</span><span class="p">,</span> <span class="s1">&#39;A5&#39;</span><span class="p">,</span> <span class="s1">&#39;C6&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">translated_tracks</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span><span class="n">motif</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">translated_tracks</span><span class="p">)</span>
+<span class="go">[[&#39;C5&#39;, &#39;E5&#39;, &#39;G#5&#39;], [&#39;B5&#39;, &#39;C6&#39;, &#39;E6&#39;]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.counterpoint.translate_notes_in_scale">
+<span class="sig-prename descclassname"><span class="pre">tonal.counterpoint.</span></span><span class="sig-name descname"><span class="pre">translate_notes_in_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">input_notes:</span> <span class="pre">~music21.stream.base.Stream</span> <span class="pre">|</span> <span class="pre">~typing.Iterable[str</span> <span class="pre">|</span> <span class="pre">~music21.note.Note],</span> <span class="pre">translation:</span> <span class="pre">int,</span> <span class="pre">input_scale:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">~music21.scale.Scale,</span> <span class="pre">*,</span> <span class="pre">scale_creator:</span> <span class="pre">~typing.Callable[[str],</span> <span class="pre">~music21.scale.Scale]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'music21.scale.MajorScale'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Stream</span></span></span><a class="reference internal" href="../../_modules/tonal/counterpoint.html#translate_notes_in_scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.counterpoint.translate_notes_in_scale" title="Link to this definition"></a></dt>
+<dd><p>Translates a sequence of notes by the given number of steps within the given scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_notes</strong> (<em>TrackSpec</em>) – The input notes.</p></li>
+<li><p><strong>translation</strong> (<em>int</em>) – The number of steps to translate the notes.</p></li>
+<li><p><strong>input_scale</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Scale</em><em>]</em>) – The scale in which to perform the translation.</p></li>
+<li><p><strong>scale_creator</strong> (<em>ScaleCreator</em>) – A function to create a Scale from a string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A stream of translated notes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Stream</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result_stream</span> <span class="o">=</span> <span class="n">translate_notes_in_scale</span><span class="p">([</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">],</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">result_stream</span><span class="p">)</span>
+<span class="go">[&#39;A3&#39;, &#39;C4&#39;, &#39;G3&#39;, &#39;A3&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="converters.html" class="btn btn-neutral float-left" title="tonal.converters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="notes.html" class="btn btn-neutral float-right" title="tonal.notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

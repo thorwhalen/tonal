@@ -1,0 +1,10 @@
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   module_docs/tonal
+   module_docs/tonal/chords
+   module_docs/tonal/converters
+   module_docs/tonal/counterpoint
+   module_docs/tonal/notes
+   module_docs/tonal/util
