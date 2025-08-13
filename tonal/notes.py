@@ -537,13 +537,13 @@ def scale_params(scale: str, midi_notes: bool = False):
     if invalid_root or invalid_quality:
         valid_roots = sorted(list_root_notes().keys())
         valid_roots = [f"'{r}'" if r != "" else "<empty string>" for r in valid_roots]
-        valid_roots = ', '.join(valid_roots)
+        valid_roots = ", ".join(valid_roots)
 
         valid_qualities = sorted(list_scale_qualities(include_aliases=True).keys())
         valid_qualities = [
             f"'{q}'" if q != "" else "<empty string>" for q in valid_qualities
         ]
-        valid_qualities = '\n\t' + '\n\t'.join(valid_qualities)
+        valid_qualities = "\n\t" + "\n\t".join(valid_qualities)
 
         problems = []
         if invalid_root:
