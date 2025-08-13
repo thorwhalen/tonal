@@ -130,7 +130,8 @@ scale_quality_alias = {
     "melodic": "melodic minor ascending",
     "penta major": "major pentatonic",
     "penta min": "minor pentatonic",
-    "penta": "minor pentatonic",
+    "pentatonic": "major pentatonic",
+    "penta": "major pentatonic",
     "minor penta": "minor pentatonic",
     "major penta": "major pentatonic",
     "whl tone": "whole tone",
@@ -539,7 +540,9 @@ def scale_params(scale: str, midi_notes: bool = False):
         valid_roots = ', '.join(valid_roots)
 
         valid_qualities = sorted(list_scale_qualities(include_aliases=True).keys())
-        valid_qualities = [f"'{q}'" if q != "" else "<empty string>" for q in valid_qualities]
+        valid_qualities = [
+            f"'{q}'" if q != "" else "<empty string>" for q in valid_qualities
+        ]
         valid_qualities = '\n\t' + '\n\t'.join(valid_qualities)
 
         problems = []
