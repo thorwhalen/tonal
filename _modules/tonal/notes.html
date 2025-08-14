@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tonal.notes &mdash; tonal 0.0.12 documentation</title>
+  <title>tonal.notes &mdash; tonal 0.0.13 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=3bbcec59"></script>
+      <script src="../../_static/documentation_options.js?v=9fc46840"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -259,8 +259,7 @@
     <span class="s2">&quot;whl_tone&quot;</span><span class="p">:</span> <span class="s2">&quot;whole_tone&quot;</span><span class="p">,</span>
     <span class="s2">&quot;diminished&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished&quot;</span><span class="p">,</span>
     <span class="s2">&quot;dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;diminished (whole-half)&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;diminished (half-whole)&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished_half_whole&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;diminished_whole_half&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished&quot;</span><span class="p">,</span>
     <span class="s2">&quot;aug&quot;</span><span class="p">:</span> <span class="s2">&quot;augmented&quot;</span><span class="p">,</span>
     <span class="s2">&quot;chrom&quot;</span><span class="p">:</span> <span class="s2">&quot;chromatic&quot;</span><span class="p">,</span>
     <span class="s2">&quot;blues_scale&quot;</span><span class="p">:</span> <span class="s2">&quot;blues&quot;</span><span class="p">,</span>
@@ -274,8 +273,8 @@
     <span class="s2">&quot;harm_min&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic_minor&quot;</span><span class="p">,</span>
     <span class="s2">&quot;mel_min_asc&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic_minor_ascending&quot;</span><span class="p">,</span>
     <span class="s2">&quot;mel_min_desc&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic_minor_descending&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;w-h_dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;h-w_dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished_half_whole&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;w_h_dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;h_w_dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished_half_whole&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="n">_scale_quality_jazz_aliases</span> <span class="o">=</span> <span class="p">{</span>
@@ -288,7 +287,7 @@
     <span class="s2">&quot;alt&quot;</span><span class="p">:</span> <span class="s2">&quot;altered&quot;</span><span class="p">,</span>
     <span class="s2">&quot;super_locrian&quot;</span><span class="p">:</span> <span class="s2">&quot;altered&quot;</span><span class="p">,</span>
     <span class="s2">&quot;lyd_dom&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mixolydian_#11&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mixolydian_sharp_11&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>
     <span class="s2">&quot;acoustic_scale&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>  <span class="c1"># Also sometimes called this</span>
     <span class="s2">&quot;phryg_dom&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian_dominant&quot;</span><span class="p">,</span>
     <span class="s2">&quot;dominant_phrygian&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian_dominant&quot;</span><span class="p">,</span>
@@ -589,6 +588,7 @@
 <span class="c1"># Validation &amp; Utilities</span>
 <span class="c1"># -----------------------------------------------------------------------------</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">lkj</span><span class="w"> </span><span class="kn">import</span> <span class="n">print_list</span>
 
 <span class="c1"># Define a specific error for incorrect scale specifications</span>
 <div class="viewcode-block" id="IncorrectScaleSpecification">
@@ -608,14 +608,22 @@
 <span class="sd">    - Valid roots</span>
 <span class="sd">    - Valid qualities (including aliases)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">columnized_list_string</span> <span class="o">=</span> <span class="n">print_list</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="n">print_func</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">valid_roots</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">list_root_notes</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="n">valid_roots_fmt</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">valid_roots</span><span class="p">)</span>
+    <span class="n">valid_roots_fmt</span> <span class="o">=</span> <span class="n">columnized_list_string</span><span class="p">(</span><span class="n">valid_roots</span><span class="p">,</span> <span class="n">items_per_line</span><span class="o">=</span><span class="mi">12</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="c1"># valid_roots_fmt = &quot;, &quot;.join(f&quot;&#39;{r}&#39;&quot; for r in valid_roots)</span>
 
-    <span class="n">valid_qualities</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">list_scale_qualities</span><span class="p">(</span><span class="n">include_aliases</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">base_qualities</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">scale_quality</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">valid_qualities</span> <span class="o">=</span> <span class="n">list_scale_qualities</span><span class="p">(</span><span class="n">include_aliases</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="n">extra_qualities</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">valid_qualities</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">base_qualities</span><span class="p">))</span>
+
     <span class="c1"># show qualities as a wrapped, indented list for readability</span>
-    <span class="n">qualities_fmt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  - &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  - &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-        <span class="p">[</span><span class="n">q</span> <span class="k">if</span> <span class="n">q</span> <span class="k">else</span> <span class="s2">&quot;&lt;empty string&gt;&quot;</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">valid_qualities</span><span class="p">]</span>
-    <span class="p">)</span>
+    <span class="n">extra_qualities</span> <span class="o">=</span> <span class="p">[</span><span class="n">q</span> <span class="k">if</span> <span class="n">q</span> <span class="k">else</span> <span class="s2">&quot;&lt;empty string&gt;&quot;</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">extra_qualities</span><span class="p">]</span>
+    <span class="n">qualities_fmt</span> <span class="o">=</span> <span class="n">columnized_list_string</span><span class="p">(</span><span class="n">base_qualities</span><span class="p">,</span> <span class="n">items_per_line</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">extra_qualities_fmt</span> <span class="o">=</span> <span class="n">columnized_list_string</span><span class="p">(</span><span class="n">extra_qualities</span><span class="p">,</span> <span class="n">items_per_line</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="c1"># qualities_fmt = &quot;\n  - &quot; + &quot;\n  - &quot;.join(</span>
+    <span class="c1">#     [q if q else &quot;&lt;empty string&gt;&quot; for q in valid_qualities]</span>
+    <span class="c1"># )</span>
 
     <span class="k">return</span> <span class="p">(</span>
         <span class="s2">&quot;Scale specification anatomy: A root and quality separated by an underscore, &quot;</span>
@@ -623,8 +631,9 @@
         <span class="s2">&quot;or &#39;&lt;root&gt;&lt;quality&gt;&#39;) (case-insensitive).</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;- Root is optional (defaults to &#39;C&#39; in some contexts).</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;- Empty quality means &#39;major&#39; (alias &#39;&#39;).</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Valid roots: </span><span class="si">{</span><span class="n">valid_roots_fmt</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Valid qualities (including aliases):</span><span class="si">{</span><span class="n">qualities_fmt</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;--------- Valid roots ---------:</span><span class="se">\n</span><span class="si">{</span><span class="n">valid_roots_fmt</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;--------- Base qualities ---------:</span><span class="se">\n</span><span class="si">{</span><span class="n">qualities_fmt</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;--------- Extra qualities (aliases and custom) ---------:</span><span class="se">\n</span><span class="si">{</span><span class="n">extra_qualities_fmt</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
     <span class="p">)</span></div>
 
 
