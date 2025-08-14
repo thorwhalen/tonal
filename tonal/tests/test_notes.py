@@ -17,7 +17,8 @@ def test_list_scales_string_has_expected_sections():
     sl = s.lower()
     assert "anatomy" in sl
     assert "valid roots" in sl
-    assert "valid qualities" in sl
+    assert "base qualities" in sl
+    assert "extra qualities" in sl
 
 
 def test_all_root_quality_combinations_parse_with_scale_midi_notes():
@@ -42,7 +43,8 @@ def test_scale_params_raises_helpful_error_on_invalid_spec():
     msg = str(excinfo.value).lower()
     assert "incorrect scale specification" in msg
     assert "valid roots" in msg
-    assert "valid qualities" in msg
+    assert "base qualities" in msg
+    assert "extra qualities" in msg
 
 
 def test_scale_params_returns_normalized_root_and_quality():

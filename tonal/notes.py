@@ -177,8 +177,7 @@ _scale_quality_western_aliases = {
     "whl_tone": "whole_tone",
     "diminished": "diminished",
     "dim": "diminished",
-    "diminished (whole-half)": "diminished",
-    "diminished (half-whole)": "diminished_half_whole",
+    "diminished_whole_half": "diminished",
     "aug": "augmented",
     "chrom": "chromatic",
     "blues_scale": "blues",
@@ -192,8 +191,8 @@ _scale_quality_western_aliases = {
     "harm_min": "harmonic_minor",
     "mel_min_asc": "melodic_minor_ascending",
     "mel_min_desc": "melodic_minor_descending",
-    "w-h_dim": "diminished",
-    "h-w_dim": "diminished_half_whole",
+    "w_h_dim": "diminished",
+    "h_w_dim": "diminished_half_whole",
 }
 
 _scale_quality_jazz_aliases = {
@@ -206,7 +205,7 @@ _scale_quality_jazz_aliases = {
     "alt": "altered",
     "super_locrian": "altered",
     "lyd_dom": "lydian_dominant",
-    "mixolydian_#11": "lydian_dominant",
+    "mixolydian_sharp_11": "lydian_dominant",
     "acoustic_scale": "lydian_dominant",  # Also sometimes called this
     "phryg_dom": "phrygian_dominant",
     "dominant_phrygian": "phrygian_dominant",
@@ -483,6 +482,7 @@ def list_chord_qualities() -> Dict[str, Sequence[int]]:
 # Validation & Utilities
 # -----------------------------------------------------------------------------
 
+from lkj import print_list
 
 # Define a specific error for incorrect scale specifications
 class IncorrectScaleSpecification(ValueError):
@@ -497,14 +497,22 @@ def list_scales_string() -> str:
     - Valid roots
     - Valid qualities (including aliases)
     """
+    columnized_list_string = print_list(style="columns", print_func=None)
     valid_roots = sorted(list_root_notes().keys())
-    valid_roots_fmt = ", ".join(f"'{r}'" for r in valid_roots)
+    valid_roots_fmt = columnized_list_string(valid_roots, items_per_line=12 + 5)
+    # valid_roots_fmt = ", ".join(f"'{r}'" for r in valid_roots)
 
-    valid_qualities = sorted(list_scale_qualities(include_aliases=True).keys())
+    base_qualities = sorted(scale_quality.keys())
+    valid_qualities = list_scale_qualities(include_aliases=True).keys()
+    extra_qualities = sorted(set(valid_qualities) - set(base_qualities))
+
     # show qualities as a wrapped, indented list for readability
-    qualities_fmt = "\n  - " + "\n  - ".join(
-        [q if q else "<empty string>" for q in valid_qualities]
-    )
+    extra_qualities = [q if q else "<empty string>" for q in extra_qualities]
+    qualities_fmt = columnized_list_string(base_qualities, items_per_line=4)
+    extra_qualities_fmt = columnized_list_string(extra_qualities, items_per_line=4)
+    # qualities_fmt = "\n  - " + "\n  - ".join(
+    #     [q if q else "<empty string>" for q in valid_qualities]
+    # )
 
     return (
         "Scale specification anatomy: A root and quality separated by an underscore, "
@@ -512,8 +520,9 @@ def list_scales_string() -> str:
         "or '<root><quality>') (case-insensitive).\n"
         "- Root is optional (defaults to 'C' in some contexts).\n"
         "- Empty quality means 'major' (alias '').\n\n"
-        f"Valid roots: {valid_roots_fmt}.\n"
-        f"Valid qualities (including aliases):{qualities_fmt}\n"
+        f"--------- Valid roots ---------:\n{valid_roots_fmt}.\n"
+        f"--------- Base qualities ---------:\n{qualities_fmt}\n"
+        f"--------- Extra qualities (aliases and custom) ---------:\n{extra_qualities_fmt}\n"
     )
 
 
