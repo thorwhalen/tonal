@@ -117,8 +117,7 @@ scale_quality = {
     "malkauns": (0, 3, 5, 8, 10),  # Pentatonic raga
 }
 
-
-scale_quality_alias = {
+_scale_quality_western_aliases = {
     # Western Aliases
     "": "major",
     "maj": "major",
@@ -154,6 +153,9 @@ scale_quality_alias = {
     "mel min desc": "melodic_minor_descending",
     "w-h dim": "diminished",
     "h-w dim": "diminished_half_whole",
+}
+
+_scale_quality_jazz_aliases = {
     # Jazz Aliases
     "bebop dom": "bebop_dominant",
     "bebop maj": "bebop_major",
@@ -168,6 +170,9 @@ scale_quality_alias = {
     "phryg dom": "phrygian_dominant",
     "dominant phrygian": "phrygian_dominant",
     "mixolydian b2 b6": "phrygian_dominant",  # If you want to get descriptive
+}
+
+_scale_quality_raga_aliases = {
     # Indian Raga Aliases
     # Aliases for Ragas whose patterns match Western/Jazz scales:
     "bilawal": "major",  # Hindustani Thaat for Major
@@ -208,6 +213,9 @@ scale_quality_alias = {
     "hansadhwani raga": "hamsadhwani",
     "malkauns raga": "malkauns",
     "indian m minor": "malkauns",  # A less common, but sometimes used, description
+}
+
+_scale_quality_backcompat_aliases = {
     # Back-compat aliases mapping spaced names to underscored canonical names
     "natural minor": "natural_minor",
     "harmonic minor": "harmonic_minor",
@@ -222,6 +230,13 @@ scale_quality_alias = {
     "bebop melodic minor": "bebop_melodic_minor",
     "lydian dominant": "lydian_dominant",
     "phrygian dominant": "phrygian_dominant",
+}
+
+scale_quality_alias = {
+    **_scale_quality_western_aliases,
+    **_scale_quality_jazz_aliases,
+    **_scale_quality_raga_aliases,
+    **_scale_quality_backcompat_aliases,
 }
 
 
