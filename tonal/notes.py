@@ -26,7 +26,7 @@ import re
 
 
 # Define root notes to MIDI note numbers
-root_notes_anglo : Dict[str, int] = {
+root_notes_anglo: Dict[str, int] = {
     # Anglo notation
     "C": 60,
     "C#": 61,
@@ -69,7 +69,7 @@ root_notes_latin_to_anglo = {
 # Make a name-to-midinote mapping with root_notes_anglo and root_notes_latin_to_anglo
 root_notes = dict(
     **root_notes_anglo,
-    **{k: root_notes_anglo[v] for k, v in root_notes_latin_to_anglo.items()}
+    **{k: root_notes_anglo[v] for k, v in root_notes_latin_to_anglo.items()},
 )
 
 # Regex to match any root at the start, case-insensitive, preferring the longest key.
@@ -77,6 +77,18 @@ root_notes = dict(
 _root_keys_longest_first = sorted(root_notes.keys(), key=len, reverse=True)
 _root_alt = "|".join(re.escape(k) for k in _root_keys_longest_first)
 root_note_re = re.compile(rf"^({_root_alt})", re.IGNORECASE)
+
+
+def _rebuild_root_note_re() -> None:
+    """Rebuild the root note regex from the current root_notes keys.
+
+    Must be called whenever root_notes is modified dynamically (e.g., via register_root_note).
+    """
+    global _root_keys_longest_first, _root_alt, root_note_re
+    _root_keys_longest_first = sorted(root_notes.keys(), key=len, reverse=True)
+    _root_alt = "|".join(re.escape(k) for k in _root_keys_longest_first)
+    root_note_re = re.compile(rf"^({_root_alt})", re.IGNORECASE)
+
 
 scale_quality = {
     # Western Diatonic & Common Scales (retained as before)
@@ -268,6 +280,10 @@ scale_quality_alias = {
     **_scale_quality_backcompat_aliases,
 }
 
+# assert that all values of scale_quality_alias are in scale_quality
+assert all(
+    v in scale_quality for v in scale_quality_alias.values()
+), "Some scale quality aliases are not in the main scale quality definitions."
 
 # TODO: Separate base and aliases
 # TODO: Verify completeness and more chord definitions if needed
@@ -322,6 +338,8 @@ def register_root_note(note_name: str, midi_value: int) -> None:
     if not (0 <= midi_value <= 127):
         raise ValueError(f"MIDI value must be between 0 and 127, got {midi_value}")
     root_notes[note_name] = midi_value
+    # Update regex to recognize the newly added root at parse time
+    _rebuild_root_note_re()
 
 
 def register_scale_quality(quality_name: str, semitone_pattern: Sequence[int]) -> None:
@@ -579,6 +597,48 @@ def semitone_pattern(quality: str) -> tuple:
     raise ValueError(f"Unknown scale quality: {quality}")
 
 
+def canonical_quality_name(quality: str) -> str:
+    """Return the canonical quality key from `scale_quality`.
+
+    Accepts aliases (including chains) and normalizes spaces to underscores.
+    Raises ValueError if no mapping exists.
+
+    Examples:
+        - "minor" -> "natural_minor"
+        - "bebop_dom" -> "bebop_dominant"
+        - "minor pentatonic" -> "minor_pentatonic"
+    """
+    raw = (quality or "").strip().lower()
+    # Generate a set of reasonable variants to try against aliases and canonical keys
+    variants = []
+
+    def add(v: str):
+        if v not in variants:
+            variants.append(v)
+
+    add(raw)
+    add(raw.replace(" ", "_"))
+    add(raw.replace("_", " "))
+    no_paren = re.sub(r"[()]", "", raw)
+    add(no_paren)
+    add(no_paren.replace(" ", "_"))
+    add(no_paren.replace("_", " "))
+
+    for q in variants:
+        if q in scale_quality:
+            return q
+        # chase aliases starting from this variant
+        seen = set()
+        cur = q
+        while cur in scale_quality_alias and cur not in seen:
+            seen.add(cur)
+            cur = scale_quality_alias[cur]
+            if cur in scale_quality:
+                return cur
+    # Not found
+    raise ValueError(f"Unknown scale quality: {quality}")
+
+
 def scale_params(scale: str, midi_notes: bool = False):
     """
     Parse a scale specification string and return (root_note, scale_quality).
@@ -591,42 +651,17 @@ def scale_params(scale: str, midi_notes: bool = False):
     >>> scale_params('dorian')
     ('', 'dorian')
     >>> scale_params('C')
-    ('C', '')
+    ('C', 'major')
     >>> scale_params('C', midi_notes=True)
     (60, (0, 2, 4, 5, 7, 9, 11))
     >>> scale_params('dorian', midi_notes=True)
     (None, (0, 2, 3, 5, 7, 9, 10))
 
-    # Test flexible parsing - different separators should work
-    >>> scale_params('Bb major')
-    ('Bb', 'major')
-    >>> scale_params('Bbmajor')
-    ('Bb', 'major')
-    >>> scale_params('Bb_major')
-    ('Bb', 'major')
-    >>> scale_params('F# minor')
-    ('F#', 'minor')
-    >>> scale_params('F#minor')
-    ('F#', 'minor')
-    >>> scale_params('F#_minor')
-    ('F#', 'minor')
-    >>> scale_params('C dorian')
-    ('C', 'dorian')
-    >>> scale_params('Cdorian')
-    ('C', 'dorian')
-    >>> scale_params('C_dorian')
-    ('C', 'dorian')
-    >>> scale_params('Ab major')
-    ('Ab', 'major')
-    >>> scale_params('Abmajor')
-    ('Ab', 'major')
-    >>> scale_params('Ab_major')
-    ('Ab', 'major')
     """
     s = scale.strip()
     m = root_note_re.match(s)
     root = ""
-    quality = s.lower()
+    quality_raw = s.lower()
     if m:
         root_raw = m.group(0)
         candidate_root = next(
@@ -634,33 +669,46 @@ def scale_params(scale: str, midi_notes: bool = False):
         )
         remaining = s[len(root_raw) :]
         candidate_quality = remaining.lstrip(" _").lower()
-        # Back-compat: allow space-separated quality tokens (e.g., 'minor pentatonic')
-        candidate_quality_norm = candidate_quality.replace(" ", "_")
         # If only root is provided, use alias ''
         if candidate_quality == "":
             root = candidate_root
-            quality = ""
+            quality_raw = ""
         else:
             # Only accept the matched root if the remaining is a valid quality
             try:
-                semitone_pattern(candidate_quality_norm)
+                canonical_quality_name(candidate_quality)
             except ValueError:
                 # Treat whole string as a quality (e.g., 'dorian' shouldn't split as 'do'+'rian')
                 root = ""
-                quality = s.lower().replace(" ", "_")
+                quality_raw = s.lower()
             else:
                 root = candidate_root
-                quality = candidate_quality_norm
+                quality_raw = candidate_quality
 
     try:
-        pattern = semitone_pattern(quality)
+        canonical_quality = canonical_quality_name(quality_raw)
+        pattern = semitone_pattern(canonical_quality)
     except ValueError as e:
         raise IncorrectScaleSpecification(
             (
-                f"Incorrect scale specification: '{scale}' (unknown scale quality '{quality}').\n"
+                f"Incorrect scale specification: '{scale}' (unknown scale quality '{quality_raw}').\n"
                 + list_scales_string()
             )
         ) from e
+
+    # Normalize root to Anglo spelling if needed
+    if root:
+        # ensure we use the canonical Anglo key when a Latin root is provided
+        lower_root = root.lower()
+        if lower_root in root_notes_latin_to_anglo:
+            root = root_notes_latin_to_anglo[lower_root]
+        # ensure the case matches a key in root_notes_anglo if already anglo
+        elif root not in root_notes_anglo:
+            # try find matching key in anglo ignoring case
+            for k in root_notes_anglo:
+                if k.lower() == lower_root:
+                    root = k
+                    break
 
     if midi_notes:
         midi = None
@@ -670,7 +718,8 @@ def scale_params(scale: str, midi_notes: bool = False):
             )
         return midi, pattern
     else:
-        return root, quality
+        # return canonical names
+        return root, canonical_quality
 
 
 def scale_midi_notes(

@@ -43,3 +43,23 @@ def test_scale_params_raises_helpful_error_on_invalid_spec():
     assert "incorrect scale specification" in msg
     assert "valid roots" in msg
     assert "valid qualities" in msg
+
+
+def test_scale_params_returns_normalized_root_and_quality():
+    """
+    scale_params should normalize:
+    - Root names to Anglo notation (using latin->anglo map when needed)
+    - Quality names to canonical keys from `scale_quality` (resolving aliases)
+    Also verify flexibility of separators:
+    - Space vs underscore in the quality
+    - Space, underscore, or nothing between root and quality
+    """
+    assert scale_params("C# bebop dominant") == ("C#", "bebop_dominant")
+    assert scale_params("C# bebop_dom") == ("C#", "bebop_dominant")
+    assert scale_params("do#_bebop dominant") == ("C#", "bebop_dominant")
+    assert scale_params("do#bebop_dominant") == ("C#", "bebop_dominant")
+    # more normalization cases
+    assert scale_params("la minor") == ("A", "natural_minor")
+    assert scale_params("sib major penta") == ("A#", "major_pentatonic")
+    assert scale_params("Bb_major_pentatonic") == ("Bb", "major_pentatonic")
+    assert scale_params("Db minor pentatonic") == ("Db", "minor_pentatonic")
