@@ -15,9 +15,9 @@ from tonal.notes import (
 def test_list_scales_string_has_expected_sections():
     s = list_scales_string()
     sl = s.lower()
-    assert 'anatomy' in sl
-    assert 'valid roots' in sl
-    assert 'valid qualities' in sl
+    assert "anatomy" in sl
+    assert "valid roots" in sl
+    assert "valid qualities" in sl
 
 
 def test_all_root_quality_combinations_parse_with_scale_midi_notes():
@@ -38,8 +38,8 @@ def test_all_root_quality_combinations_parse_with_scale_midi_notes():
 
 def test_scale_params_raises_helpful_error_on_invalid_spec():
     with pytest.raises(IncorrectScaleSpecification) as excinfo:
-        scale_params('H hypermix')
+        scale_params("H hypermix")
     msg = str(excinfo.value).lower()
-    assert 'incorrect scale specification' in msg
-    assert 'valid roots' in msg
-    assert 'valid qualities' in msg
+    assert "incorrect scale specification" in msg
+    assert "valid roots" in msg
+    assert "valid qualities" in msg
