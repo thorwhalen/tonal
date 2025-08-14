@@ -419,12 +419,12 @@ def list_scales_string() -> str:
     - Valid qualities (including aliases)
     """
     valid_roots = sorted(list_root_notes().keys())
-    valid_roots_fmt = ', '.join(f"'{r}'" for r in valid_roots)
+    valid_roots_fmt = ", ".join(f"'{r}'" for r in valid_roots)
 
     valid_qualities = sorted(list_scale_qualities(include_aliases=True).keys())
     # show qualities as a wrapped, indented list for readability
-    qualities_fmt = '\n  - ' + '\n  - '.join(
-        [q if q else '<empty string>' for q in valid_qualities]
+    qualities_fmt = "\n  - " + "\n  - ".join(
+        [q if q else "<empty string>" for q in valid_qualities]
     )
 
     return (
