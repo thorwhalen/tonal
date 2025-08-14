@@ -156,109 +156,109 @@ _scale_quality_western_aliases = {
     "minor": "natural_minor",
     "harmonic": "harmonic_minor",
     "melodic": "melodic_minor_ascending",
-    "penta major": "major_pentatonic",
-    "penta min": "minor_pentatonic",
+    "penta_major": "major_pentatonic",
+    "penta_min": "minor_pentatonic",
     "pentatonic": "major_pentatonic",
     "penta": "major_pentatonic",
-    "minor penta": "minor_pentatonic",
-    "major penta": "major_pentatonic",
-    "whl tone": "whole_tone",
+    "minor_penta": "minor_pentatonic",
+    "major_penta": "major_pentatonic",
+    "whl_tone": "whole_tone",
     "diminished": "diminished",
     "dim": "diminished",
     "diminished (whole-half)": "diminished",
     "diminished (half-whole)": "diminished_half_whole",
     "aug": "augmented",
     "chrom": "chromatic",
-    "blues scale": "blues",
+    "blues_scale": "blues",
     "dor": "dorian",
     "phr": "phrygian",
     "lyd": "lydian",
     "mix": "mixolydian",
     "aeo": "aeolian",
     "ion": "ionian",
-    "nat min": "natural_minor",
-    "harm min": "harmonic_minor",
-    "mel min asc": "melodic_minor_ascending",
-    "mel min desc": "melodic_minor_descending",
-    "w-h dim": "diminished",
-    "h-w dim": "diminished_half_whole",
+    "nat_min": "natural_minor",
+    "harm_min": "harmonic_minor",
+    "mel_min_asc": "melodic_minor_ascending",
+    "mel_min_desc": "melodic_minor_descending",
+    "w-h_dim": "diminished",
+    "h-w_dim": "diminished_half_whole",
 }
 
 _scale_quality_jazz_aliases = {
     # Jazz Aliases
-    "bebop dom": "bebop_dominant",
-    "bebop maj": "bebop_major",
-    "bebop min": "bebop_minor",
-    "bebop dorian": "bebop_minor",  # Common alias for bebop minor
-    "bebop melodic": "bebop_melodic_minor",
+    "bebop_dom": "bebop_dominant",
+    "bebop_maj": "bebop_major",
+    "bebop_min": "bebop_minor",
+    "bebop_dorian": "bebop_minor",  # Common alias for bebop minor
+    "bebop_melodic": "bebop_melodic_minor",
     "alt": "altered",
-    "super locrian": "altered",
-    "lyd dom": "lydian_dominant",
-    "mixolydian #11": "lydian_dominant",
-    "acoustic scale": "lydian_dominant",  # Also sometimes called this
-    "phryg dom": "phrygian_dominant",
-    "dominant phrygian": "phrygian_dominant",
-    "mixolydian b2 b6": "phrygian_dominant",  # If you want to get descriptive
+    "super_locrian": "altered",
+    "lyd_dom": "lydian_dominant",
+    "mixolydian_#11": "lydian_dominant",
+    "acoustic_scale": "lydian_dominant",  # Also sometimes called this
+    "phryg_dom": "phrygian_dominant",
+    "dominant_phrygian": "phrygian_dominant",
+    "mixolydian_b2_b6": "phrygian_dominant",  # If you want to get descriptive
 }
 
 _scale_quality_raga_aliases = {
     # Indian Raga Aliases
     # Aliases for Ragas whose patterns match Western/Jazz scales:
     "bilawal": "major",  # Hindustani Thaat for Major
-    "ionian raga": "major",
+    "ionian_raga": "major",
     "shankarabharanam": "major",  # Carnatic Melakarta 29 for Major
     "dheerasankarabharanam": "major",  # Carnatic Melakarta 29 for Major
     "kharaharapriya": "dorian",  # Carnatic Melakarta 22 for Dorian
-    "melakarta 22": "dorian",
+    "melakarta_22": "dorian",
     "kafi": "dorian",  # Hindustani Thaat for Dorian
     "harikambhoji": "mixolydian",  # Carnatic Melakarta 28 for Mixolydian
-    "melakarta 28": "mixolydian",
+    "melakarta_28": "mixolydian",
     "khamaj": "mixolydian",  # Hindustani Thaat for Mixolydian
     "natabhairavi": "natural_minor",  # Carnatic Melakarta 20 for Natural Minor
-    "melakarta 20": "natural_minor",
+    "melakarta_20": "natural_minor",
     "asavari": "natural_minor",  # Hindustani Thaat for Natural Minor / Aeolian
-    "aeolian raga": "natural_minor",
+    "aeolian_raga": "natural_minor",
     "hanumatodi": "phrygian",  # Carnatic Melakarta 8 for Phrygian
-    "melakarta 8": "phrygian",
-    "phrygian raga": "phrygian",
+    "melakarta_8": "phrygian",
+    "phrygian_raga": "phrygian",
     "kalyan": "lydian",  # Hindustani Thaat for Lydian
     "kirwani": "harmonic_minor",  # Melakarta 21, identical to Harmonic Minor
-    "melakarta 21": "harmonic_minor",
+    "melakarta_21": "harmonic_minor",
     "mayamalavagowla": "bhairav",  # Carnatic Melakarta 15
-    "melakarta 15": "bhairav",
+    "melakarta_15": "bhairav",
     "bhupali": "major_pentatonic",  # Hindustani Raga identical to Major Pentatonic
     "mohnam": "major_pentatonic",  # Carnatic equivalent of Bhupali / Major Pentatonic
     "durga": "major_pentatonic",
     "deshkar": "major_pentatonic",
-    "carnatic major": "major",  # Common reference for the Carnatic major scale
-    "carnatic minor": "natural_minor",  # Common reference for the Carnatic natural minor scale
+    "carnatic_major": "major",  # Common reference for the Carnatic major scale
+    "carnatic_minor": "natural_minor",  # Common reference for the Carnatic natural minor scale
     # Aliases for Ragas unique to scale_quality (or now canonical here)
-    "bhairav thaat": "bhairav",
-    "todi thaat": "todi",
-    "poorvi thaat": "poorvi",
-    "marwa thaat": "marwa",
-    "melakarta 36": "chalanata",
-    "melakarta 16": "chakravakam",
-    "hansadhwani raga": "hamsadhwani",
-    "malkauns raga": "malkauns",
-    "indian m minor": "malkauns",  # A less common, but sometimes used, description
+    "bhairav_thaat": "bhairav",
+    "todi_thaat": "todi",
+    "poorvi_thaat": "poorvi",
+    "marwa_thaat": "marwa",
+    "melakarta_36": "chalanata",
+    "melakarta_16": "chakravakam",
+    "hansadhwani_raga": "hamsadhwani",
+    "malkauns_raga": "malkauns",
+    "indian_m_minor": "malkauns",  # A less common, but sometimes used, description
 }
 
 _scale_quality_backcompat_aliases = {
     # Back-compat aliases mapping spaced names to underscored canonical names
-    "natural minor": "natural_minor",
-    "harmonic minor": "harmonic_minor",
-    "melodic minor ascending": "melodic_minor_ascending",
-    "melodic minor descending": "melodic_minor_descending",
-    "major pentatonic": "major_pentatonic",
-    "minor pentatonic": "minor_pentatonic",
-    "whole tone": "whole_tone",
-    "bebop dominant": "bebop_dominant",
-    "bebop major": "bebop_major",
-    "bebop minor": "bebop_minor",
-    "bebop melodic minor": "bebop_melodic_minor",
-    "lydian dominant": "lydian_dominant",
-    "phrygian dominant": "phrygian_dominant",
+    "natural_minor": "natural_minor",
+    "harmonic_minor": "harmonic_minor",
+    "melodic_minor_ascending": "melodic_minor_ascending",
+    "melodic_minor_descending": "melodic_minor_descending",
+    "major_pentatonic": "major_pentatonic",
+    "minor_pentatonic": "minor_pentatonic",
+    "whole_tone": "whole_tone",
+    "bebop_dominant": "bebop_dominant",
+    "bebop_major": "bebop_major",
+    "bebop_minor": "bebop_minor",
+    "bebop_melodic_minor": "bebop_melodic_minor",
+    "lydian_dominant": "lydian_dominant",
+    "phrygian_dominant": "phrygian_dominant",
 }
 
 scale_quality_alias = {
@@ -634,6 +634,8 @@ def scale_params(scale: str, midi_notes: bool = False):
         )
         remaining = s[len(root_raw) :]
         candidate_quality = remaining.lstrip(" _").lower()
+        # Back-compat: allow space-separated quality tokens (e.g., 'minor pentatonic')
+        candidate_quality_norm = candidate_quality.replace(" ", "_")
         # If only root is provided, use alias ''
         if candidate_quality == "":
             root = candidate_root
@@ -641,14 +643,14 @@ def scale_params(scale: str, midi_notes: bool = False):
         else:
             # Only accept the matched root if the remaining is a valid quality
             try:
-                semitone_pattern(candidate_quality)
+                semitone_pattern(candidate_quality_norm)
             except ValueError:
                 # Treat whole string as a quality (e.g., 'dorian' shouldn't split as 'do'+'rian')
                 root = ""
-                quality = s.lower()
+                quality = s.lower().replace(" ", "_")
             else:
                 root = candidate_root
-                quality = candidate_quality
+                quality = candidate_quality_norm
 
     try:
         pattern = semitone_pattern(quality)
