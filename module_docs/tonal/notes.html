@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tonal.notes &mdash; tonal 0.0.7 documentation</title>
+  <title>tonal.notes &mdash; tonal 0.0.9 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=bbaf98b3"></script>
+      <script src="../../_static/documentation_options.js?v=f7cdbf68"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -59,6 +59,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.list_root_notes"><code class="docutils literal notranslate"><span class="pre">list_root_notes()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.list_scale_qualities"><code class="docutils literal notranslate"><span class="pre">list_scale_qualities()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.list_scale_quality_aliases"><code class="docutils literal notranslate"><span class="pre">list_scale_quality_aliases()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.notes.list_scales_string"><code class="docutils literal notranslate"><span class="pre">list_scales_string()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.register_chord_quality"><code class="docutils literal notranslate"><span class="pre">register_chord_quality()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.register_root_note"><code class="docutils literal notranslate"><span class="pre">register_root_note()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.register_scale_quality"><code class="docutils literal notranslate"><span class="pre">register_scale_quality()</span></code></a></li>
@@ -191,6 +192,16 @@ note. For example, the semitone pattern for a major scale is [0, 2, 4, 5, 7, 9, 
 <span class="go">&#39;major&#39;</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.notes.list_scales_string">
+<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">list_scales_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#list_scales_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.list_scales_string" title="Link to this definition"></a></dt>
+<dd><p>Return a user-friendly help string describing scale syntax and valid values.</p>
+<p>Includes:
+- Anatomy of a scale specification
+- Valid roots
+- Valid qualities (including aliases)</p>
 </dd></dl>
 
 <dl class="py function">
