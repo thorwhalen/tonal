@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tonal.notes &mdash; tonal 0.0.11 documentation</title>
+  <title>tonal.notes &mdash; tonal 0.0.12 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=0c446633"></script>
+      <script src="../../_static/documentation_options.js?v=3bbcec59"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -108,7 +108,8 @@
 
 
 <span class="c1"># Define root notes to MIDI note numbers</span>
-<span class="n">root_notes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="n">root_notes_anglo</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Anglo notation</span>
     <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
     <span class="s2">&quot;C#&quot;</span><span class="p">:</span> <span class="mi">61</span><span class="p">,</span>
     <span class="s2">&quot;Db&quot;</span><span class="p">:</span> <span class="mi">61</span><span class="p">,</span>
@@ -127,9 +128,49 @@
     <span class="s2">&quot;Bb&quot;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span>
     <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="mi">71</span><span class="p">,</span>
 <span class="p">}</span>
+<span class="n">root_notes_latin_to_anglo</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;do&quot;</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;do#&quot;</span><span class="p">:</span> <span class="s2">&quot;C#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;reb&quot;</span><span class="p">:</span> <span class="s2">&quot;C#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;re&quot;</span><span class="p">:</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;re#&quot;</span><span class="p">:</span> <span class="s2">&quot;D#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mib&quot;</span><span class="p">:</span> <span class="s2">&quot;D#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mi&quot;</span><span class="p">:</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fa&quot;</span><span class="p">:</span> <span class="s2">&quot;F&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fa#&quot;</span><span class="p">:</span> <span class="s2">&quot;F#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;solb&quot;</span><span class="p">:</span> <span class="s2">&quot;F#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sol&quot;</span><span class="p">:</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sol#&quot;</span><span class="p">:</span> <span class="s2">&quot;G#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lab&quot;</span><span class="p">:</span> <span class="s2">&quot;G#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;la&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;la#&quot;</span><span class="p">:</span> <span class="s2">&quot;A#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sib&quot;</span><span class="p">:</span> <span class="s2">&quot;A#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;si&quot;</span><span class="p">:</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span>
+<span class="p">}</span>
 
-<span class="c1"># Regex to match root note at the start of a scale string (e.g., &#39;C&#39;, &#39;C#&#39;, &#39;Db&#39;, etc.), followed by space or end</span>
-<span class="n">root_note_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^([A-Ga-g][#b]?)(?=\s|$)&quot;</span><span class="p">)</span>
+<span class="c1"># Make a name-to-midinote mapping with root_notes_anglo and root_notes_latin_to_anglo</span>
+<span class="n">root_notes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="o">**</span><span class="n">root_notes_anglo</span><span class="p">,</span>
+    <span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">root_notes_anglo</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">root_notes_latin_to_anglo</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
+<span class="p">)</span>
+
+<span class="c1"># Regex to match any root at the start, case-insensitive, preferring the longest key.</span>
+<span class="c1"># This allows patterns like &quot;Bbmajor&quot; (no separator) or &quot;F#_minor&quot;.</span>
+<span class="n">_root_keys_longest_first</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">root_notes</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">_root_alt</span> <span class="o">=</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">_root_keys_longest_first</span><span class="p">)</span>
+<span class="n">root_note_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;^(</span><span class="si">{</span><span class="n">_root_alt</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_rebuild_root_note_re</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Rebuild the root note regex from the current root_notes keys.</span>
+
+<span class="sd">    Must be called whenever root_notes is modified dynamically (e.g., via register_root_note).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_root_keys_longest_first</span><span class="p">,</span> <span class="n">_root_alt</span><span class="p">,</span> <span class="n">root_note_re</span>
+    <span class="n">_root_keys_longest_first</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">root_notes</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_root_alt</span> <span class="o">=</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">_root_keys_longest_first</span><span class="p">)</span>
+    <span class="n">root_note_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;^(</span><span class="si">{</span><span class="n">_root_alt</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
 
 <span class="n">scale_quality</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># Western Diatonic &amp; Common Scales (retained as before)</span>
@@ -209,109 +250,109 @@
     <span class="s2">&quot;minor&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>
     <span class="s2">&quot;harmonic&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic_minor&quot;</span><span class="p">,</span>
     <span class="s2">&quot;melodic&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic_minor_ascending&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;penta major&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;penta min&quot;</span><span class="p">:</span> <span class="s2">&quot;minor_pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;penta_major&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;penta_min&quot;</span><span class="p">:</span> <span class="s2">&quot;minor_pentatonic&quot;</span><span class="p">,</span>
     <span class="s2">&quot;pentatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>
     <span class="s2">&quot;penta&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;minor penta&quot;</span><span class="p">:</span> <span class="s2">&quot;minor_pentatonic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;major penta&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;whl tone&quot;</span><span class="p">:</span> <span class="s2">&quot;whole_tone&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;minor_penta&quot;</span><span class="p">:</span> <span class="s2">&quot;minor_pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;major_penta&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;whl_tone&quot;</span><span class="p">:</span> <span class="s2">&quot;whole_tone&quot;</span><span class="p">,</span>
     <span class="s2">&quot;diminished&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished&quot;</span><span class="p">,</span>
     <span class="s2">&quot;dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished&quot;</span><span class="p">,</span>
     <span class="s2">&quot;diminished (whole-half)&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished&quot;</span><span class="p">,</span>
     <span class="s2">&quot;diminished (half-whole)&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished_half_whole&quot;</span><span class="p">,</span>
     <span class="s2">&quot;aug&quot;</span><span class="p">:</span> <span class="s2">&quot;augmented&quot;</span><span class="p">,</span>
     <span class="s2">&quot;chrom&quot;</span><span class="p">:</span> <span class="s2">&quot;chromatic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;blues scale&quot;</span><span class="p">:</span> <span class="s2">&quot;blues&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blues_scale&quot;</span><span class="p">:</span> <span class="s2">&quot;blues&quot;</span><span class="p">,</span>
     <span class="s2">&quot;dor&quot;</span><span class="p">:</span> <span class="s2">&quot;dorian&quot;</span><span class="p">,</span>
     <span class="s2">&quot;phr&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian&quot;</span><span class="p">,</span>
     <span class="s2">&quot;lyd&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian&quot;</span><span class="p">,</span>
     <span class="s2">&quot;mix&quot;</span><span class="p">:</span> <span class="s2">&quot;mixolydian&quot;</span><span class="p">,</span>
     <span class="s2">&quot;aeo&quot;</span><span class="p">:</span> <span class="s2">&quot;aeolian&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ion&quot;</span><span class="p">:</span> <span class="s2">&quot;ionian&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;nat min&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;harm min&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic_minor&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mel min asc&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic_minor_ascending&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mel min desc&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic_minor_descending&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;w-h dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;h-w dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished_half_whole&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nat_min&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harm_min&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic_minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mel_min_asc&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic_minor_ascending&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mel_min_desc&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic_minor_descending&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;w-h_dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;h-w_dim&quot;</span><span class="p">:</span> <span class="s2">&quot;diminished_half_whole&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="n">_scale_quality_jazz_aliases</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># Jazz Aliases</span>
-    <span class="s2">&quot;bebop dom&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_dominant&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;bebop maj&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_major&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;bebop min&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_minor&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;bebop dorian&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_minor&quot;</span><span class="p">,</span>  <span class="c1"># Common alias for bebop minor</span>
-    <span class="s2">&quot;bebop melodic&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_melodic_minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bebop_dom&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bebop_maj&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_major&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bebop_min&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bebop_dorian&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_minor&quot;</span><span class="p">,</span>  <span class="c1"># Common alias for bebop minor</span>
+    <span class="s2">&quot;bebop_melodic&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_melodic_minor&quot;</span><span class="p">,</span>
     <span class="s2">&quot;alt&quot;</span><span class="p">:</span> <span class="s2">&quot;altered&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;super locrian&quot;</span><span class="p">:</span> <span class="s2">&quot;altered&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;lyd dom&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mixolydian #11&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;acoustic scale&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>  <span class="c1"># Also sometimes called this</span>
-    <span class="s2">&quot;phryg dom&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian_dominant&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;dominant phrygian&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian_dominant&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mixolydian b2 b6&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian_dominant&quot;</span><span class="p">,</span>  <span class="c1"># If you want to get descriptive</span>
+    <span class="s2">&quot;super_locrian&quot;</span><span class="p">:</span> <span class="s2">&quot;altered&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lyd_dom&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mixolydian_#11&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;acoustic_scale&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>  <span class="c1"># Also sometimes called this</span>
+    <span class="s2">&quot;phryg_dom&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian_dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dominant_phrygian&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian_dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mixolydian_b2_b6&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian_dominant&quot;</span><span class="p">,</span>  <span class="c1"># If you want to get descriptive</span>
 <span class="p">}</span>
 
 <span class="n">_scale_quality_raga_aliases</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># Indian Raga Aliases</span>
     <span class="c1"># Aliases for Ragas whose patterns match Western/Jazz scales:</span>
     <span class="s2">&quot;bilawal&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Thaat for Major</span>
-    <span class="s2">&quot;ionian raga&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ionian_raga&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>
     <span class="s2">&quot;shankarabharanam&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 29 for Major</span>
     <span class="s2">&quot;dheerasankarabharanam&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 29 for Major</span>
     <span class="s2">&quot;kharaharapriya&quot;</span><span class="p">:</span> <span class="s2">&quot;dorian&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 22 for Dorian</span>
-    <span class="s2">&quot;melakarta 22&quot;</span><span class="p">:</span> <span class="s2">&quot;dorian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melakarta_22&quot;</span><span class="p">:</span> <span class="s2">&quot;dorian&quot;</span><span class="p">,</span>
     <span class="s2">&quot;kafi&quot;</span><span class="p">:</span> <span class="s2">&quot;dorian&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Thaat for Dorian</span>
     <span class="s2">&quot;harikambhoji&quot;</span><span class="p">:</span> <span class="s2">&quot;mixolydian&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 28 for Mixolydian</span>
-    <span class="s2">&quot;melakarta 28&quot;</span><span class="p">:</span> <span class="s2">&quot;mixolydian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melakarta_28&quot;</span><span class="p">:</span> <span class="s2">&quot;mixolydian&quot;</span><span class="p">,</span>
     <span class="s2">&quot;khamaj&quot;</span><span class="p">:</span> <span class="s2">&quot;mixolydian&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Thaat for Mixolydian</span>
     <span class="s2">&quot;natabhairavi&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 20 for Natural Minor</span>
-    <span class="s2">&quot;melakarta 20&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melakarta_20&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>
     <span class="s2">&quot;asavari&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Thaat for Natural Minor / Aeolian</span>
-    <span class="s2">&quot;aeolian raga&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;aeolian_raga&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>
     <span class="s2">&quot;hanumatodi&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 8 for Phrygian</span>
-    <span class="s2">&quot;melakarta 8&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;phrygian raga&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melakarta_8&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phrygian_raga&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian&quot;</span><span class="p">,</span>
     <span class="s2">&quot;kalyan&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Thaat for Lydian</span>
     <span class="s2">&quot;kirwani&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic_minor&quot;</span><span class="p">,</span>  <span class="c1"># Melakarta 21, identical to Harmonic Minor</span>
-    <span class="s2">&quot;melakarta 21&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic_minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melakarta_21&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic_minor&quot;</span><span class="p">,</span>
     <span class="s2">&quot;mayamalavagowla&quot;</span><span class="p">:</span> <span class="s2">&quot;bhairav&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic Melakarta 15</span>
-    <span class="s2">&quot;melakarta 15&quot;</span><span class="p">:</span> <span class="s2">&quot;bhairav&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melakarta_15&quot;</span><span class="p">:</span> <span class="s2">&quot;bhairav&quot;</span><span class="p">,</span>
     <span class="s2">&quot;bhupali&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>  <span class="c1"># Hindustani Raga identical to Major Pentatonic</span>
     <span class="s2">&quot;mohnam&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>  <span class="c1"># Carnatic equivalent of Bhupali / Major Pentatonic</span>
     <span class="s2">&quot;durga&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>
     <span class="s2">&quot;deshkar&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;carnatic major&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>  <span class="c1"># Common reference for the Carnatic major scale</span>
-    <span class="s2">&quot;carnatic minor&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>  <span class="c1"># Common reference for the Carnatic natural minor scale</span>
+    <span class="s2">&quot;carnatic_major&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>  <span class="c1"># Common reference for the Carnatic major scale</span>
+    <span class="s2">&quot;carnatic_minor&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>  <span class="c1"># Common reference for the Carnatic natural minor scale</span>
     <span class="c1"># Aliases for Ragas unique to scale_quality (or now canonical here)</span>
-    <span class="s2">&quot;bhairav thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;bhairav&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;todi thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;todi&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;poorvi thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;poorvi&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;marwa thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;marwa&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;melakarta 36&quot;</span><span class="p">:</span> <span class="s2">&quot;chalanata&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;melakarta 16&quot;</span><span class="p">:</span> <span class="s2">&quot;chakravakam&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hansadhwani raga&quot;</span><span class="p">:</span> <span class="s2">&quot;hamsadhwani&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;malkauns raga&quot;</span><span class="p">:</span> <span class="s2">&quot;malkauns&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;indian m minor&quot;</span><span class="p">:</span> <span class="s2">&quot;malkauns&quot;</span><span class="p">,</span>  <span class="c1"># A less common, but sometimes used, description</span>
+    <span class="s2">&quot;bhairav_thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;bhairav&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;todi_thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;todi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;poorvi_thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;poorvi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;marwa_thaat&quot;</span><span class="p">:</span> <span class="s2">&quot;marwa&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melakarta_36&quot;</span><span class="p">:</span> <span class="s2">&quot;chalanata&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melakarta_16&quot;</span><span class="p">:</span> <span class="s2">&quot;chakravakam&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hansadhwani_raga&quot;</span><span class="p">:</span> <span class="s2">&quot;hamsadhwani&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;malkauns_raga&quot;</span><span class="p">:</span> <span class="s2">&quot;malkauns&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;indian_m_minor&quot;</span><span class="p">:</span> <span class="s2">&quot;malkauns&quot;</span><span class="p">,</span>  <span class="c1"># A less common, but sometimes used, description</span>
 <span class="p">}</span>
 
 <span class="n">_scale_quality_backcompat_aliases</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># Back-compat aliases mapping spaced names to underscored canonical names</span>
-    <span class="s2">&quot;natural minor&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;harmonic minor&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic_minor&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;melodic minor ascending&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic_minor_ascending&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;melodic minor descending&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic_minor_descending&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;major pentatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;minor pentatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;minor_pentatonic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;whole tone&quot;</span><span class="p">:</span> <span class="s2">&quot;whole_tone&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;bebop dominant&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_dominant&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;bebop major&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_major&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;bebop minor&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_minor&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;bebop melodic minor&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_melodic_minor&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;lydian dominant&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;phrygian dominant&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian_dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;natural_minor&quot;</span><span class="p">:</span> <span class="s2">&quot;natural_minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harmonic_minor&quot;</span><span class="p">:</span> <span class="s2">&quot;harmonic_minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melodic_minor_ascending&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic_minor_ascending&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;melodic_minor_descending&quot;</span><span class="p">:</span> <span class="s2">&quot;melodic_minor_descending&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;major_pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;minor_pentatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;minor_pentatonic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;whole_tone&quot;</span><span class="p">:</span> <span class="s2">&quot;whole_tone&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bebop_dominant&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bebop_major&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_major&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bebop_minor&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bebop_melodic_minor&quot;</span><span class="p">:</span> <span class="s2">&quot;bebop_melodic_minor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">:</span> <span class="s2">&quot;lydian_dominant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phrygian_dominant&quot;</span><span class="p">:</span> <span class="s2">&quot;phrygian_dominant&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="n">scale_quality_alias</span> <span class="o">=</span> <span class="p">{</span>
@@ -321,6 +362,10 @@
     <span class="o">**</span><span class="n">_scale_quality_backcompat_aliases</span><span class="p">,</span>
 <span class="p">}</span>
 
+<span class="c1"># assert that all values of scale_quality_alias are in scale_quality</span>
+<span class="k">assert</span> <span class="nb">all</span><span class="p">(</span>
+    <span class="n">v</span> <span class="ow">in</span> <span class="n">scale_quality</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">scale_quality_alias</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="p">),</span> <span class="s2">&quot;Some scale quality aliases are not in the main scale quality definitions.&quot;</span>
 
 <span class="c1"># TODO: Separate base and aliases</span>
 <span class="c1"># TODO: Verify completeness and more chord definitions if needed</span>
@@ -360,6 +405,7 @@
 <span class="c1"># -----------------------------------------------------------------------------</span>
 
 
+<span class="c1"># TODO: Need to update global root_note_re value, since root_notes changes here:</span>
 <div class="viewcode-block" id="register_root_note">
 <a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.register_root_note">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">register_root_note</span><span class="p">(</span><span class="n">note_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">midi_value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -375,7 +421,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">midi_value</span> <span class="o">&lt;=</span> <span class="mi">127</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MIDI value must be between 0 and 127, got </span><span class="si">{</span><span class="n">midi_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">root_notes</span><span class="p">[</span><span class="n">note_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">midi_value</span></div>
+    <span class="n">root_notes</span><span class="p">[</span><span class="n">note_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">midi_value</span>
+    <span class="c1"># Update regex to recognize the newly added root at parse time</span>
+    <span class="n">_rebuild_root_note_re</span><span class="p">()</span></div>
 
 
 
@@ -570,7 +618,9 @@
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="p">(</span>
-        <span class="s2">&quot;Scale specification anatomy: &#39;&lt;root&gt; &lt;quality&gt;&#39; (case-insensitive).</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;Scale specification anatomy: A root and quality separated by an underscore, &quot;</span>
+        <span class="s2">&quot;a space, or nothing (so, &#39;&lt;root&gt;_&lt;quality&gt;&#39;, &#39;&lt;root&gt; &lt;quality&gt;&#39; &quot;</span>
+        <span class="s2">&quot;or &#39;&lt;root&gt;&lt;quality&gt;&#39;) (case-insensitive).</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;- Root is optional (defaults to &#39;C&#39; in some contexts).</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;- Empty quality means &#39;major&#39; (alias &#39;&#39;).</span><span class="se">\n\n</span><span class="s2">&quot;</span>
         <span class="sa">f</span><span class="s2">&quot;Valid roots: </span><span class="si">{</span><span class="n">valid_roots_fmt</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -668,6 +718,51 @@
 
 
 
+<div class="viewcode-block" id="canonical_quality_name">
+<a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.canonical_quality_name">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">canonical_quality_name</span><span class="p">(</span><span class="n">quality</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the canonical quality key from `scale_quality`.</span>
+
+<span class="sd">    Accepts aliases (including chains) and normalizes spaces to underscores.</span>
+<span class="sd">    Raises ValueError if no mapping exists.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        - &quot;minor&quot; -&gt; &quot;natural_minor&quot;</span>
+<span class="sd">        - &quot;bebop_dom&quot; -&gt; &quot;bebop_dominant&quot;</span>
+<span class="sd">        - &quot;minor pentatonic&quot; -&gt; &quot;minor_pentatonic&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">raw</span> <span class="o">=</span> <span class="p">(</span><span class="n">quality</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="c1"># Generate a set of reasonable variants to try against aliases and canonical keys</span>
+    <span class="n">variants</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">variants</span><span class="p">:</span>
+            <span class="n">variants</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="n">add</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+    <span class="n">add</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">))</span>
+    <span class="n">add</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">))</span>
+    <span class="n">no_paren</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[()]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">raw</span><span class="p">)</span>
+    <span class="n">add</span><span class="p">(</span><span class="n">no_paren</span><span class="p">)</span>
+    <span class="n">add</span><span class="p">(</span><span class="n">no_paren</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">))</span>
+    <span class="n">add</span><span class="p">(</span><span class="n">no_paren</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">variants</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">scale_quality</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">q</span>
+        <span class="c1"># chase aliases starting from this variant</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">q</span>
+        <span class="k">while</span> <span class="n">cur</span> <span class="ow">in</span> <span class="n">scale_quality_alias</span> <span class="ow">and</span> <span class="n">cur</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">scale_quality_alias</span><span class="p">[</span><span class="n">cur</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">cur</span> <span class="ow">in</span> <span class="n">scale_quality</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">cur</span>
+    <span class="c1"># Not found</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown scale quality: </span><span class="si">{</span><span class="n">quality</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
 <div class="viewcode-block" id="scale_params">
 <a class="viewcode-back" href="../../module_docs/tonal/notes.html#tonal.notes.scale_params">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">scale_params</span><span class="p">(</span><span class="n">scale</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">midi_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
@@ -682,7 +777,7 @@
 <span class="sd">    &gt;&gt;&gt; scale_params(&#39;dorian&#39;)</span>
 <span class="sd">    (&#39;&#39;, &#39;dorian&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; scale_params(&#39;C&#39;)</span>
-<span class="sd">    (&#39;C&#39;, &#39;&#39;)</span>
+<span class="sd">    (&#39;C&#39;, &#39;major&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; scale_params(&#39;C&#39;, midi_notes=True)</span>
 <span class="sd">    (60, (0, 2, 4, 5, 7, 9, 11))</span>
 <span class="sd">    &gt;&gt;&gt; scale_params(&#39;dorian&#39;, midi_notes=True)</span>
@@ -691,50 +786,66 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">scale</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">root_note_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">m</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">root_notes</span><span class="p">):</span>
-        <span class="n">root</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
-        <span class="n">quality</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">root</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">quality</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-
-    <span class="c1"># If only root is given, quality is empty string (defaults to major via alias &#39;&#39;)</span>
-    <span class="k">if</span> <span class="n">quality</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">and</span> <span class="n">root</span><span class="p">:</span>
-        <span class="n">quality</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-    <span class="c1"># Validate root and quality; build helpful error if invalid</span>
-    <span class="n">invalid_root</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="n">root</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">root_notes</span><span class="p">):</span>
-        <span class="n">invalid_root</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">quality_raw</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+        <span class="n">root_raw</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">candidate_root</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">root_notes</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">root_raw</span><span class="o">.</span><span class="n">lower</span><span class="p">()),</span> <span class="n">root_raw</span>
+        <span class="p">)</span>
+        <span class="n">remaining</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">root_raw</span><span class="p">)</span> <span class="p">:]</span>
+        <span class="n">candidate_quality</span> <span class="o">=</span> <span class="n">remaining</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot; _&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="c1"># If only root is provided, use alias &#39;&#39;</span>
+        <span class="k">if</span> <span class="n">candidate_quality</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">candidate_root</span>
+            <span class="n">quality_raw</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Only accept the matched root if the remaining is a valid quality</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">canonical_quality_name</span><span class="p">(</span><span class="n">candidate_quality</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="c1"># Treat whole string as a quality (e.g., &#39;dorian&#39; shouldn&#39;t split as &#39;do&#39;+&#39;rian&#39;)</span>
+                <span class="n">root</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">quality_raw</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">root</span> <span class="o">=</span> <span class="n">candidate_root</span>
+                <span class="n">quality_raw</span> <span class="o">=</span> <span class="n">candidate_quality</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">pattern</span> <span class="o">=</span> <span class="n">semitone_pattern</span><span class="p">(</span><span class="n">quality</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-        <span class="n">pattern</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">invalid_quality</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">invalid_quality</span> <span class="o">=</span> <span class="kc">False</span>
-
-    <span class="k">if</span> <span class="n">invalid_root</span> <span class="ow">or</span> <span class="n">invalid_quality</span><span class="p">:</span>
-        <span class="n">problems</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="n">invalid_root</span><span class="p">:</span>
-            <span class="n">problems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown root &#39;</span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">invalid_quality</span><span class="p">:</span>
-            <span class="n">problems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown scale quality &#39;</span><span class="si">{</span><span class="n">quality</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-        <span class="n">problems_text</span> <span class="o">=</span> <span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">problems</span><span class="p">)</span> <span class="k">if</span> <span class="n">problems</span> <span class="k">else</span> <span class="s2">&quot;invalid specification&quot;</span>
-
+        <span class="n">canonical_quality</span> <span class="o">=</span> <span class="n">canonical_quality_name</span><span class="p">(</span><span class="n">quality_raw</span><span class="p">)</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="n">semitone_pattern</span><span class="p">(</span><span class="n">canonical_quality</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IncorrectScaleSpecification</span><span class="p">(</span>
             <span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Incorrect scale specification: &#39;</span><span class="si">{</span><span class="n">scale</span><span class="si">}</span><span class="s2">&#39; (</span><span class="si">{</span><span class="n">problems_text</span><span class="si">}</span><span class="s2">).</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Incorrect scale specification: &#39;</span><span class="si">{</span><span class="n">scale</span><span class="si">}</span><span class="s2">&#39; (unknown scale quality &#39;</span><span class="si">{</span><span class="n">quality_raw</span><span class="si">}</span><span class="s2">&#39;).</span><span class="se">\n</span><span class="s2">&quot;</span>
                 <span class="o">+</span> <span class="n">list_scales_string</span><span class="p">()</span>
             <span class="p">)</span>
-        <span class="p">)</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+    <span class="c1"># Normalize root to Anglo spelling if needed</span>
+    <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+        <span class="c1"># ensure we use the canonical Anglo key when a Latin root is provided</span>
+        <span class="n">lower_root</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">lower_root</span> <span class="ow">in</span> <span class="n">root_notes_latin_to_anglo</span><span class="p">:</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">root_notes_latin_to_anglo</span><span class="p">[</span><span class="n">lower_root</span><span class="p">]</span>
+        <span class="c1"># ensure the case matches a key in root_notes_anglo if already anglo</span>
+        <span class="k">elif</span> <span class="n">root</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">root_notes_anglo</span><span class="p">:</span>
+            <span class="c1"># try find matching key in anglo ignoring case</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">root_notes_anglo</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">lower_root</span><span class="p">:</span>
+                    <span class="n">root</span> <span class="o">=</span> <span class="n">k</span>
+                    <span class="k">break</span>
 
     <span class="k">if</span> <span class="n">midi_notes</span><span class="p">:</span>
-        <span class="n">root_midi</span> <span class="o">=</span> <span class="n">root_notes</span><span class="p">[</span><span class="n">root</span><span class="p">]</span> <span class="k">if</span> <span class="n">root</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="n">root_midi</span><span class="p">,</span> <span class="n">pattern</span>
+        <span class="n">midi</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="n">midi</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">root_notes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">root</span><span class="o">.</span><span class="n">lower</span><span class="p">()),</span> <span class="kc">None</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">midi</span><span class="p">,</span> <span class="n">pattern</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">root</span><span class="p">,</span> <span class="n">quality</span></div>
+        <span class="c1"># return canonical names</span>
+        <span class="k">return</span> <span class="n">root</span><span class="p">,</span> <span class="n">canonical_quality</span></div>
 
 
 
