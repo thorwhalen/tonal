@@ -26,7 +26,8 @@ import re
 
 
 # Define root notes to MIDI note numbers
-root_notes: Dict[str, int] = {
+root_notes_anglo : Dict[str, int] = {
+    # Anglo notation
     "C": 60,
     "C#": 61,
     "Db": 61,
@@ -45,9 +46,37 @@ root_notes: Dict[str, int] = {
     "Bb": 70,
     "B": 71,
 }
+root_notes_latin_to_anglo = {
+    "do": "C",
+    "do#": "C#",
+    "reb": "C#",
+    "re": "D",
+    "re#": "D#",
+    "mib": "D#",
+    "mi": "E",
+    "fa": "F",
+    "fa#": "F#",
+    "solb": "F#",
+    "sol": "G",
+    "sol#": "G#",
+    "lab": "G#",
+    "la": "A",
+    "la#": "A#",
+    "sib": "A#",
+    "si": "B",
+}
 
-# Regex to match root note at the start of a scale string (e.g., 'C', 'C#', 'Db', etc.), followed by space or end
-root_note_re = re.compile(r"^([A-Ga-g][#b]?)(?=\s|$)")
+# Make a name-to-midinote mapping with root_notes_anglo and root_notes_latin_to_anglo
+root_notes = dict(
+    **root_notes_anglo,
+    **{k: root_notes_anglo[v] for k, v in root_notes_latin_to_anglo.items()}
+)
+
+# Regex to match any root at the start, case-insensitive, preferring the longest key.
+# This allows patterns like "Bbmajor" (no separator) or "F#_minor".
+_root_keys_longest_first = sorted(root_notes.keys(), key=len, reverse=True)
+_root_alt = "|".join(re.escape(k) for k in _root_keys_longest_first)
+root_note_re = re.compile(rf"^({_root_alt})", re.IGNORECASE)
 
 scale_quality = {
     # Western Diatonic & Common Scales (retained as before)
@@ -278,6 +307,7 @@ chord_quality: Dict[str, Sequence[int]] = {
 # -----------------------------------------------------------------------------
 
 
+# TODO: Need to update global root_note_re value, since root_notes changes here:
 def register_root_note(note_name: str, midi_value: int) -> None:
     """Register a new root note with its MIDI value.
 
@@ -459,7 +489,9 @@ def list_scales_string() -> str:
     )
 
     return (
-        "Scale specification anatomy: '<root> <quality>' (case-insensitive).\n"
+        "Scale specification anatomy: A root and quality separated by an underscore, "
+        "a space, or nothing (so, '<root>_<quality>', '<root> <quality>' "
+        "or '<root><quality>') (case-insensitive).\n"
         "- Root is optional (defaults to 'C' in some contexts).\n"
         "- Empty quality means 'major' (alias '').\n\n"
         f"Valid roots: {valid_roots_fmt}.\n"
@@ -565,51 +597,76 @@ def scale_params(scale: str, midi_notes: bool = False):
     >>> scale_params('dorian', midi_notes=True)
     (None, (0, 2, 3, 5, 7, 9, 10))
 
+    # Test flexible parsing - different separators should work
+    >>> scale_params('Bb major')
+    ('Bb', 'major')
+    >>> scale_params('Bbmajor')
+    ('Bb', 'major')
+    >>> scale_params('Bb_major')
+    ('Bb', 'major')
+    >>> scale_params('F# minor')
+    ('F#', 'minor')
+    >>> scale_params('F#minor')
+    ('F#', 'minor')
+    >>> scale_params('F#_minor')
+    ('F#', 'minor')
+    >>> scale_params('C dorian')
+    ('C', 'dorian')
+    >>> scale_params('Cdorian')
+    ('C', 'dorian')
+    >>> scale_params('C_dorian')
+    ('C', 'dorian')
+    >>> scale_params('Ab major')
+    ('Ab', 'major')
+    >>> scale_params('Abmajor')
+    ('Ab', 'major')
+    >>> scale_params('Ab_major')
+    ('Ab', 'major')
     """
     s = scale.strip()
     m = root_note_re.match(s)
-    if m and m.group(1).upper() in (k.upper() for k in root_notes):
-        root = m.group(1).capitalize()
-        quality = s[len(root) :].strip()
-    else:
-        root = ""
-        quality = s.strip()
-
-    # If only root is given, quality is empty string (defaults to major via alias '')
-    if quality == "" and root:
-        quality = ""
-
-    # Validate root and quality; build helpful error if invalid
-    invalid_root = False
-    if root and root.upper() not in (k.upper() for k in root_notes):
-        invalid_root = True
+    root = ""
+    quality = s.lower()
+    if m:
+        root_raw = m.group(0)
+        candidate_root = next(
+            (k for k in root_notes if k.lower() == root_raw.lower()), root_raw
+        )
+        remaining = s[len(root_raw) :]
+        candidate_quality = remaining.lstrip(" _").lower()
+        # If only root is provided, use alias ''
+        if candidate_quality == "":
+            root = candidate_root
+            quality = ""
+        else:
+            # Only accept the matched root if the remaining is a valid quality
+            try:
+                semitone_pattern(candidate_quality)
+            except ValueError:
+                # Treat whole string as a quality (e.g., 'dorian' shouldn't split as 'do'+'rian')
+                root = ""
+                quality = s.lower()
+            else:
+                root = candidate_root
+                quality = candidate_quality
 
     try:
         pattern = semitone_pattern(quality)
-    except ValueError:
-        pattern = None
-        invalid_quality = True
-    else:
-        invalid_quality = False
-
-    if invalid_root or invalid_quality:
-        problems = []
-        if invalid_root:
-            problems.append(f"unknown root '{root}'")
-        if invalid_quality:
-            problems.append(f"unknown scale quality '{quality}'")
-        problems_text = "; ".join(problems) if problems else "invalid specification"
-
+    except ValueError as e:
         raise IncorrectScaleSpecification(
             (
-                f"Incorrect scale specification: '{scale}' ({problems_text}).\n"
+                f"Incorrect scale specification: '{scale}' (unknown scale quality '{quality}').\n"
                 + list_scales_string()
             )
-        )
+        ) from e
 
     if midi_notes:
-        root_midi = root_notes[root] if root else None
-        return root_midi, pattern
+        midi = None
+        if root:
+            midi = next(
+                (v for k, v in root_notes.items() if k.lower() == root.lower()), None
+            )
+        return midi, pattern
     else:
         return root, quality
 
