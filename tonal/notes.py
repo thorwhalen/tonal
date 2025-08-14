@@ -484,6 +484,7 @@ def list_chord_qualities() -> Dict[str, Sequence[int]]:
 
 from lkj import print_list
 
+
 # Define a specific error for incorrect scale specifications
 class IncorrectScaleSpecification(ValueError):
     """Raised when a scale string cannot be parsed/validated into root and quality."""
