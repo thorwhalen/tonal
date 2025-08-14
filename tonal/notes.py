@@ -52,17 +52,17 @@ root_note_re = re.compile(r"^([A-Ga-g][#b]?)(?=\s|$)")
 scale_quality = {
     # Western Diatonic & Common Scales (retained as before)
     "major": (0, 2, 4, 5, 7, 9, 11),
-    "natural minor": (0, 2, 3, 5, 7, 8, 10),
-    "harmonic minor": (0, 2, 3, 5, 7, 8, 11),
-    "melodic minor ascending": (0, 2, 3, 5, 7, 9, 11),
-    "melodic minor descending": (0, 2, 3, 5, 7, 8, 10),
-    "major pentatonic": (0, 2, 4, 7, 9),
-    "minor pentatonic": (0, 3, 5, 7, 10),
+    "natural_minor": (0, 2, 3, 5, 7, 8, 10),
+    "harmonic_minor": (0, 2, 3, 5, 7, 8, 11),
+    "melodic_minor_ascending": (0, 2, 3, 5, 7, 9, 11),
+    "melodic_minor_descending": (0, 2, 3, 5, 7, 8, 10),
+    "major_pentatonic": (0, 2, 4, 7, 9),
+    "minor_pentatonic": (0, 3, 5, 7, 10),
     "blues": (0, 3, 5, 6, 7, 10),
     "chromatic": (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
-    "whole tone": (0, 2, 4, 6, 8, 10),
-    "diminished (whole-half)": (0, 2, 3, 5, 6, 8, 9, 11),
-    "diminished (half-whole)": (0, 1, 3, 4, 6, 7, 9, 10),
+    "whole_tone": (0, 2, 4, 6, 8, 10),
+    "diminished": (0, 2, 3, 5, 6, 8, 9, 11),
+    "diminished_half_whole": (0, 1, 3, 4, 6, 7, 9, 10),
     "augmented": (0, 3, 4, 7, 8, 11),
     "lydian": (0, 2, 4, 6, 7, 9, 11),
     "mixolydian": (0, 2, 4, 5, 7, 9, 10),
@@ -72,7 +72,7 @@ scale_quality = {
     "aeolian": (0, 2, 3, 5, 7, 8, 10),
     "ionian": (0, 2, 4, 5, 7, 9, 11),
     # Major Jazz Scales (distinct or commonly named in jazz)
-    "bebop dominant": (
+    "bebop_dominant": (
         0,
         2,
         4,
@@ -82,11 +82,11 @@ scale_quality = {
         10,
         11,
     ),  # Mixolydian with added M7 (or b7, M7)
-    "bebop major": (0, 2, 4, 5, 7, 8, 9, 11),  # Major with added b6 (or M6, b6)
-    "bebop minor": (0, 2, 3, 4, 5, 7, 9, 10),  # Dorian with added M3 (or m3, M3)
-    "bebop melodic minor": (0, 2, 3, 5, 7, 8, 9, 11),  # Melodic Minor with added b6
+    "bebop_major": (0, 2, 4, 5, 7, 8, 9, 11),  # Major with added b6 (or M6, b6)
+    "bebop_minor": (0, 2, 3, 4, 5, 7, 9, 10),  # Dorian with added M3 (or m3, M3)
+    "bebop_melodic_minor": (0, 2, 3, 5, 7, 8, 9, 11),  # Melodic Minor with added b6
     "altered": (0, 1, 3, 4, 6, 8, 10),  # 7th mode of Melodic Minor, aka Super Locrian
-    "lydian dominant": (
+    "lydian_dominant": (
         0,
         2,
         4,
@@ -95,7 +95,7 @@ scale_quality = {
         9,
         10,
     ),  # 4th mode of Melodic Minor, aka Mixolydian #11
-    "phrygian dominant": (
+    "phrygian_dominant": (
         0,
         1,
         4,
@@ -119,24 +119,26 @@ scale_quality = {
 
 
 scale_quality_alias = {
-    # Western Aliases (retained and expanded slightly)
+    # Western Aliases
     "": "major",
     "maj": "major",
     "M": "major",
-    "min": "natural minor",
-    "m": "natural minor",
-    "minor": "natural minor",
-    "harmonic": "harmonic minor",
-    "melodic": "melodic minor ascending",
-    "penta major": "major pentatonic",
-    "penta min": "minor pentatonic",
-    "pentatonic": "major pentatonic",
-    "penta": "major pentatonic",
-    "minor penta": "minor pentatonic",
-    "major penta": "major pentatonic",
-    "whl tone": "whole tone",
-    "diminished": "diminished (whole-half)",
-    "dim": "diminished (whole-half)",
+    "min": "natural_minor",
+    "m": "natural_minor",
+    "minor": "natural_minor",
+    "harmonic": "harmonic_minor",
+    "melodic": "melodic_minor_ascending",
+    "penta major": "major_pentatonic",
+    "penta min": "minor_pentatonic",
+    "pentatonic": "major_pentatonic",
+    "penta": "major_pentatonic",
+    "minor penta": "minor_pentatonic",
+    "major penta": "major_pentatonic",
+    "whl tone": "whole_tone",
+    "diminished": "diminished",
+    "dim": "diminished",
+    "diminished (whole-half)": "diminished",
+    "diminished (half-whole)": "diminished_half_whole",
     "aug": "augmented",
     "chrom": "chromatic",
     "blues scale": "blues",
@@ -146,26 +148,26 @@ scale_quality_alias = {
     "mix": "mixolydian",
     "aeo": "aeolian",
     "ion": "ionian",
-    "nat min": "natural minor",
-    "harm min": "harmonic minor",
-    "mel min asc": "melodic minor ascending",
-    "mel min desc": "melodic minor descending",
-    "w-h dim": "diminished (whole-half)",
-    "h-w dim": "diminished (half-whole)",
+    "nat min": "natural_minor",
+    "harm min": "harmonic_minor",
+    "mel min asc": "melodic_minor_ascending",
+    "mel min desc": "melodic_minor_descending",
+    "w-h dim": "diminished",
+    "h-w dim": "diminished_half_whole",
     # Jazz Aliases
-    "bebop dom": "bebop dominant",
-    "bebop maj": "bebop major",
-    "bebop min": "bebop minor",
-    "bebop dorian": "bebop minor",  # Common alias for bebop minor
-    "bebop melodic": "bebop melodic minor",
+    "bebop dom": "bebop_dominant",
+    "bebop maj": "bebop_major",
+    "bebop min": "bebop_minor",
+    "bebop dorian": "bebop_minor",  # Common alias for bebop minor
+    "bebop melodic": "bebop_melodic_minor",
     "alt": "altered",
     "super locrian": "altered",
-    "lyd dom": "lydian dominant",
-    "mixolydian #11": "lydian dominant",
-    "acoustic scale": "lydian dominant",  # Also sometimes called this
-    "phryg dom": "phrygian dominant",
-    "dominant phrygian": "phrygian dominant",
-    "mixolydian b2 b6": "phrygian dominant",  # If you want to get descriptive
+    "lyd dom": "lydian_dominant",
+    "mixolydian #11": "lydian_dominant",
+    "acoustic scale": "lydian_dominant",  # Also sometimes called this
+    "phryg dom": "phrygian_dominant",
+    "dominant phrygian": "phrygian_dominant",
+    "mixolydian b2 b6": "phrygian_dominant",  # If you want to get descriptive
     # Indian Raga Aliases
     # Aliases for Ragas whose patterns match Western/Jazz scales:
     "bilawal": "major",  # Hindustani Thaat for Major
@@ -178,24 +180,24 @@ scale_quality_alias = {
     "harikambhoji": "mixolydian",  # Carnatic Melakarta 28 for Mixolydian
     "melakarta 28": "mixolydian",
     "khamaj": "mixolydian",  # Hindustani Thaat for Mixolydian
-    "natabhairavi": "natural minor",  # Carnatic Melakarta 20 for Natural Minor
-    "melakarta 20": "natural minor",
-    "asavari": "natural minor",  # Hindustani Thaat for Natural Minor / Aeolian
-    "aeolian raga": "natural minor",
+    "natabhairavi": "natural_minor",  # Carnatic Melakarta 20 for Natural Minor
+    "melakarta 20": "natural_minor",
+    "asavari": "natural_minor",  # Hindustani Thaat for Natural Minor / Aeolian
+    "aeolian raga": "natural_minor",
     "hanumatodi": "phrygian",  # Carnatic Melakarta 8 for Phrygian
     "melakarta 8": "phrygian",
     "phrygian raga": "phrygian",
     "kalyan": "lydian",  # Hindustani Thaat for Lydian
-    "kirwani": "harmonic minor",  # Melakarta 21, identical to Harmonic Minor
-    "melakarta 21": "harmonic minor",
+    "kirwani": "harmonic_minor",  # Melakarta 21, identical to Harmonic Minor
+    "melakarta 21": "harmonic_minor",
     "mayamalavagowla": "bhairav",  # Carnatic Melakarta 15
     "melakarta 15": "bhairav",
-    "bhupali": "major pentatonic",  # Hindustani Raga identical to Major Pentatonic
-    "mohnam": "major pentatonic",  # Carnatic equivalent of Bhupali / Major Pentatonic
-    "durga": "major pentatonic",
-    "deshkar": "major pentatonic",
+    "bhupali": "major_pentatonic",  # Hindustani Raga identical to Major Pentatonic
+    "mohnam": "major_pentatonic",  # Carnatic equivalent of Bhupali / Major Pentatonic
+    "durga": "major_pentatonic",
+    "deshkar": "major_pentatonic",
     "carnatic major": "major",  # Common reference for the Carnatic major scale
-    "carnatic minor": "natural minor",  # Common reference for the Carnatic natural minor scale
+    "carnatic minor": "natural_minor",  # Common reference for the Carnatic natural minor scale
     # Aliases for Ragas unique to scale_quality (or now canonical here)
     "bhairav thaat": "bhairav",
     "todi thaat": "todi",
@@ -206,6 +208,20 @@ scale_quality_alias = {
     "hansadhwani raga": "hamsadhwani",
     "malkauns raga": "malkauns",
     "indian m minor": "malkauns",  # A less common, but sometimes used, description
+    # Back-compat aliases mapping spaced names to underscored canonical names
+    "natural minor": "natural_minor",
+    "harmonic minor": "harmonic_minor",
+    "melodic minor ascending": "melodic_minor_ascending",
+    "melodic minor descending": "melodic_minor_descending",
+    "major pentatonic": "major_pentatonic",
+    "minor pentatonic": "minor_pentatonic",
+    "whole tone": "whole_tone",
+    "bebop dominant": "bebop_dominant",
+    "bebop major": "bebop_major",
+    "bebop minor": "bebop_minor",
+    "bebop melodic minor": "bebop_melodic_minor",
+    "lydian dominant": "lydian_dominant",
+    "phrygian dominant": "phrygian_dominant",
 }
 
 
