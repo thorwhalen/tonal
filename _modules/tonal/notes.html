@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tonal.notes &mdash; tonal 0.0.9 documentation</title>
+  <title>tonal.notes &mdash; tonal 0.0.10 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=f7cdbf68"></script>
+      <script src="../../_static/documentation_options.js?v=a83ce22a"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/converters.html">tonal.converters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/counterpoint.html">tonal.counterpoint</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/notes.html">tonal.notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/tests/test_notes.html">tonal.tests.test_notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/util.html">tonal.util</a></li>
 </ul>
 
@@ -529,12 +530,12 @@
 <span class="sd">    - Valid qualities (including aliases)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">valid_roots</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">list_root_notes</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="n">valid_roots_fmt</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">valid_roots</span><span class="p">)</span>
+    <span class="n">valid_roots_fmt</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">valid_roots</span><span class="p">)</span>
 
     <span class="n">valid_qualities</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">list_scale_qualities</span><span class="p">(</span><span class="n">include_aliases</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="c1"># show qualities as a wrapped, indented list for readability</span>
-    <span class="n">qualities_fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">  - &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">  - &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-        <span class="p">[</span><span class="n">q</span> <span class="k">if</span> <span class="n">q</span> <span class="k">else</span> <span class="s1">&#39;&lt;empty string&gt;&#39;</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">valid_qualities</span><span class="p">]</span>
+    <span class="n">qualities_fmt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  - &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  - &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">q</span> <span class="k">if</span> <span class="n">q</span> <span class="k">else</span> <span class="s2">&quot;&lt;empty string&gt;&quot;</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">valid_qualities</span><span class="p">]</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="p">(</span>

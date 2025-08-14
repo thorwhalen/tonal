@@ -7,4 +7,5 @@
    module_docs/tonal/converters
    module_docs/tonal/counterpoint
    module_docs/tonal/notes
+   module_docs/tonal/tests/test_notes
    module_docs/tonal/util
