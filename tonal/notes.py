@@ -135,6 +135,7 @@ scale_quality_alias = {
     "minor penta": "minor pentatonic",
     "major penta": "major pentatonic",
     "whl tone": "whole tone",
+    "diminished": "diminished (whole-half)",
     "dim": "diminished (whole-half)",
     "aug": "augmented",
     "chrom": "chromatic",
@@ -400,13 +401,39 @@ def list_chord_qualities() -> Dict[str, Sequence[int]]:
 
 
 # -----------------------------------------------------------------------------
-# Validation
+# Validation & Utilities
 # -----------------------------------------------------------------------------
 
 
 # Define a specific error for incorrect scale specifications
 class IncorrectScaleSpecification(ValueError):
     """Raised when a scale string cannot be parsed/validated into root and quality."""
+
+
+def list_scales_string() -> str:
+    """Return a user-friendly help string describing scale syntax and valid values.
+
+    Includes:
+    - Anatomy of a scale specification
+    - Valid roots
+    - Valid qualities (including aliases)
+    """
+    valid_roots = sorted(list_root_notes().keys())
+    valid_roots_fmt = ', '.join(f"'{r}'" for r in valid_roots)
+
+    valid_qualities = sorted(list_scale_qualities(include_aliases=True).keys())
+    # show qualities as a wrapped, indented list for readability
+    qualities_fmt = '\n  - ' + '\n  - '.join(
+        [q if q else '<empty string>' for q in valid_qualities]
+    )
+
+    return (
+        "Scale specification anatomy: '<root> <quality>' (case-insensitive).\n"
+        "- Root is optional (defaults to 'C' in some contexts).\n"
+        "- Empty quality means 'major' (alias '').\n\n"
+        f"Valid roots: {valid_roots_fmt}.\n"
+        f"Valid qualities (including aliases):{qualities_fmt}\n"
+    )
 
 
 def validate_scale_semitone_pattern_uniquness(scale_quality: dict) -> bool:
@@ -535,16 +562,6 @@ def scale_params(scale: str, midi_notes: bool = False):
         invalid_quality = False
 
     if invalid_root or invalid_quality:
-        valid_roots = sorted(list_root_notes().keys())
-        valid_roots = [f"'{r}'" if r != "" else "<empty string>" for r in valid_roots]
-        valid_roots = ', '.join(valid_roots)
-
-        valid_qualities = sorted(list_scale_qualities(include_aliases=True).keys())
-        valid_qualities = [
-            f"'{q}'" if q != "" else "<empty string>" for q in valid_qualities
-        ]
-        valid_qualities = '\n\t' + '\n\t'.join(valid_qualities)
-
         problems = []
         if invalid_root:
             problems.append(f"unknown root '{root}'")
@@ -555,9 +572,7 @@ def scale_params(scale: str, midi_notes: bool = False):
         raise IncorrectScaleSpecification(
             (
                 f"Incorrect scale specification: '{scale}' ({problems_text}).\n"
-                f"Anatomy: '<root> <quality>' (case-insensitive). Root is optional; quality can be omitted to mean 'major'.\n"
-                f"Valid roots: {valid_roots}.\n"
-                f"Valid qualities (including aliases): {valid_qualities}.\n"
+                + list_scales_string()
             )
         )
 
