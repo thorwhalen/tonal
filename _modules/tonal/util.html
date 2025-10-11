@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tonal.util &mdash; tonal 0.0.13 documentation</title>
+  <title>tonal.util &mdash; tonal 0.0.14 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=9fc46840"></script>
+      <script src="../../_static/documentation_options.js?v=544df88d"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -93,7 +93,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">config2py</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">process_path</span><span class="p">,</span>
     <span class="n">simple_config_getter</span><span class="p">,</span>
-    <span class="n">get_app_data_folder</span><span class="p">,</span>
+    <span class="n">get_app_config_folder</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">config2py.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigNotFound</span>
 
@@ -111,7 +111,7 @@
 
 <span class="n">pkg_name</span> <span class="o">=</span> <span class="s2">&quot;tonal&quot;</span>
 
-<span class="n">app_data_dir</span> <span class="o">=</span> <span class="n">process_path</span><span class="p">(</span><span class="n">get_app_data_folder</span><span class="p">(</span><span class="s2">&quot;tonal&quot;</span><span class="p">))</span>
+<span class="n">app_data_dir</span> <span class="o">=</span> <span class="n">process_path</span><span class="p">(</span><span class="n">get_app_config_folder</span><span class="p">(</span><span class="s2">&quot;tonal&quot;</span><span class="p">))</span>
 <span class="n">soundfonts_dir</span> <span class="o">=</span> <span class="n">process_path</span><span class="p">(</span>
     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">app_data_dir</span><span class="p">,</span> <span class="s2">&quot;soundfonts&quot;</span><span class="p">),</span> <span class="n">ensure_dir_exists</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
