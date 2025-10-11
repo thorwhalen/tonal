@@ -11,7 +11,7 @@ from functools import partial
 from config2py import (
     process_path,
     simple_config_getter,
-    get_app_data_folder,
+    get_app_config_folder,
 )
 from config2py.errors import ConfigNotFound
 
@@ -29,7 +29,7 @@ from dol import written_bytes
 
 pkg_name = "tonal"
 
-app_data_dir = process_path(get_app_data_folder("tonal"))
+app_data_dir = process_path(get_app_config_folder("tonal"))
 soundfonts_dir = process_path(
     os.path.join(app_data_dir, "soundfonts"), ensure_dir_exists=True
 )
