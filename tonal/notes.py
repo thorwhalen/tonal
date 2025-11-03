@@ -15,7 +15,8 @@ note. For example, the semitone pattern for a major scale is [0, 2, 4, 5, 7, 9, 
 
 """
 
-from typing import Dict, Sequence, Tuple
+from typing import Dict, Tuple
+from collections.abc import Sequence
 from tonal.util import (
     note_name_pattern,
     parse_note_name,
@@ -26,7 +27,7 @@ import re
 
 
 # Define root notes to MIDI note numbers
-root_notes_anglo: Dict[str, int] = {
+root_notes_anglo: dict[str, int] = {
     # Anglo notation
     "C": 60,
     "C#": 61,
@@ -288,7 +289,7 @@ assert all(
 # TODO: Verify completeness and more chord definitions if needed
 # TODO: See if defs can be infered from parsing the chord names
 # Define quality and extension intervals
-chord_quality: Dict[str, Sequence[int]] = {
+chord_quality: dict[str, Sequence[int]] = {
     "": (0, 4, 7),  # Major triad, 'C' -> 'Cmaj
     "maj": (0, 4, 7),  # Major triad
     "M": (0, 4, 7),  # Major triad
@@ -400,7 +401,7 @@ def register_chord_quality(quality_name: str, semitone_pattern: Sequence[int]) -
     chord_quality[quality_name] = pattern_tuple
 
 
-def list_root_notes() -> Dict[str, int]:
+def list_root_notes() -> dict[str, int]:
     """List all registered root notes.
 
     Returns:
@@ -415,7 +416,7 @@ def list_root_notes() -> Dict[str, int]:
     return dict(root_notes)
 
 
-def list_scale_qualities(include_aliases: bool = False) -> Dict[str, Sequence[int]]:
+def list_scale_qualities(include_aliases: bool = False) -> dict[str, Sequence[int]]:
     """List all registered scale qualities.
 
     Args:
@@ -445,7 +446,7 @@ def list_scale_qualities(include_aliases: bool = False) -> Dict[str, Sequence[in
     return result
 
 
-def list_scale_quality_aliases() -> Dict[str, str]:
+def list_scale_quality_aliases() -> dict[str, str]:
     """List all registered scale quality aliases.
 
     Returns:
@@ -460,7 +461,7 @@ def list_scale_quality_aliases() -> Dict[str, str]:
     return dict(scale_quality_alias)
 
 
-def list_chord_qualities() -> Dict[str, Sequence[int]]:
+def list_chord_qualities() -> dict[str, Sequence[int]]:
     """List all registered chord qualities.
 
     Returns:
@@ -700,10 +701,8 @@ def scale_params(scale: str, midi_notes: bool = False):
         pattern = semitone_pattern(canonical_quality)
     except ValueError as e:
         raise IncorrectScaleSpecification(
-            (
                 f"Incorrect scale specification: '{scale}' (unknown scale quality '{quality_raw}').\n"
                 + list_scales_string()
-            )
         ) from e
 
     # Normalize root to Anglo spelling if needed
@@ -734,7 +733,7 @@ def scale_params(scale: str, midi_notes: bool = False):
 
 def scale_midi_notes(
     scale: str = "C major",
-    midi_range: Tuple[int, int] = (0, 127),
+    midi_range: tuple[int, int] = (0, 127),
     *,
     default_root: str = "C",
 ) -> tuple:

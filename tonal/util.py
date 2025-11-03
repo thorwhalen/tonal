@@ -5,7 +5,7 @@
 #   to be consistent.
 
 import os
-from typing import Callable
+from collections.abc import Callable
 from importlib.resources import files
 from functools import partial
 from config2py import (
@@ -54,19 +54,14 @@ except ConfigNotFound:
     DFLT_SOUNDFONT = str(data_files / "Caeds Small Trash GM v1.06.sf2")
 
 from typing import (
-    Callable,
-    Iterable,
     List,
     Union,
-    Generator,
     Optional,
-    Container,
     Any,
-    Sequence,
     Tuple,
-    Mapping,
     Dict,
 )
+from collections.abc import Callable, Iterable, Generator, Container, Sequence, Mapping
 import os
 from operator import attrgetter
 import re
@@ -106,9 +101,9 @@ NoteString = str
 NoteSpec = Union[NoteString, Note]
 NotesSpec = Iterable[NoteSpec]
 TrackSpec = Union[Stream, NotesSpec]
-TracksSpec = List[TrackSpec]
+TracksSpec = list[TrackSpec]
 ScaleCreator = Callable[[str], Scale]
-StreamSpec = Union[str, Iterable[str], List[Note], Stream]
+StreamSpec = Union[str, Iterable[str], list[Note], Stream]
 Streams = Iterable[Stream]
 
 StrToNote = Callable[[str], Note]
@@ -116,7 +111,7 @@ StrToNote = Callable[[str], Note]
 Filepath = str
 ScoreSpec = Union[Filepath, Score]
 PartFilter = Callable[[Part], bool]
-PartIdx = Union[int, List[int]]
+PartIdx = Union[int, list[int]]
 PartFilterSpec = Optional[Union[PartIdx, PartFilter]]
 
 # Regex for note names (e.g., C, C#, Db, etc.)
@@ -143,7 +138,7 @@ def add_pattern_aliases(quality_extensions):
 
 
 def string_to_note(
-    note_or_notes: Optional[Union[NoteString, Iterable[NoteString]]] = None,
+    note_or_notes: NoteString | Iterable[NoteString] | None = None,
     egress: Callable = list,
     **note_kwargs,
 ) -> Note:
@@ -266,7 +261,7 @@ def mk_stream(obj: StreamSpec, **kwargs) -> Stream:
 
 
 def ensure_scale(
-    input_scale: Union[str, Scale], scale_creator: ScaleCreator = MajorScale
+    input_scale: str | Scale, scale_creator: ScaleCreator = MajorScale
 ) -> Scale:
     """
     Ensures the input is a Scale object. Converts a string to a Scale using the provided scale creator.
@@ -289,7 +284,7 @@ def ensure_scale(
     return input_scale
 
 
-def get_scale_notes(input_note: Note, input_scale: Scale) -> List[str]:
+def get_scale_notes(input_note: Note, input_scale: Scale) -> list[str]:
     """
     Returns the names of the pitches in the scale within one octave around the input note.
 
@@ -339,7 +334,7 @@ def ensure_iterable_of_notes(
     return _notes()
 
 
-def note_names(notes: TrackSpec, name_attr="nameWithOctave") -> List[str]:
+def note_names(notes: TrackSpec, name_attr="nameWithOctave") -> list[str]:
     """
     Returns the names of the notes in the input iterable.
 
@@ -369,7 +364,7 @@ def note_names(notes: TrackSpec, name_attr="nameWithOctave") -> List[str]:
         return list(map(attrgetter(name_attr), ensure_iterable_of_notes(notes)))
 
 
-def multi_note_names(tracks: TracksSpec) -> List[List[NoteString]]:
+def multi_note_names(tracks: TracksSpec) -> list[list[NoteString]]:
     """
     Returns the names of the notes in the input iterable.
 
@@ -416,7 +411,7 @@ def add_streams(list_of_streams: Streams) -> Stream:
     return combined_stream
 
 
-def concatenate_streams(streams_list: List[Streams]) -> Streams:
+def concatenate_streams(streams_list: list[Streams]) -> Streams:
     """
     Concatenates corresponding streams from a list of lists of streams.
 
@@ -442,7 +437,7 @@ def concatenate_streams(streams_list: List[Streams]) -> Streams:
     return list(map(add_streams, zip(*streams_list)))
 
 
-def create_score_from_tracks(tracks: List[Stream]) -> Score:
+def create_score_from_tracks(tracks: list[Stream]) -> Score:
     """
     Creates a music21 Score from a list of tracks (Stream objects).
 

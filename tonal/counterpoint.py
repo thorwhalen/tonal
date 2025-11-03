@@ -47,7 +47,8 @@ of a partial function to get a translator with a fixed input scale:
 [['C5', 'E5', 'G#5'], ['B5', 'C6', 'E6']]
 """
 
-from typing import List, Union, Iterable
+from typing import List, Union
+from collections.abc import Iterable
 from music21.scale import Scale, MajorScale
 from music21.stream import Stream
 from music21.note import Note
@@ -68,7 +69,7 @@ from tonal.util import (
 def _translate_note_in_scale(
     input_note: NoteString,
     translation: int,
-    input_scale: Union[str, Scale],
+    input_scale: str | Scale,
     *,
     scale_creator: ScaleCreator = MajorScale,
 ) -> str:
@@ -147,7 +148,7 @@ def _translate_note_in_scale(
 def translate_notes_in_scale(
     input_notes: TrackSpec,
     translation: int,
-    input_scale: Union[str, Scale],
+    input_scale: str | Scale,
     *,
     scale_creator: ScaleCreator = MajorScale,
 ) -> Stream:
@@ -186,12 +187,12 @@ def translate_notes_in_scale(
 
 
 def translate_in_scale(
-    motif: Union[TrackSpec, TracksSpec],
-    translation: Union[int, Iterable[int]],
-    input_scale: Union[str, Scale],
+    motif: TrackSpec | TracksSpec,
+    translation: int | Iterable[int],
+    input_scale: str | Scale,
     *,
     scale_creator: ScaleCreator = MajorScale,
-) -> Union[Stream, List[Stream]]:
+) -> Stream | list[Stream]:
     """
     Translates the input notes or tracks by the given number of steps within the given scale.
 

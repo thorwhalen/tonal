@@ -2,7 +2,8 @@
 
 from mido import MidiFile, MidiTrack, Message
 import subprocess
-from typing import Sequence, Tuple, Callable, Mapping, Dict
+from typing import Tuple, Dict
+from collections.abc import Sequence, Callable, Mapping
 import os
 import re
 from config2py import process_path
@@ -29,7 +30,7 @@ DFLT_CHORD_SEQUENCE = [
 # Type aliases for this module
 Chord = str
 Notes = Sequence[Note]
-ChordTimed = Tuple[Chord, Notes]
+ChordTimed = tuple[Chord, Notes]
 ChordSequence = Sequence[ChordTimed]
 ChordDefinitions = Callable[[Chord], Notes]
 ChordRenderer = Callable[[Notes, any, int], None]

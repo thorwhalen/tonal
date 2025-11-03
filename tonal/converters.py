@@ -3,7 +3,8 @@
 import os
 import io
 import tempfile
-from typing import Union, Optional, Callable, Any, Dict
+from typing import Union, Optional, Any, Dict
+from collections.abc import Callable
 from tonal.util import (
     DFLT_MIDI_OUTPUT,
     DFLT_SOUNDFONT,
@@ -30,7 +31,7 @@ dflt_format_for_extension = {
 dflt_extension_for_format = {v: k for k, v in dflt_format_for_extension.items()}
 
 # Define magic number signatures for common file formats
-FORMAT_SIGNATURES: Dict[bytes, str] = {
+FORMAT_SIGNATURES: dict[bytes, str] = {
     b"MThd": "midi",  # MIDI files start with MThd
     b"RIFF": "wav",  # WAV files start with RIFF
     b"<?xml": "musicxml",  # XML files often start with <?xml
@@ -70,13 +71,13 @@ def ensure_dest_filepath(
 
 # Use dol.written_bytes to use file functions as bytes functions
 def convert(
-    src: Union[FilePath, BytesData],
-    dest: Optional[Union[FilePath, str]] = None,
+    src: FilePath | BytesData,
+    dest: FilePath | str | None = None,
     *,
-    src_format: Optional[str] = None,
-    dest_format: Optional[str] = None,
+    src_format: str | None = None,
+    dest_format: str | None = None,
     format_for_extension=dflt_format_for_extension,
-) -> Union[FilePath, BytesData]:
+) -> FilePath | BytesData:
     """
     Convert between different music formats.
 
@@ -165,7 +166,7 @@ def convert(
         return conversion_func(src, dest)
 
 
-def guess_format_from_bytes(data: bytes) -> Optional[str]:
+def guess_format_from_bytes(data: bytes) -> str | None:
     """
     Attempt to guess the format of a file from its bytes content.
 
@@ -208,8 +209,8 @@ def _get_conversion_func(src_format: str, dest_format: str) -> Callable:
 
 
 def _convert_from_bytes(
-    src_bytes: bytes, dest: Optional[str] = None, *, src_format: str, dest_format: str
-) -> Union[FilePath, bytes]:
+    src_bytes: bytes, dest: str | None = None, *, src_format: str, dest_format: str
+) -> FilePath | bytes:
     """Handle conversions where the source is bytes."""
     # Write bytes to a temporary file with the correct extension
     with tempfile.NamedTemporaryFile(
