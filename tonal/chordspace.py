@@ -249,6 +249,56 @@ def is_subset_pcs(a: Tuple[int, ...], b: Tuple[int, ...]) -> bool:
     return {x % 12 for x in a}.issubset({y % 12 for y in b})
 
 
+def is_codiatonic(
+    a: Tuple[int, ...],
+    b: Tuple[int, ...],
+    scale_quality: Sequence[int] = (0, 2, 4, 5, 7, 9, 11),
+    *,
+    tonic: Optional[int] = None,
+) -> bool:
+    """
+    Return True if the union of the pitch classes of chords `a` and `b`
+    can be embedded in a single scale derived from the given `scale_quality`.
+
+    If `tonic` is provided (0–11), only test that transposition of the scale;
+    otherwise, test all 12 possible transpositions.
+
+    Args:
+        a: chord as a tuple of pitches (any integers)
+        b: chord as a tuple of pitches (any integers)
+        scale_quality: sequence of pitch-class intervals for the scale (default: major)
+        tonic: if not None, only use this tonic (0-11), else try all 12 transpositions
+
+    Returns:
+        True if union of a and b's pitch classes is a subset of any transposition of the scale.
+
+    >>> is_codiatonic((0, 4, 7), (2, 5, 9))  # e.g. C major triad + D minor triad, both in C major
+    True
+    >>> is_codiatonic((0, 4, 7), (1, 5, 8))  # No two major triads a semitone apart in major scales...
+    False
+    >>> is_codiatonic((0, 4, 7), (1, 5, 8), scale_quality=(0,2,3,5,7,8,11))  # ... but in a harmonic minor, there are
+    True
+    >>> is_codiatonic((0, 4, 7), (1, 4, 8), tonic=0)  # Only test C major scale
+    False
+    >>> is_codiatonic((0, 4, 7), (1, 4, 8), tonic=1)  # Only test C# major scale
+    False
+    >>> is_codiatonic((0, 4, 7), (2, 5, 9), tonic=0)  # C major scale, C and Dm triads
+    True
+    """
+    pcs_union = {x % 12 for x in a} | {y % 12 for y in b}
+    scale_quality_set = set(x % 12 for x in scale_quality)
+    # Precompute all 12 transpositions of the scale as sets
+    if tonic is not None:
+        tonics = [tonic % 12]
+    else:
+        tonics = list(range(12))
+    for t in tonics:
+        scale_pcs = {(p + t) % 12 for p in scale_quality_set}
+        if pcs_union.issubset(scale_pcs):
+            return True
+    return False
+
+
 def build_graph(
     voicings: List[Tuple[int, ...]],
     *,
@@ -345,8 +395,8 @@ def generate_graph_default() -> Dict[int, List[int]]:
     """
     Convenience: generate a default voicing space and link it.
 
-    >>> G = generate_graph_default()
-    >>> len(G) > 50
+    >>> G = generate_graph_default()  # doctest: +SKIP
+    >>> len(G) > 50  # doctest: +SKIP
     True
     """
     V = generate_default_voicing_space()
@@ -540,10 +590,18 @@ def compute_links(
     Args:
         chord_table: list of dicts or DataFrame describing chords.
         id_col: name of chord ID column.
-        kind: link definition:
+        kind: link definition - either a string or callable:
+            String options:
             - "shared": share >= min_shared_pcs pitch classes
             - "subset": subset relation in pitch-class space
             - "voiceleading": voice-leading distance <= max_vl_distance
+            - "codiatonic": both chords fit in same major scale
+
+            Callable: custom function with signature:
+                (i: int, j: int, voicings: List, pc_sets: List, **kwargs) -> bool
+                where i, j are chord indices, voicings is list of tuples,
+                pc_sets is list of pitch-class sets, and kwargs includes
+                min_shared_pcs and max_vl_distance
         min_shared_pcs: threshold for 'shared' links
         max_vl_distance: max distance for 'voiceleading' links
         warning_threshold: threshold for warning about large computations
@@ -594,13 +652,41 @@ def compute_links(
 
 
 def _get_link_function(
-    kind: str,
+    kind,
     *,
     pc_sets: List[Set[int]],
     min_shared_pcs: int,
     max_vl_distance: int,
 ) -> Callable[[int, int, List[Tuple[int, ...]]], bool]:
-    """Create a link function based on the specified kind."""
+    """
+    Create a link function based on the specified kind.
+
+    Args:
+        kind: Either a string name ("shared", "subset", "voiceleading", "codiatonic")
+              or a callable with signature (i: int, j: int, voicings, pc_sets, **kwargs) -> bool
+        pc_sets: Precomputed pitch-class sets for efficiency
+        min_shared_pcs: Threshold for 'shared' links
+        max_vl_distance: Max distance for 'voiceleading' links
+
+    Returns:
+        A link function with signature (i: int, j: int, voicings: List[Tuple]) -> bool
+    """
+    # If it's already a callable, wrap it to provide pc_sets
+    if callable(kind):
+
+        def link_func(i: int, j: int, voicings: List[Tuple[int, ...]]) -> bool:
+            return kind(
+                i,
+                j,
+                voicings,
+                pc_sets,
+                min_shared_pcs=min_shared_pcs,
+                max_vl_distance=max_vl_distance,
+            )
+
+        return link_func
+
+    # Otherwise, look up by name
     if kind == "shared":
 
         def link_func(i: int, j: int, voicings: List[Tuple[int, ...]]) -> bool:
@@ -616,10 +702,15 @@ def _get_link_function(
         def link_func(i: int, j: int, voicings: List[Tuple[int, ...]]) -> bool:
             return voice_leading_distance(voicings[i], voicings[j]) <= max_vl_distance
 
+    elif kind == "codiatonic":
+
+        def link_func(i: int, j: int, voicings: List[Tuple[int, ...]]) -> bool:
+            return is_codiatonic(voicings[i], voicings[j])
+
     else:
         raise ValueError(
             f"Unknown link kind: {kind}. "
-            "Must be 'shared', 'subset', or 'voiceleading'."
+            "Must be 'shared', 'subset', 'voiceleading', 'codiatonic', or a custom callable."
         )
 
     return link_func

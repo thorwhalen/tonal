@@ -18,6 +18,7 @@ from tonal.chordspace import (
     shared_pcs,
     voice_leading_distance,
     is_subset_pcs,
+    is_codiatonic,
     _generate_ids,
     _chord_features,
     _compute_interval_vector,
@@ -336,6 +337,51 @@ def test_empty_voicings():
     assert len(table) == 0
 
 
+def test_compute_links_codiatonic():
+    """Test codiatonic link computation."""
+    rows = [
+        {"id_": 0, "voicing": (0, 4, 7), "pitch_classes": [0, 4, 7]},  # C major
+        {"id_": 1, "voicing": (2, 5, 9), "pitch_classes": [2, 5, 9]},  # D minor
+        {
+            "id_": 2,
+            "voicing": (1, 5, 8),
+            "pitch_classes": [1, 5, 8],
+        },  # C# major (not in C major scale)
+    ]
+
+    links = compute_links(rows, kind="codiatonic")
+
+    # C major and D minor should be codiatonic (both in C major scale)
+    assert 1 in links[0]
+    assert 0 in links[1]
+
+    # C# major should not be codiatonic with C major or D minor
+    assert 2 not in links[0]
+    assert 2 not in links[1]
+
+
+def test_custom_link_function():
+    """Test using a custom link function."""
+    rows = [
+        {"id_": 0, "voicing": (0, 4, 7), "pitch_classes": [0, 4, 7]},
+        {"id_": 1, "voicing": (1, 5, 8), "pitch_classes": [1, 5, 8]},
+        {"id_": 2, "voicing": (0, 3, 7), "pitch_classes": [0, 3, 7]},
+    ]
+
+    # Custom function: link if root notes (first pitch) are same
+    def same_root(i, j, voicings, pc_sets, **kwargs):
+        return voicings[i][0] % 12 == voicings[j][0] % 12
+
+    links = compute_links(rows, kind=same_root)
+
+    # Chords 0 and 2 both start with 0 (C)
+    assert 2 in links[0]
+    assert 0 in links[2]
+
+    # Chord 1 starts with 1 (C#), so no matches
+    assert len(links[1]) == 0
+
+
 if __name__ == "__main__":
     # Run a quick test when executed directly
     print("Running basic smoke tests...")
@@ -367,6 +413,12 @@ if __name__ == "__main__":
 
     test_compute_links_subset()
     print("✓ Compute links (subset) works")
+
+    test_compute_links_codiatonic()
+    print("✓ Compute links (codiatonic) works")
+
+    test_custom_link_function()
+    print("✓ Custom link functions work")
 
     test_compute_links_voiceleading()
     print("✓ Compute links (voiceleading) works")
