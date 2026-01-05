@@ -316,7 +316,51 @@ chord_quality: dict[str, Sequence[int]] = {
     "13": (0, 4, 7, 10, 14, 17, 21),  # Dominant 13th
     "maj13": (0, 4, 7, 11, 14, 17, 21),  # Major 13th
     "min13": (0, 3, 7, 10, 14, 17, 21),  # Minor 13th
+    # Suspended chords
+    "sus": (0, 5, 7),  # Sus4
+    "sus2": (0, 2, 7),
+    # Added-tone chords
+    "add9": (0, 4, 7, 14),
+    "add2": (0, 2, 4, 7),
 }
+
+# Common textual shorthands (e.g. Dm11) used by some lead sheets
+_text_chord_quality_aliases: dict[str, str] = {
+    "m6": "min6",
+    "m7": "min7",
+    "m9": "min9",
+    "m11": "min11",
+    "m13": "min13",
+}
+
+for _alias, _canonical in _text_chord_quality_aliases.items():
+    if _canonical in chord_quality:
+        chord_quality[_alias] = chord_quality[_canonical]
+
+# iReal Pro-style chord symbols (used by accompy normalization)
+# - "^"  : major
+# - "-"  : minor
+# - "o"  : diminished
+# - "h"  : half-diminished (ø)
+_ireal_chord_quality_aliases: dict[str, str] = {
+    "^": "maj",
+    "^7": "maj7",
+    "^9": "maj9",
+    "-": "min",
+    "-7": "min7",
+    "-9": "min9",
+    "o": "dim",
+    "o7": "dim7",
+    # iReal uses 'h'/'h7' for half-diminished; tonal uses 'hdim7'
+    "h": "hdim7",
+    "h7": "hdim7",
+    "+": "aug",
+}
+
+for _alias, _canonical in _ireal_chord_quality_aliases.items():
+    if _canonical in chord_quality:
+        chord_quality[_alias] = chord_quality[_canonical]
+
 
 # -----------------------------------------------------------------------------
 # Registration
@@ -701,8 +745,8 @@ def scale_params(scale: str, midi_notes: bool = False):
         pattern = semitone_pattern(canonical_quality)
     except ValueError as e:
         raise IncorrectScaleSpecification(
-                f"Incorrect scale specification: '{scale}' (unknown scale quality '{quality_raw}').\n"
-                + list_scales_string()
+            f"Incorrect scale specification: '{scale}' (unknown scale quality '{quality_raw}').\n"
+            + list_scales_string()
         ) from e
 
     # Normalize root to Anglo spelling if needed

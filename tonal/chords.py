@@ -15,7 +15,7 @@ from tonal.util import (
     parse_note_name,
     add_pattern_aliases,
 )
-from tonal.notes import root_notes, chord_quality
+from tonal.notes import root_notes, chord_quality, root_note_re
 from music21.note import Note
 
 DFLT_CHORD_SEQUENCE = [
@@ -29,22 +29,80 @@ DFLT_CHORD_SEQUENCE = [
 
 # Type aliases for this module
 Chord = str
-Notes = Sequence[Note]
+Notes = Sequence[int]
 ChordTimed = tuple[Chord, Notes]
 ChordSequence = Sequence[ChordTimed]
 ChordDefinitions = Callable[[Chord], Notes]
 ChordRenderer = Callable[[Notes, any, int], None]
 
 
-def chord_to_notes(chord: Chord) -> Notes:
+def _parse_root_note(chord: str) -> tuple[str, int]:
+    """Parse a chord root note and return (root_key, root_len).
+
+    Uses the broader root registry from `tonal.notes` (supports both Anglo and
+    Latin names registered in `root_notes`).
+    """
+    m = root_note_re.match(chord.strip())
+    if not m:
+        raise ValueError(f"Unknown root note in chord: {chord!r}")
+    raw = m.group(1)
+    raw_len = len(raw)
+
+    # Normalize to an existing key in root_notes (case-insensitive)
+    raw_lower = raw.lower()
+    if raw in root_notes:
+        return raw, raw_len
+    if raw_lower in root_notes:
+        return raw_lower, raw_len
+    # fall back to a case-insensitive key search
+    for k in root_notes.keys():
+        if k.lower() == raw_lower:
+            return k, raw_len
+    raise ValueError(f"Unknown root note: {raw}")
+
+
+_alteration_re = re.compile(r"[#b]\d+")
+_add_re = re.compile(r"add\d+")
+
+
+def _simplify_quality_extension(quality_extension: str) -> str:
+    """Simplify a chord quality string to something in `chord_quality`.
+
+    This is intentionally conservative: it will ignore common alterations
+    (e.g. '7b9', '^7#11') by stripping the alteration suffix and keeping the
+    base quality.
+    """
+    qe = (quality_extension or "").strip()
+    if not qe:
+        return ""
+    # Ignore slash bass notes (e.g. "^7/G" -> "^7")
+    qe = qe.split("/", 1)[0]
+    if qe in chord_quality:
+        return qe
+
+    # Normalize some common spellings
+    qe = qe.replace("sus4", "sus")
+
+    # Strip alterations like b9, #11, b13, etc.
+    qe2 = _alteration_re.sub("", qe)
+    qe2 = _add_re.sub("", qe2)
+    qe2 = qe2.strip()
+    if qe2 in chord_quality:
+        return qe2
+
+    return qe
+
+
+def chord_to_notes(chord: Chord) -> list[int]:
     """
     Parse a chord string and return the corresponding sequence of MIDI note numbers.
 
     :param chord: The chord string (e.g., 'Cmaj7').
     :return: A sequence of MIDI note numbers representing the chord.
     """
-    root = parse_note_name(chord)
-    quality_extension = chord[len(root) :]
+    root, root_len = _parse_root_note(chord)
+    quality_extension = chord.strip()[root_len:]
+    quality_extension = _simplify_quality_extension(quality_extension)
     root_midi = root_notes.get(root)
     # print(root, root_midi, quality_extension)
 
@@ -56,7 +114,7 @@ def chord_to_notes(chord: Chord) -> Notes:
     if intervals is None:
         raise ValueError(f"Unknown quality/extension: {quality_extension}")
 
-    return [root_midi + interval for interval in intervals]
+    return [root_midi + int(interval) for interval in intervals]
 
 
 if not os.path.exists(DFLT_SOUNDFONT):
