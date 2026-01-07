@@ -42,6 +42,7 @@ from typing import (
     Set,
     FrozenSet,
     Optional,
+    Hashable,
 )
 
 
@@ -429,6 +430,131 @@ def generate_graph_default() -> Dict[int, List[int]]:
 DEFAULT_WARNING_THRESHOLD = 10000  # warn if processing more than this many combinations
 
 
+def transitive_reduction_links(
+    adjacency: Sequence[Sequence[int]],
+    *,
+    require_dag: bool = True,
+) -> List[List[int]]:
+    r"""Compute a transitive reduction of a directed graph given as adjacency lists.
+
+    This removes an edge $u \to v$ if there exists an alternate path from $u$ to
+    $v$ of length $\ge 2$.
+
+    Notes:
+        - For DAGs, the transitive reduction is unique.
+        - For graphs with cycles, transitive reduction is not unique; by default
+          this function refuses cyclic graphs.
+
+    Args:
+        adjacency: adjacency lists indexed by node index.
+        require_dag: if True, raise ValueError when cycles are detected.
+
+    Returns:
+        A new adjacency list with transitive edges removed.
+
+    >>> adj = [[1, 2], [2], []]  # 0->1->2 and 0->2 (transitive)
+    >>> transitive_reduction_links(adj)
+    [[1], [2], []]
+    """
+
+    adj = [list(dict.fromkeys(neigh)) for neigh in adjacency]
+    n = len(adj)
+
+    topo = _topological_order(adj)
+    if topo is None:
+        if require_dag:
+            raise ValueError(
+                "Graph has cycles; transitive reduction is ambiguous. "
+                "Set require_dag=False to proceed anyway (not recommended)."
+            )
+        # Fallback: conservative removal using per-edge reachability checks.
+        return _transitive_reduction_general(adj)
+
+    # Compute reachability sets in reverse topological order
+    reachable: List[Set[int]] = [set() for _ in range(n)]
+    for u in reversed(topo):
+        r: Set[int] = set()
+        for v in adj[u]:
+            r.add(v)
+            r |= reachable[v]
+        reachable[u] = r
+
+    reduced: List[List[int]] = []
+    for u in range(n):
+        out_u = list(adj[u])
+        closure_by_child: Dict[int, Set[int]] = {w: ({w} | reachable[w]) for w in out_u}
+
+        kept: List[int] = []
+        for v in out_u:
+            # Remove u->v if v is reachable via some other outgoing neighbor.
+            implied = any((w != v) and (v in closure_by_child[w]) for w in out_u)
+            if implied:
+                continue
+            kept.append(v)
+        reduced.append(kept)
+
+    return reduced
+
+
+def _topological_order(adjacency: Sequence[Sequence[int]]) -> Optional[List[int]]:
+    """Return a topological order if graph is a DAG, else None."""
+    n = len(adjacency)
+    indeg = [0] * n
+    for u in range(n):
+        for v in adjacency[u]:
+            if 0 <= v < n:
+                indeg[v] += 1
+
+    queue = [i for i, d in enumerate(indeg) if d == 0]
+    order: List[int] = []
+    while queue:
+        u = queue.pop()
+        order.append(u)
+        for v in adjacency[u]:
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                queue.append(v)
+
+    if len(order) != n:
+        return None
+    return order
+
+
+def _transitive_reduction_general(
+    adjacency: Sequence[Sequence[int]],
+) -> List[List[int]]:
+    """Conservative transitive reduction for general directed graphs.
+
+    This removes edge u->v if v is reachable from u without using that edge.
+    """
+
+    adj = [list(dict.fromkeys(neigh)) for neigh in adjacency]
+    n = len(adj)
+    reduced: List[List[int]] = []
+    for u in range(n):
+        kept: List[int] = []
+        for v in adj[u]:
+            # BFS from u, skipping the direct edge u->v
+            seen = {u}
+            stack = [w for w in adj[u] if w != v]
+            reachable = False
+            while stack and not reachable:
+                x = stack.pop()
+                if x in seen:
+                    continue
+                seen.add(x)
+                if x == v:
+                    reachable = True
+                    break
+                stack.extend(adj[x])
+
+            if reachable:
+                continue
+            kept.append(v)
+        reduced.append(kept)
+    return reduced
+
+
 def _warn_if_large_computation(
     n: int, threshold: int = DEFAULT_WARNING_THRESHOLD
 ) -> None:
@@ -582,6 +708,8 @@ def compute_links(
     kind: str = "shared",
     min_shared_pcs: int = 2,
     max_vl_distance: int = 3,
+    universe_pcs: Sequence[int] = tuple(range(12)),
+    reduce_transitive: bool = False,
     warning_threshold: int = DEFAULT_WARNING_THRESHOLD,
 ) -> List[List]:
     """
@@ -640,15 +768,18 @@ def compute_links(
         pc_sets=pc_sets,
         min_shared_pcs=min_shared_pcs,
         max_vl_distance=max_vl_distance,
+        universe_pcs=universe_pcs,
     )
 
     # Compute links
-    all_links = [
-        [ids[j] for j in range(n) if i != j and link_func(i, j, voicings)]
-        for i in range(n)
+    adjacency_idx: List[List[int]] = [
+        [j for j in range(n) if i != j and link_func(i, j, voicings)] for i in range(n)
     ]
 
-    return all_links
+    if reduce_transitive:
+        adjacency_idx = transitive_reduction_links(adjacency_idx, require_dag=True)
+
+    return [[ids[j] for j in js] for js in adjacency_idx]
 
 
 def _get_link_function(
@@ -657,6 +788,7 @@ def _get_link_function(
     pc_sets: List[Set[int]],
     min_shared_pcs: int,
     max_vl_distance: int,
+    universe_pcs: Sequence[int],
 ) -> Callable[[int, int, List[Tuple[int, ...]]], bool]:
     """
     Create a link function based on the specified kind.
@@ -707,10 +839,26 @@ def _get_link_function(
         def link_func(i: int, j: int, voicings: List[Tuple[int, ...]]) -> bool:
             return is_codiatonic(voicings[i], voicings[j])
 
+    elif kind == "subset_kh":
+        # Kh restriction: only include subset edges where both endpoints'
+        # complements are present in the node set.
+        universe = frozenset({p % 12 for p in universe_pcs})
+        pc_frozens = [frozenset(s) for s in pc_sets]
+        pc_index: Dict[FrozenSet[int], int] = {s: i for i, s in enumerate(pc_frozens)}
+        has_complement = [
+            (universe.difference(pc_frozens[i]) in pc_index)
+            for i in range(len(pc_frozens))
+        ]
+
+        def link_func(i: int, j: int, voicings: List[Tuple[int, ...]]) -> bool:
+            if not (has_complement[i] and has_complement[j]):
+                return False
+            return pc_sets[i].issubset(pc_sets[j])
+
     else:
         raise ValueError(
             f"Unknown link kind: {kind}. "
-            "Must be 'shared', 'subset', 'voiceleading', 'codiatonic', or a custom callable."
+            "Must be 'shared', 'subset', 'subset_kh', 'voiceleading', 'codiatonic', or a custom callable."
         )
 
     return link_func

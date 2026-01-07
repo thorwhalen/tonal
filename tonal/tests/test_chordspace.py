@@ -22,6 +22,7 @@ from tonal.chordspace import (
     _generate_ids,
     _chord_features,
     _compute_interval_vector,
+    transitive_reduction_links,
 )
 
 
@@ -239,6 +240,59 @@ def test_compute_links_subset():
     assert len(links) == 2
     assert 1 in links[0]  # first is subset of second
     assert 1 not in links[1]  # second is not subset of first
+
+
+def test_transitive_reduction_links_dag():
+    """Transitive reduction removes implied edges in a DAG."""
+    adj = [[1, 2], [2], []]
+    reduced = transitive_reduction_links(adj)
+    assert reduced == [[1], [2], []]
+
+
+def test_compute_links_subset_reduce_transitive():
+    """compute_links can remove transitive edges for subset graphs."""
+    rows = [
+        {"id_": 0, "voicing": (0, 4, 7), "pitch_classes": [0, 4, 7]},
+        {"id_": 1, "voicing": (0, 2, 4, 7), "pitch_classes": [0, 2, 4, 7]},
+        {"id_": 2, "voicing": (0, 2, 4, 7, 9), "pitch_classes": [0, 2, 4, 7, 9]},
+    ]
+
+    links = compute_links(rows, kind="subset", reduce_transitive=True)
+
+    assert links[0] == [1]
+    assert links[1] == [2]
+    assert links[2] == []
+
+
+def test_compute_links_subset_kh_requires_complements_present():
+    """subset_kh only links when both endpoints have complements in the node set."""
+    # Universe is 0..11. Use pitch-class sets (via voicings) that include a set
+    # and its complement, so kh condition can be satisfied.
+    rows = [
+        {"id_": "A", "voicing": (0, 4), "pitch_classes": [0, 4]},
+        {"id_": "B", "voicing": (0, 4, 7), "pitch_classes": [0, 4, 7]},
+        # complements
+        {
+            "id_": "Ac",
+            "voicing": (1, 2, 3, 5, 6, 7, 8, 9, 10, 11),
+            "pitch_classes": [1, 2, 3, 5, 6, 7, 8, 9, 10, 11],
+        },
+        {
+            "id_": "Bc",
+            "voicing": (1, 2, 3, 5, 6, 8, 9, 10, 11),
+            "pitch_classes": [1, 2, 3, 5, 6, 8, 9, 10, 11],
+        },
+    ]
+
+    links_kh = compute_links(rows, kind="subset_kh")
+
+    # A subset B should be linked
+    assert "B" in links_kh[0]
+
+    # Without complements, kh should suppress links
+    rows_no_complements = rows[:2]
+    links_kh2 = compute_links(rows_no_complements, kind="subset_kh")
+    assert links_kh2 == [[], []]
 
 
 def test_compute_links_voiceleading():
