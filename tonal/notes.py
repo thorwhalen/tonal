@@ -16,14 +16,55 @@ note. For example, the semitone pattern for a major scale is [0, 2, 4, 5, 7, 9, 
 """
 
 from typing import Dict, Tuple
-from collections.abc import Sequence
-from tonal.util import (
-    note_name_pattern,
-    parse_note_name,
-    add_pattern_aliases,
-)
+from collections.abc import Iterable, Iterator, Sequence
 
 import re
+
+
+# NOTE: This module is intentionally dependency-light.
+# Historically it imported `tonal.util`, but that module pulls in music21.
+# Keeping `tonal.notes` lightweight lets downstream packages (e.g. atonal)
+# reuse scale/chord definitions without inheriting heavy optional deps.
+
+
+# TODO: note_name_pattern, parse_note_name, and add_pattern_aliases ported here to avoid music21 dep. Put back when music21 dep better managed
+# Regex for note names (e.g., C, C#, Db, etc.)
+note_name_pattern = re.compile(r"([A-Ga-g][#b]?)")
+
+
+def parse_note_name(note_str: str) -> str:
+    """Parse a note name prefix from a string.
+
+    >>> parse_note_name('C#4')
+    'C#'
+    >>> parse_note_name('Eb')
+    'Eb'
+    """
+    match = note_name_pattern.match(note_str)
+    if match:
+        return match.group(1)
+    else:
+        raise ValueError(f"Invalid note string: {note_str}")
+
+
+def add_pattern_aliases(
+    quality_extensions: Dict[str, Sequence[int]],
+) -> Iterator[tuple[str, Sequence[int]]]:
+    """Generate common textual aliases for quality-extension keys.
+
+    This is shared logic used by several modules (e.g. mapping maj->M, min->m).
+
+    >>> d = {'maj7': (0, 4, 7, 11), 'min7': (0, 3, 7, 10)}
+    >>> dict(add_pattern_aliases(d))['M7']
+    (0, 4, 7, 11)
+    """
+    for _qe in quality_extensions:
+        if _qe.startswith("maj"):
+            yield _qe.replace("maj", "M"), quality_extensions[_qe]
+        elif _qe.startswith("min"):
+            yield _qe.replace("min", "m"), quality_extensions[_qe]
+        elif _qe.startswith("dim"):
+            yield _qe.replace("dim", "°"), quality_extensions[_qe]
 
 
 # Define root notes to MIDI note numbers
@@ -96,6 +137,7 @@ scale_quality = {
     "major": (0, 2, 4, 5, 7, 9, 11),
     "natural_minor": (0, 2, 3, 5, 7, 8, 10),
     "harmonic_minor": (0, 2, 3, 5, 7, 8, 11),
+    "harmonic_major": (0, 2, 4, 5, 7, 8, 11),
     "melodic_minor_ascending": (0, 2, 3, 5, 7, 9, 11),
     "melodic_minor_descending": (0, 2, 3, 5, 7, 8, 10),
     "major_pentatonic": (0, 2, 4, 7, 9),
@@ -105,6 +147,9 @@ scale_quality = {
     "whole_tone": (0, 2, 4, 6, 8, 10),
     "diminished": (0, 2, 3, 5, 6, 8, 9, 11),
     "diminished_half_whole": (0, 1, 3, 4, 6, 7, 9, 10),
+    # Neo-Riemannian / hexatonic collections
+    # Forte 6-32 prime form: (0, 1, 4, 5, 8, 9)
+    "hexatonic_major_minor": (0, 1, 4, 5, 8, 9),
     "augmented": (0, 3, 4, 7, 8, 11),
     "lydian": (0, 2, 4, 6, 7, 9, 11),
     "mixolydian": (0, 2, 4, 5, 7, 9, 10),
@@ -190,10 +235,14 @@ _scale_quality_western_aliases = {
     "ion": "ionian",
     "nat_min": "natural_minor",
     "harm_min": "harmonic_minor",
+    "harm_maj": "harmonic_major",
+    "harm_major": "harmonic_major",
     "mel_min_asc": "melodic_minor_ascending",
     "mel_min_desc": "melodic_minor_descending",
     "w_h_dim": "diminished",
     "h_w_dim": "diminished_half_whole",
+    "octatonic_whole_half": "diminished",
+    "octatonic_half_whole": "diminished_half_whole",
 }
 
 _scale_quality_jazz_aliases = {
@@ -331,6 +380,9 @@ _text_chord_quality_aliases: dict[str, str] = {
     "m9": "min9",
     "m11": "min11",
     "m13": "min13",
+    "m7b5": "hdim7",
+    "min7b5": "hdim7",
+    "ø7": "hdim7",
 }
 
 for _alias, _canonical in _text_chord_quality_aliases.items():
