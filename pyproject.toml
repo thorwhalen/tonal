@@ -15,10 +15,11 @@ authors = [
     { name = "Thor Whalen" },
 ]
 dependencies = [
+    "config2py",
+    "dol",
+    "lkj",
     "mido",
     "music21",
-    "numpy",
-    "lkj",
 ]
 
 [project.license]
@@ -32,6 +33,12 @@ dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
     "ruff>=0.1.0",
+]
+test = [
+    "config2py",
+    "dol",
+    "mido",
+    "music21",
 ]
 docs = [
     "sphinx>=6.0",
@@ -79,15 +86,18 @@ convention = "google"
 [tool.pytest.ini_options]
 minversion = "6.0"
 testpaths = [
-    "tests",
+    "tonal/tests",
 ]
 doctest_optionflags = [
     "NORMALIZE_WHITESPACE",
     "ELLIPSIS",
 ]
 
+[tool.hatch.build.targets.wheel]
+packages = ["tonal"]
+
 [tool.wads.ci]
-project_name = ""
+project_name = "tonal"
 
 [tool.wads.ci.commands]
 pre_test = []
