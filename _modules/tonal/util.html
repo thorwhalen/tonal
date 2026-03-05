@@ -5,16 +5,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tonal.util &mdash; tonal 0.0.14 documentation</title>
+  <title>tonal.util &mdash; tonal 0.0.16 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=544df88d"></script>
+      <script src="../../_static/documentation_options.js?v=c7cdf6fe"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/converters.html">tonal.converters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/counterpoint.html">tonal.counterpoint</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/notes.html">tonal.notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/tests/test_chords.html">tonal.tests.test_chords</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/tests/test_notes.html">tonal.tests.test_notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/util.html">tonal.util</a></li>
 </ul>
@@ -87,7 +88,7 @@
 <span class="c1">#   to be consistent.</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">importlib.resources</span><span class="w"> </span><span class="kn">import</span> <span class="n">files</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">config2py</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -136,19 +137,14 @@
     <span class="n">DFLT_SOUNDFONT</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">data_files</span> <span class="o">/</span> <span class="s2">&quot;Caeds Small Trash GM v1.06.sf2&quot;</span><span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">Callable</span><span class="p">,</span>
-    <span class="n">Iterable</span><span class="p">,</span>
     <span class="n">List</span><span class="p">,</span>
     <span class="n">Union</span><span class="p">,</span>
-    <span class="n">Generator</span><span class="p">,</span>
     <span class="n">Optional</span><span class="p">,</span>
-    <span class="n">Container</span><span class="p">,</span>
     <span class="n">Any</span><span class="p">,</span>
-    <span class="n">Sequence</span><span class="p">,</span>
     <span class="n">Tuple</span><span class="p">,</span>
-    <span class="n">Mapping</span><span class="p">,</span>
     <span class="n">Dict</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Container</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Mapping</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
@@ -191,9 +187,9 @@
 <span class="n">NoteSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">NoteString</span><span class="p">,</span> <span class="n">Note</span><span class="p">]</span>
 <span class="n">NotesSpec</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">NoteSpec</span><span class="p">]</span>
 <span class="n">TrackSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Stream</span><span class="p">,</span> <span class="n">NotesSpec</span><span class="p">]</span>
-<span class="n">TracksSpec</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="n">TrackSpec</span><span class="p">]</span>
+<span class="n">TracksSpec</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="n">TrackSpec</span><span class="p">]</span>
 <span class="n">ScaleCreator</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Scale</span><span class="p">]</span>
-<span class="n">StreamSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Note</span><span class="p">],</span> <span class="n">Stream</span><span class="p">]</span>
+<span class="n">StreamSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Note</span><span class="p">],</span> <span class="n">Stream</span><span class="p">]</span>
 <span class="n">Streams</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Stream</span><span class="p">]</span>
 
 <span class="n">StrToNote</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Note</span><span class="p">]</span>
@@ -201,7 +197,7 @@
 <span class="n">Filepath</span> <span class="o">=</span> <span class="nb">str</span>
 <span class="n">ScoreSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Filepath</span><span class="p">,</span> <span class="n">Score</span><span class="p">]</span>
 <span class="n">PartFilter</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Part</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span>
-<span class="n">PartIdx</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+<span class="n">PartIdx</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
 <span class="n">PartFilterSpec</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">PartIdx</span><span class="p">,</span> <span class="n">PartFilter</span><span class="p">]]</span>
 
 <span class="c1"># Regex for note names (e.g., C, C#, Db, etc.)</span>
@@ -230,7 +226,7 @@
 <div class="viewcode-block" id="string_to_note">
 <a class="viewcode-back" href="../../module_docs/tonal/util.html#tonal.util.string_to_note">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">string_to_note</span><span class="p">(</span>
-    <span class="n">note_or_notes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">NoteString</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">NoteString</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">note_or_notes</span><span class="p">:</span> <span class="n">NoteString</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">NoteString</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">egress</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="nb">list</span><span class="p">,</span>
     <span class="o">**</span><span class="n">note_kwargs</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Note</span><span class="p">:</span>
@@ -365,7 +361,7 @@
 <div class="viewcode-block" id="ensure_scale">
 <a class="viewcode-back" href="../../module_docs/tonal/util.html#tonal.util.ensure_scale">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ensure_scale</span><span class="p">(</span>
-    <span class="n">input_scale</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Scale</span><span class="p">],</span> <span class="n">scale_creator</span><span class="p">:</span> <span class="n">ScaleCreator</span> <span class="o">=</span> <span class="n">MajorScale</span>
+    <span class="n">input_scale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Scale</span><span class="p">,</span> <span class="n">scale_creator</span><span class="p">:</span> <span class="n">ScaleCreator</span> <span class="o">=</span> <span class="n">MajorScale</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Scale</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Ensures the input is a Scale object. Converts a string to a Scale using the provided scale creator.</span>
@@ -391,7 +387,7 @@
 
 <div class="viewcode-block" id="get_scale_notes">
 <a class="viewcode-back" href="../../module_docs/tonal/util.html#tonal.util.get_scale_notes">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_scale_notes</span><span class="p">(</span><span class="n">input_note</span><span class="p">:</span> <span class="n">Note</span><span class="p">,</span> <span class="n">input_scale</span><span class="p">:</span> <span class="n">Scale</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_scale_notes</span><span class="p">(</span><span class="n">input_note</span><span class="p">:</span> <span class="n">Note</span><span class="p">,</span> <span class="n">input_scale</span><span class="p">:</span> <span class="n">Scale</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the names of the pitches in the scale within one octave around the input note.</span>
 
@@ -447,7 +443,7 @@
 
 <div class="viewcode-block" id="note_names">
 <a class="viewcode-back" href="../../module_docs/tonal/util.html#tonal.util.note_names">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">note_names</span><span class="p">(</span><span class="n">notes</span><span class="p">:</span> <span class="n">TrackSpec</span><span class="p">,</span> <span class="n">name_attr</span><span class="o">=</span><span class="s2">&quot;nameWithOctave&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">note_names</span><span class="p">(</span><span class="n">notes</span><span class="p">:</span> <span class="n">TrackSpec</span><span class="p">,</span> <span class="n">name_attr</span><span class="o">=</span><span class="s2">&quot;nameWithOctave&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the names of the notes in the input iterable.</span>
 
@@ -480,7 +476,7 @@
 
 <div class="viewcode-block" id="multi_note_names">
 <a class="viewcode-back" href="../../module_docs/tonal/util.html#tonal.util.multi_note_names">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">multi_note_names</span><span class="p">(</span><span class="n">tracks</span><span class="p">:</span> <span class="n">TracksSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">NoteString</span><span class="p">]]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">multi_note_names</span><span class="p">(</span><span class="n">tracks</span><span class="p">:</span> <span class="n">TracksSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">NoteString</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the names of the notes in the input iterable.</span>
 
@@ -533,7 +529,7 @@
 
 <div class="viewcode-block" id="concatenate_streams">
 <a class="viewcode-back" href="../../module_docs/tonal/util.html#tonal.util.concatenate_streams">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">concatenate_streams</span><span class="p">(</span><span class="n">streams_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Streams</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Streams</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">concatenate_streams</span><span class="p">(</span><span class="n">streams_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Streams</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Streams</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Concatenates corresponding streams from a list of lists of streams.</span>
 
@@ -562,7 +558,7 @@
 
 <div class="viewcode-block" id="create_score_from_tracks">
 <a class="viewcode-back" href="../../module_docs/tonal/util.html#tonal.util.create_score_from_tracks">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">create_score_from_tracks</span><span class="p">(</span><span class="n">tracks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Stream</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_score_from_tracks</span><span class="p">(</span><span class="n">tracks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Stream</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a music21 Score from a list of tracks (Stream objects).</span>
 

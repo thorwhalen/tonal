@@ -5,16 +5,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tonal.counterpoint &mdash; tonal 0.0.14 documentation</title>
+  <title>tonal.counterpoint &mdash; tonal 0.0.16 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=544df88d"></script>
+      <script src="../../_static/documentation_options.js?v=c7cdf6fe"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/converters.html">tonal.converters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/counterpoint.html">tonal.counterpoint</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/notes.html">tonal.notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/tests/test_chords.html">tonal.tests.test_chords</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/tests/test_notes.html">tonal.tests.test_notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/tonal/util.html">tonal.util</a></li>
 </ul>
@@ -129,7 +130,8 @@
 <span class="sd">[[&#39;C5&#39;, &#39;E5&#39;, &#39;G#5&#39;], [&#39;B5&#39;, &#39;C6&#39;, &#39;E6&#39;]]</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">music21.scale</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scale</span><span class="p">,</span> <span class="n">MajorScale</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">music21.stream</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stream</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">music21.note</span><span class="w"> </span><span class="kn">import</span> <span class="n">Note</span>
@@ -150,7 +152,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">_translate_note_in_scale</span><span class="p">(</span>
     <span class="n">input_note</span><span class="p">:</span> <span class="n">NoteString</span><span class="p">,</span>
     <span class="n">translation</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">input_scale</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Scale</span><span class="p">],</span>
+    <span class="n">input_scale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Scale</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">scale_creator</span><span class="p">:</span> <span class="n">ScaleCreator</span> <span class="o">=</span> <span class="n">MajorScale</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -231,7 +233,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">translate_notes_in_scale</span><span class="p">(</span>
     <span class="n">input_notes</span><span class="p">:</span> <span class="n">TrackSpec</span><span class="p">,</span>
     <span class="n">translation</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">input_scale</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Scale</span><span class="p">],</span>
+    <span class="n">input_scale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Scale</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">scale_creator</span><span class="p">:</span> <span class="n">ScaleCreator</span> <span class="o">=</span> <span class="n">MajorScale</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Stream</span><span class="p">:</span>
@@ -273,12 +275,12 @@
 <div class="viewcode-block" id="translate_in_scale">
 <a class="viewcode-back" href="../../module_docs/tonal/counterpoint.html#tonal.counterpoint.translate_in_scale">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">translate_in_scale</span><span class="p">(</span>
-    <span class="n">motif</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TrackSpec</span><span class="p">,</span> <span class="n">TracksSpec</span><span class="p">],</span>
-    <span class="n">translation</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
-    <span class="n">input_scale</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Scale</span><span class="p">],</span>
+    <span class="n">motif</span><span class="p">:</span> <span class="n">TrackSpec</span> <span class="o">|</span> <span class="n">TracksSpec</span><span class="p">,</span>
+    <span class="n">translation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">input_scale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Scale</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">scale_creator</span><span class="p">:</span> <span class="n">ScaleCreator</span> <span class="o">=</span> <span class="n">MajorScale</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Stream</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Stream</span><span class="p">]]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Stream</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Stream</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Translates the input notes or tracks by the given number of steps within the given scale.</span>
 

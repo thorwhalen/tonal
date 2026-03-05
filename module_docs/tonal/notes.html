@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tonal.notes &mdash; tonal 0.0.14 documentation</title>
+  <title>tonal.notes &mdash; tonal 0.0.16 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=544df88d"></script>
+      <script src="../../_static/documentation_options.js?v=c7cdf6fe"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -24,7 +24,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="tonal.tests.test_notes" href="tests/test_notes.html" />
+    <link rel="next" title="tonal.tests.test_chords" href="tests/test_chords.html" />
     <link rel="prev" title="tonal.counterpoint" href="counterpoint.html" /> 
 </head>
 
@@ -55,12 +55,14 @@
 <li class="toctree-l1"><a class="reference internal" href="counterpoint.html">tonal.counterpoint</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">tonal.notes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.IncorrectScaleSpecification"><code class="docutils literal notranslate"><span class="pre">IncorrectScaleSpecification</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.notes.add_pattern_aliases"><code class="docutils literal notranslate"><span class="pre">add_pattern_aliases()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.canonical_quality_name"><code class="docutils literal notranslate"><span class="pre">canonical_quality_name()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.list_chord_qualities"><code class="docutils literal notranslate"><span class="pre">list_chord_qualities()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.list_root_notes"><code class="docutils literal notranslate"><span class="pre">list_root_notes()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.list_scale_qualities"><code class="docutils literal notranslate"><span class="pre">list_scale_qualities()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.list_scale_quality_aliases"><code class="docutils literal notranslate"><span class="pre">list_scale_quality_aliases()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.list_scales_string"><code class="docutils literal notranslate"><span class="pre">list_scales_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tonal.notes.parse_note_name"><code class="docutils literal notranslate"><span class="pre">parse_note_name()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.register_chord_quality"><code class="docutils literal notranslate"><span class="pre">register_chord_quality()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.register_root_note"><code class="docutils literal notranslate"><span class="pre">register_root_note()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.register_scale_quality"><code class="docutils literal notranslate"><span class="pre">register_scale_quality()</span></code></a></li>
@@ -72,6 +74,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#tonal.notes.validate_scale_semitone_pattern_uniquness"><code class="docutils literal notranslate"><span class="pre">validate_scale_semitone_pattern_uniquness()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="tests/test_chords.html">tonal.tests.test_chords</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tests/test_notes.html">tonal.tests.test_notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">tonal.util</a></li>
 </ul>
@@ -122,6 +125,18 @@ note. For example, the semitone pattern for a major scale is [0, 2, 4, 5, 7, 9, 
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="tonal.notes.add_pattern_aliases">
+<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">add_pattern_aliases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quality_extensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#add_pattern_aliases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.add_pattern_aliases" title="Link to this definition"></a></dt>
+<dd><p>Generate common textual aliases for quality-extension keys.</p>
+<p>This is shared logic used by several modules (e.g. mapping maj-&gt;M, min-&gt;m).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;maj7&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="s1">&#39;min7&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">(</span><span class="n">add_pattern_aliases</span><span class="p">(</span><span class="n">d</span><span class="p">))[</span><span class="s1">&#39;M7&#39;</span><span class="p">]</span>
+<span class="go">(0, 4, 7, 11)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="tonal.notes.canonical_quality_name">
 <span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">canonical_quality_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quality</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#canonical_quality_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.canonical_quality_name" title="Link to this definition"></a></dt>
 <dd><p>Return the canonical quality key from <cite>scale_quality</cite>.</p>
@@ -137,7 +152,7 @@ Raises ValueError if no mapping exists.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tonal.notes.list_chord_qualities">
-<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">list_chord_qualities</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#list_chord_qualities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.list_chord_qualities" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">list_chord_qualities</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#list_chord_qualities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.list_chord_qualities" title="Link to this definition"></a></dt>
 <dd><p>List all registered chord qualities.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -155,7 +170,7 @@ Raises ValueError if no mapping exists.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tonal.notes.list_root_notes">
-<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">list_root_notes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#list_root_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.list_root_notes" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">list_root_notes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#list_root_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.list_root_notes" title="Link to this definition"></a></dt>
 <dd><p>List all registered root notes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -173,7 +188,7 @@ Raises ValueError if no mapping exists.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tonal.notes.list_scale_qualities">
-<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">list_scale_qualities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include_aliases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#list_scale_qualities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.list_scale_qualities" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">list_scale_qualities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include_aliases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#list_scale_qualities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.list_scale_qualities" title="Link to this definition"></a></dt>
 <dd><p>List all registered scale qualities.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -194,7 +209,7 @@ Raises ValueError if no mapping exists.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tonal.notes.list_scale_quality_aliases">
-<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">list_scale_quality_aliases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#list_scale_quality_aliases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.list_scale_quality_aliases" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">list_scale_quality_aliases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#list_scale_quality_aliases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.list_scale_quality_aliases" title="Link to this definition"></a></dt>
 <dd><p>List all registered scale quality aliases.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -218,6 +233,18 @@ Raises ValueError if no mapping exists.</p>
 - Anatomy of a scale specification
 - Valid roots
 - Valid qualities (including aliases)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.notes.parse_note_name">
+<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">parse_note_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#parse_note_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.parse_note_name" title="Link to this definition"></a></dt>
+<dd><p>Parse a note name prefix from a string.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_note_name</span><span class="p">(</span><span class="s1">&#39;C#4&#39;</span><span class="p">)</span>
+<span class="go">&#39;C#&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_note_name</span><span class="p">(</span><span class="s1">&#39;Eb&#39;</span><span class="p">)</span>
+<span class="go">&#39;Eb&#39;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -298,7 +325,7 @@ Raises ValueError if no mapping exists.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tonal.notes.scale_midi_notes">
-<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">scale_midi_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'C</span> <span class="pre">major'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">midi_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">127)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'C'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#scale_midi_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.scale_midi_notes" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">scale_midi_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'C</span> <span class="pre">major'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">midi_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">127)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'C'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#scale_midi_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.scale_midi_notes" title="Link to this definition"></a></dt>
 <dd><p>Return a tuple of all MIDI note numbers in the given range that belong to the specified scale.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -419,7 +446,7 @@ in the scale_qualities dictionary.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="counterpoint.html" class="btn btn-neutral float-left" title="tonal.counterpoint" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="tests/test_notes.html" class="btn btn-neutral float-right" title="tonal.tests.test_notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="tests/test_chords.html" class="btn btn-neutral float-right" title="tonal.tests.test_chords" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

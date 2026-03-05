@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to tonal’s documentation! &mdash; tonal 0.0.14 documentation</title>
+  <title>Welcome to tonal’s documentation! &mdash; tonal 0.0.16 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=544df88d"></script>
+      <script src="_static/documentation_options.js?v=c7cdf6fe"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="module_docs/tonal/converters.html">tonal.converters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/tonal/counterpoint.html">tonal.counterpoint</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/tonal/notes.html">tonal.notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/tonal/tests/test_chords.html">tonal.tests.test_chords</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/tonal/tests/test_notes.html">tonal.tests.test_notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/tonal/util.html">tonal.util</a></li>
 </ul>
@@ -112,12 +113,14 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/tonal/notes.html">tonal.notes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.IncorrectScaleSpecification"><code class="docutils literal notranslate"><span class="pre">IncorrectScaleSpecification</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.add_pattern_aliases"><code class="docutils literal notranslate"><span class="pre">add_pattern_aliases()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.canonical_quality_name"><code class="docutils literal notranslate"><span class="pre">canonical_quality_name()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.list_chord_qualities"><code class="docutils literal notranslate"><span class="pre">list_chord_qualities()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.list_root_notes"><code class="docutils literal notranslate"><span class="pre">list_root_notes()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.list_scale_qualities"><code class="docutils literal notranslate"><span class="pre">list_scale_qualities()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.list_scale_quality_aliases"><code class="docutils literal notranslate"><span class="pre">list_scale_quality_aliases()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.list_scales_string"><code class="docutils literal notranslate"><span class="pre">list_scales_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.parse_note_name"><code class="docutils literal notranslate"><span class="pre">parse_note_name()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.register_chord_quality"><code class="docutils literal notranslate"><span class="pre">register_chord_quality()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.register_root_note"><code class="docutils literal notranslate"><span class="pre">register_root_note()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.register_scale_quality"><code class="docutils literal notranslate"><span class="pre">register_scale_quality()</span></code></a></li>
@@ -129,6 +132,7 @@
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/notes.html#tonal.notes.validate_scale_semitone_pattern_uniquness"><code class="docutils literal notranslate"><span class="pre">validate_scale_semitone_pattern_uniquness()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/tonal/tests/test_chords.html">tonal.tests.test_chords</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/tonal/tests/test_notes.html">tonal.tests.test_notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/tonal/util.html">tonal.util</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/tonal/util.html#tonal.util.add_streams"><code class="docutils literal notranslate"><span class="pre">add_streams()</span></code></a></li>
@@ -159,8 +163,8 @@
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-<p>Release: 0.0.14</p>
-<p>Last change: Oct 11, 2025</p>
+<p>Release: 0.0.16</p>
+<p>Last change: Mar 05, 2026</p>
 </section>
 
 
