@@ -278,9 +278,9 @@ def ensure_scale(
     """
     if isinstance(input_scale, str):
         input_scale = scale_creator(input_scale)
-    assert isinstance(
-        input_scale, Scale
-    ), f"The input scale must be a music21.scale.Scale object: {input_scale=}"
+    assert isinstance(input_scale, Scale), (
+        f"The input scale must be a music21.scale.Scale object: {input_scale=}"
+    )
     return input_scale
 
 

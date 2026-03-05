@@ -330,9 +330,9 @@ scale_quality_alias = {
 }
 
 # assert that all values of scale_quality_alias are in scale_quality
-assert all(
-    v in scale_quality for v in scale_quality_alias.values()
-), "Some scale quality aliases are not in the main scale quality definitions."
+assert all(v in scale_quality for v in scale_quality_alias.values()), (
+    "Some scale quality aliases are not in the main scale quality definitions."
+)
 
 # TODO: Separate base and aliases
 # TODO: Verify completeness and more chord definitions if needed
