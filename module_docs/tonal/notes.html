@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tonal.notes &mdash; tonal 0.0.17 documentation</title>
+  <title>tonal.notes &mdash; tonal 0.0.18 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,9 +15,9 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=63b572e7"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/documentation_options.js?v=8bafd125"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../_static/copybutton.js?v=f281be69"></script>
@@ -120,7 +120,7 @@ the precise distance in semitones (half-steps) of each note from the starting (r
 note. For example, the semitone pattern for a major scale is [0, 2, 4, 5, 7, 9, 11].</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="tonal.notes.IncorrectScaleSpecification">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">IncorrectScaleSpecification</span></span><a class="reference internal" href="../../_modules/tonal/notes.html#IncorrectScaleSpecification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.IncorrectScaleSpecification" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">IncorrectScaleSpecification</span></span><a class="reference internal" href="../../_modules/tonal/notes.html#IncorrectScaleSpecification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.IncorrectScaleSpecification" title="Link to this definition"></a></dt>
 <dd><p>Raised when a scale string cannot be parsed/validated into root and quality.</p>
 </dd></dl>
 
@@ -325,7 +325,7 @@ Raises ValueError if no mapping exists.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tonal.notes.scale_midi_notes">
-<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">scale_midi_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'C</span> <span class="pre">major'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">midi_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">127)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'C'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#scale_midi_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.scale_midi_notes" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tonal.notes.</span></span><span class="sig-name descname"><span class="pre">scale_midi_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'C</span> <span class="pre">major'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">midi_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">127)</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'C'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../../_modules/tonal/notes.html#scale_midi_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tonal.notes.scale_midi_notes" title="Link to this definition"></a></dt>
 <dd><p>Return a tuple of all MIDI note numbers in the given range that belong to the specified scale.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -342,7 +342,7 @@ Raises ValueError if no mapping exists.</p>
 <dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale_midi_notes</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">)</span>  
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale_midi_notes</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">)</span>
 <span class="go">(1, 3, 4, 6, 8, 9, 11, 13, 15, 16, ...114, 116, 117, 119, 121, 123, 124, 126)</span>
 </pre></div>
 </div>
@@ -351,7 +351,7 @@ to start with 4, remember that scale_midi_notes is designed to return all notes 
 within the MIDI range, not just the notes starting from the root note.
 The first note in that range that is in E major is actually a C#, which the
 midi note 1 is. You can control the range through:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale_midi_notes</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="n">midi_range</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>  
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale_midi_notes</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="n">midi_range</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
 <span class="go">(4, 6, 8, 9, 11, 13, 15, 16, 18, 20, 21, 23, 25, 27, 28, 30)</span>
 </pre></div>
 </div>

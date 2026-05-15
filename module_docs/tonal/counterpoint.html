@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tonal.counterpoint &mdash; tonal 0.0.17 documentation</title>
+  <title>tonal.counterpoint &mdash; tonal 0.0.18 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,9 +15,9 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=63b572e7"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/documentation_options.js?v=8bafd125"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../_static/copybutton.js?v=f281be69"></script>
@@ -93,7 +93,7 @@
 <p>The <cite>translate_in_scale</cite> allows you to translate a sequence of notes, or multiple
 tracks of notes by the given number of steps within the given scale.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span> <span class="o">=</span> <span class="n">translate_in_scale</span><span class="p">([</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">],</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span>
 <span class="go">&lt;music21.stream.Stream ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
 <span class="go">[&#39;A3&#39;, &#39;C4&#39;, &#39;G3&#39;, &#39;A3&#39;]</span>
@@ -157,7 +157,7 @@ of a partial function to get a translator with a fixed input scale:</p>
 <p class="rubric">Examples</p>
 <p>For a single track of notes:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span> <span class="o">=</span> <span class="n">translate_in_scale</span><span class="p">([</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">],</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span>
 <span class="go">&lt;music21.stream.Stream ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
 <span class="go">[&#39;A3&#39;, &#39;C4&#39;, &#39;G3&#39;, &#39;A3&#39;]</span>
@@ -174,7 +174,7 @@ of a partial function to get a translator with a fixed input scale:</p>
 <p>With a E major scale, and two translations:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">motif</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;G#4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;C#5&#39;</span><span class="p">,</span> <span class="s1">&#39;E5&#39;</span><span class="p">,</span> <span class="s1">&#39;G#5&#39;</span><span class="p">]]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">translated_tracks</span> <span class="o">=</span> <span class="n">translate_in_scale</span><span class="p">(</span><span class="n">motif</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">translated_tracks</span><span class="p">)</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">translated_tracks</span><span class="p">)</span>
 <span class="go">[[&#39;F#4&#39;, &#39;A4&#39;, &#39;C#5&#39;, &#39;G#4&#39;, &#39;B4&#39;, &#39;D#5&#39;],</span>
 <span class="go">[&#39;D#5&#39;, &#39;F#5&#39;, &#39;A5&#39;, &#39;E5&#39;, &#39;G#5&#39;, &#39;B5&#39;]]</span>
 </pre></div>
