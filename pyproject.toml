@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "tonal"
-version = "0.0.18"
+version = "0.0.19"
 description = "Tools for music analysis and generation"
 readme = "README.md"
 requires-python = ">=3.10"
