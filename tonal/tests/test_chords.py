@@ -32,7 +32,16 @@ def test_chord_to_notes_ignores_slash_bass_note():
 
 
 def test_chord_to_notes_simplifies_common_alterations():
-    """Common alterations should not cause failures (base quality is used)."""
-    notes = chord_to_notes("A7b9")
+    """Undefined alterations fall back to the base quality (suffix stripped)."""
+    # 7#11 is not a defined quality, so it strips to a plain dominant 7th.
+    notes = chord_to_notes("A7#11")
     assert len(notes) == 4
     assert notes[3] - notes[0] == 10  # dominant 7th
+
+
+def test_chord_to_notes_honors_defined_alterations():
+    """Alterations that are defined qualities are honored, not stripped."""
+    notes = chord_to_notes("A7b9")
+    assert len(notes) == 5
+    root = notes[0]
+    assert tuple(n - root for n in notes) == (0, 4, 7, 10, 13)  # dominant 7th flat 9
