@@ -368,9 +368,25 @@ chord_quality: dict[str, Sequence[int]] = {
     # Suspended chords
     "sus": (0, 5, 7),  # Sus4
     "sus2": (0, 2, 7),
+    "7sus4": (0, 5, 7, 10),  # Dominant 7th suspended 4th
     # Added-tone chords
     "add9": (0, 4, 7, 14),
     "add2": (0, 2, 4, 7),
+    "6add9": (0, 4, 7, 9, 14),  # 6/9 chord (major 6 add 9)
+    "minadd9": (0, 3, 7, 14),  # Minor add 9
+    "min6add9": (0, 3, 7, 9, 14),  # Minor 6/9
+    "minmaj9": (0, 3, 7, 11, 14),  # Minor major 9th
+    # Power chord
+    "5": (0, 7),  # Power chord (root + fifth)
+    # Altered-fifth chords
+    "maj7b5": (0, 4, 6, 11),  # Major 7th flat 5
+    "maj7#5": (0, 4, 8, 11),  # Augmented major 7th (major 7 sharp 5)
+    "7b5": (0, 4, 6, 10),  # Dominant 7th flat 5
+    "min11b5": (0, 3, 6, 10, 14, 17),  # Minor 11th flat 5
+    # Altered-extension dominants
+    "7b9": (0, 4, 7, 10, 13),  # Dominant 7th flat 9
+    "7#9": (0, 4, 7, 10, 15),  # Dominant 7th sharp 9 (Hendrix chord)
+    "7alt": (0, 4, 8, 10, 13, 15),  # Altered dominant (3, #5/b13, b7, b9, #9)
 }
 
 # Common textual shorthands (e.g. Dm11) used by some lead sheets
@@ -383,6 +399,14 @@ _text_chord_quality_aliases: dict[str, str] = {
     "m7b5": "hdim7",
     "min7b5": "hdim7",
     "ø7": "hdim7",
+    "ø": "hdim7",  # bare half-diminished symbol
+    "sus4": "sus",  # explicit Sus4 spelling
+    "mmaj7": "minmaj7",  # Minor major 7th
+    "mmaj9": "minmaj9",  # Minor major 9th
+    "madd9": "minadd9",  # Minor add 9
+    "m6add9": "min6add9",  # Minor 6/9
+    "m11b5": "min11b5",  # Minor 11th flat 5
+    "7#5": "aug7",  # Dominant augmented 7th (same intervals as aug7)
 }
 
 for _alias, _canonical in _text_chord_quality_aliases.items():
