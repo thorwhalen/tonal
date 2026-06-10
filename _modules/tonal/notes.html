@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tonal.notes &mdash; tonal 0.0.18 documentation</title>
+  <title>tonal.notes &mdash; tonal 0.0.19 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=8bafd125"></script>
+      <script src="../../_static/documentation_options.js?v=2fd7553c"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -457,9 +457,25 @@
     <span class="c1"># Suspended chords</span>
     <span class="s2">&quot;sus&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>  <span class="c1"># Sus4</span>
     <span class="s2">&quot;sus2&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
+    <span class="s2">&quot;7sus4&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Dominant 7th suspended 4th</span>
     <span class="c1"># Added-tone chords</span>
     <span class="s2">&quot;add9&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span>
     <span class="s2">&quot;add2&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
+    <span class="s2">&quot;6add9&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span>  <span class="c1"># 6/9 chord (major 6 add 9)</span>
+    <span class="s2">&quot;minadd9&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span>  <span class="c1"># Minor add 9</span>
+    <span class="s2">&quot;min6add9&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span>  <span class="c1"># Minor 6/9</span>
+    <span class="s2">&quot;minmaj9&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span>  <span class="c1"># Minor major 9th</span>
+    <span class="c1"># Power chord</span>
+    <span class="s2">&quot;5&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>  <span class="c1"># Power chord (root + fifth)</span>
+    <span class="c1"># Altered-fifth chords</span>
+    <span class="s2">&quot;maj7b5&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Major 7th flat 5</span>
+    <span class="s2">&quot;maj7#5&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>  <span class="c1"># Augmented major 7th (major 7 sharp 5)</span>
+    <span class="s2">&quot;7b5&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Dominant 7th flat 5</span>
+    <span class="s2">&quot;min11b5&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span>  <span class="c1"># Minor 11th flat 5</span>
+    <span class="c1"># Altered-extension dominants</span>
+    <span class="s2">&quot;7b9&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">),</span>  <span class="c1"># Dominant 7th flat 9</span>
+    <span class="s2">&quot;7#9&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>  <span class="c1"># Dominant 7th sharp 9 (Hendrix chord)</span>
+    <span class="s2">&quot;7alt&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>  <span class="c1"># Altered dominant (3, #5/b13, b7, b9, #9)</span>
 <span class="p">}</span>
 
 <span class="c1"># Common textual shorthands (e.g. Dm11) used by some lead sheets</span>
@@ -472,6 +488,14 @@
     <span class="s2">&quot;m7b5&quot;</span><span class="p">:</span> <span class="s2">&quot;hdim7&quot;</span><span class="p">,</span>
     <span class="s2">&quot;min7b5&quot;</span><span class="p">:</span> <span class="s2">&quot;hdim7&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ø7&quot;</span><span class="p">:</span> <span class="s2">&quot;hdim7&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ø&quot;</span><span class="p">:</span> <span class="s2">&quot;hdim7&quot;</span><span class="p">,</span>  <span class="c1"># bare half-diminished symbol</span>
+    <span class="s2">&quot;sus4&quot;</span><span class="p">:</span> <span class="s2">&quot;sus&quot;</span><span class="p">,</span>  <span class="c1"># explicit Sus4 spelling</span>
+    <span class="s2">&quot;mmaj7&quot;</span><span class="p">:</span> <span class="s2">&quot;minmaj7&quot;</span><span class="p">,</span>  <span class="c1"># Minor major 7th</span>
+    <span class="s2">&quot;mmaj9&quot;</span><span class="p">:</span> <span class="s2">&quot;minmaj9&quot;</span><span class="p">,</span>  <span class="c1"># Minor major 9th</span>
+    <span class="s2">&quot;madd9&quot;</span><span class="p">:</span> <span class="s2">&quot;minadd9&quot;</span><span class="p">,</span>  <span class="c1"># Minor add 9</span>
+    <span class="s2">&quot;m6add9&quot;</span><span class="p">:</span> <span class="s2">&quot;min6add9&quot;</span><span class="p">,</span>  <span class="c1"># Minor 6/9</span>
+    <span class="s2">&quot;m11b5&quot;</span><span class="p">:</span> <span class="s2">&quot;min11b5&quot;</span><span class="p">,</span>  <span class="c1"># Minor 11th flat 5</span>
+    <span class="s2">&quot;7#5&quot;</span><span class="p">:</span> <span class="s2">&quot;aug7&quot;</span><span class="p">,</span>  <span class="c1"># Dominant augmented 7th (same intervals as aug7)</span>
 <span class="p">}</span>
 
 <span class="k">for</span> <span class="n">_alias</span><span class="p">,</span> <span class="n">_canonical</span> <span class="ow">in</span> <span class="n">_text_chord_quality_aliases</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
