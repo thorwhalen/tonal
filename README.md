@@ -26,15 +26,15 @@ The `scale_midi_notes` function converts scale specifications into MIDI note num
 from tonal.notes import scale_midi_notes
 
 # Get all C major notes in the middle octave range
-notes = scale_midi_notes('C major', midi_range=(60, 72))
+notes = scale_midi_notes("C major", midi_range=(60, 72))
 print(notes)  # (60, 62, 64, 65, 67, 69, 71, 72)
 
 # Minor pentatonic scale
-notes = scale_midi_notes('A minor pentatonic', midi_range=(57, 70))
+notes = scale_midi_notes("A minor pentatonic", midi_range=(57, 70))
 print(notes)  # (57, 60, 62, 64, 67, 69)
 
 # If no root is specified, defaults to C
-notes = scale_midi_notes('dorian', midi_range=(60, 72))
+notes = scale_midi_notes("dorian", midi_range=(60, 72))
 print(notes)  # (60, 62, 63, 65, 67, 69, 70, 72)
 ```
 
@@ -55,11 +55,11 @@ The module also provides:
 from tonal.notes import semitone_pattern, scale_params, list_scale_qualities
 
 # Get the interval pattern for blues scale
-pattern = semitone_pattern('blues')
+pattern = semitone_pattern("blues")
 print(pattern)  # (0, 3, 5, 6, 7, 10)
 
 # Parse a scale string
-root, quality = scale_params('F# harmonic minor')
+root, quality = scale_params("F# harmonic minor")
 print(f"Root: {root}, Quality: {quality}")  # Root: F#, Quality: harmonic minor
 
 # See all available scale qualities
@@ -74,16 +74,15 @@ print(f"Available scales: {len(qualities)} total")
 from tonal import chords_to_wav
 
 chord_sequence = [
-    ('Bdim', 120),
-    ('Em11', 120),
-    ('Amin9', 120),
-    ('Dm7', 120),
-    'G7',
-    'Cmaj7',
+    ("Bdim", 120),
+    ("Em11", 120),
+    ("Amin9", 120),
+    ("Dm7", 120),
+    "G7",
+    "Cmaj7",
 ]
 
 wav_filepath = chords_to_wav(chord_sequence)
-
 ```
 
 If you have [hum](https://pypi.org/project/hum/) you can use it to diplay (and hear) 
@@ -91,6 +90,7 @@ the sound:
 
 ```python
 from hum import Sound
+
 Sound.from_file(wav_filepath).display()
 ```
 
@@ -104,7 +104,7 @@ midi and wav files produce are.
 from tonal.chords import play_arpeggio
 
 Sound.from_file(
-    chords_to_wav(chord_sequence, name='test_arpeggio', render_chord=play_arpeggio)
+    chords_to_wav(chord_sequence, name="test_arpeggio", render_chord=play_arpeggio)
 ).display()
 ```
 
@@ -173,7 +173,7 @@ motif = [
     "B4 A4".split(),
 ]
 
-tracks = translate_in_scale(motif, range(7, -14, -1), 'C')
+tracks = translate_in_scale(motif, range(7, -14, -1), "C")
 score = create_score_from_tracks(tracks)
 score.show()
 play_music21_object(score)

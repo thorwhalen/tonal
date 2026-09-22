@@ -321,8 +321,7 @@ def midi_to_wav(
     )
     if result.returncode != 0 or not os.path.exists(output_wav):
         raise RuntimeError(
-            f"fluidsynth failed to render {midi_file} -> {output_wav}\n"
-            f"{result.stderr}"
+            f"fluidsynth failed to render {midi_file} -> {output_wav}\n{result.stderr}"
         )
 
     return output_wav
