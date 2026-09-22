@@ -314,8 +314,15 @@ def midi_to_wav(
 
     output_wav = ensure_dest_filepath(midi_file, output_wav, dest_format="wav")
 
-    subprocess.run(
-        ["fluidsynth", "-ni", soundfont, midi_file, "-F", output_wav, "-r", "44100"]
+    result = subprocess.run(
+        ["fluidsynth", "-ni", "-F", output_wav, "-r", "44100", soundfont, midi_file],
+        capture_output=True,
+        text=True,
     )
+    if result.returncode != 0 or not os.path.exists(output_wav):
+        raise RuntimeError(
+            f"fluidsynth failed to render {midi_file} -> {output_wav}\n"
+            f"{result.stderr}"
+        )
 
     return output_wav
