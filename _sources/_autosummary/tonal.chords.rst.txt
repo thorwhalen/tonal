@@ -1,0 +1,19 @@
+tonal.chords
+============
+
+.. automodule:: tonal.chords
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      chord_to_notes
+      chords_to_midi
+      chords_to_wav
+      play_arpeggio
+      play_simultaneously
+      process_chord_sequence
+      register_chord_render
+      resolve_chord_render
+   

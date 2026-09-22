@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-09-22T14:43:23Z",
+  "package": {
+    "name": "tonal",
+    "version": "0.0.21",
+    "display_name": "tonal",
+    "source": "pyproject.toml"
+  },
+  "git": {
+    "available": true,
+    "commit": "b44ec8f61f066ccf1765dfd280253ba3b9fffd02",
+    "short_commit": "b44ec8f",
+    "branch": "main",
+    "tags": [
+      "0.0.21"
+    ],
+    "dirty": false,
+    "remote_url": "https://github.com/thorwhalen/tonal",
+    "commit_url": "https://github.com/thorwhalen/tonal/commit/b44ec8f61f066ccf1765dfd280253ba3b9fffd02",
+    "error": null
+  },
+  "ci": {
+    "provider": "github",
+    "repository": "thorwhalen/tonal",
+    "sha": "787385407e3dd645d5dd60134af453ec615ea1cf",
+    "sha_in_history": true,
+    "ref": "refs/heads/main",
+    "ref_name": "main",
+    "run_id": "35741979889",
+    "run_url": "https://github.com/thorwhalen/tonal/actions/runs/35741979889",
+    "server_url": "https://github.com"
+  },
+  "tools": {
+    "epythet": "0.2.12",
+    "sphinx": "9.1.0",
+    "docutils": "0.22.4",
+    "python": "3.12.14"
+  },
+  "config": {
+    "theme": "auto",
+    "html_theme": "sphinxawesome_theme",
+    "accent": "#8f3152",
+    "mode": "auto",
+    "api_generator": "autosummary",
+    "ignore": [
+      "tests/",
+      "scrap/",
+      "examples/"
+    ],
+    "agent_outputs": true,
+    "aggregates": [
+      "md"
+    ],
+    "ai_artifacts": true,
+    "provenance": true,
+    "docs_dir": "docsrc"
+  },
+  "site": {
+    "modules_documented": 6,
+    "objects_documented": 48
+  },
+  "pypi": {
+    "checked": true,
+    "latest": "0.0.21",
+    "relation": "same",
+    "error": null
+  },
+  "reproduce": "git clone https://github.com/thorwhalen/tonal && cd tonal\ngit checkout b44ec8f61f066ccf1765dfd280253ba3b9fffd02\npip install \"epythet==0.2.12\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "warnings": [],
+  "alignment": {
+    "aligned": true,
+    "notes": []
+  }
+}

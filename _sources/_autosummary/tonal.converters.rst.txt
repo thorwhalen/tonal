@@ -1,0 +1,19 @@
+tonal.converters
+================
+
+.. automodule:: tonal.converters
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      convert
+      ensure_dest_filepath
+      format_of_filepath
+      guess_format_from_bytes
+      image_to_musicxml
+      midi_to_wav
+      musicxml_to_midi
+      replace_extension
+   

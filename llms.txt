@@ -1,0 +1,24 @@
+# tonal
+
+> Tools for music analysis and generation
+
+
+## Pages
+
+- [tonal](index.html.md): Tools for music analysis and generation
+- [API reference](api.html.md): | &#96;tonal&#96;   | Tools to generate music   |
+- [tonal](_autosummary/tonal.html.md): Tools to generate music
+- [tonal.chords](_autosummary/tonal.chords.html.md): Tools for chords and chord progressions.
+- [tonal.converters](_autosummary/tonal.converters.html.md): Convert music into various formats.
+- [tonal.counterpoint](_autosummary/tonal.counterpoint.html.md): Tools for counterpoint.
+- [tonal.notes](_autosummary/tonal.notes.html.md): Notes, scales, and chords definitions.
+- [tonal.util](_autosummary/tonal.util.html.md): Utils for sonification.
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-09-22 14:43 UTC&#42;&#42; from commit &lt;a href="https://github.com/tho...
+
+## Optional
+
+- [tonal.md](tonal.md): Complete documentation in a single file.
+
+## Build
+
+- [build_info.json](build_info.json): build provenance (commit, version, tool versions, whether the docs match the package)

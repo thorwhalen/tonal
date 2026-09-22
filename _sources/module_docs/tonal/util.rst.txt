@@ -1,4 +1,0 @@
-tonal.util
-==========
-.. automodule:: tonal.util
-   :members:

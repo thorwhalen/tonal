@@ -1,0 +1,34 @@
+tonal.notes
+===========
+
+.. automodule:: tonal.notes
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      add_pattern_aliases
+      canonical_quality_name
+      list_chord_qualities
+      list_root_notes
+      list_scale_qualities
+      list_scale_quality_aliases
+      list_scales_string
+      parse_note_name
+      register_chord_quality
+      register_root_note
+      register_scale_quality
+      register_scale_quality_alias
+      scale_midi_notes
+      scale_params
+      semitone_pattern
+      validate_scale_aliases
+      validate_scale_semitone_pattern_uniquness
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      IncorrectScaleSpecification
+   

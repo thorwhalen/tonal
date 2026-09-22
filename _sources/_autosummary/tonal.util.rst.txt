@@ -1,0 +1,31 @@
+tonal.util
+==========
+
+.. automodule:: tonal.util
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      add_pattern_aliases
+      add_streams
+      concatenate_streams
+      create_score_from_tracks
+      delete_parts
+      ensure_iterable_of_notes
+      ensure_part_filter
+      ensure_scale
+      filter_parts
+      get_scale_notes
+      identity_func
+      is_existing_filepath
+      mk_score
+      mk_stream
+      multi_note_names
+      note_names
+      parse_note_name
+      play_music21_object
+      resolve_format_from_filepath
+      string_to_note
+   

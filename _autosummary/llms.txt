@@ -1,0 +1,17 @@
+# tonal
+
+> Tools for music analysis and generation
+
+
+## Pages in this subsection
+
+- [tonal](tonal.html.md): Tools to generate music
+- [tonal.chords](tonal.chords.html.md): Tools for chords and chord progressions.
+- [tonal.converters](tonal.converters.html.md): Convert music into various formats.
+- [tonal.counterpoint](tonal.counterpoint.html.md): Tools for counterpoint.
+- [tonal.notes](tonal.notes.html.md): Notes, scales, and chords definitions.
+- [tonal.util](tonal.util.html.md): Utils for sonification.
+
+## Optional
+
+- [Top-level llms.txt](../llms.txt): Complete documentation index.

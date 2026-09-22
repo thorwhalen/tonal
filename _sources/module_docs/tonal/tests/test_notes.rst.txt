@@ -1,4 +1,0 @@
-tonal.tests.test_notes
-======================
-.. automodule:: tonal.tests.test_notes
-   :members:

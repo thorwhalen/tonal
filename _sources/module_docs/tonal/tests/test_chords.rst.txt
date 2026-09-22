@@ -1,4 +1,0 @@
-tonal.tests.test_chords
-=======================
-.. automodule:: tonal.tests.test_chords
-   :members:

@@ -1,0 +1,17 @@
+﻿tonal
+=====
+
+.. automodule:: tonal
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   chords
+   converters
+   counterpoint
+   notes
+   util

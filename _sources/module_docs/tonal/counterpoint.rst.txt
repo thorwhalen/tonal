@@ -1,4 +1,0 @@
-tonal.counterpoint
-==================
-.. automodule:: tonal.counterpoint
-   :members:

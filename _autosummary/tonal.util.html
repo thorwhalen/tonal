@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+
+<html :class="{ 'dark' : darkMode === true }" data-content_root="../" lang="en" x-data="{ darkMode: $persist(window.matchMedia('(prefers-color-scheme: dark)').matches), activeSection: ''}">
+<head>
+<script>
+    (function () {
+      // Set initial color scheme
+      if ((localStorage.getItem("_x_darkMode") === "true") || (window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        document.documentElement.classList.add("dark");
+      }
+
+      // Watch for media preference changes
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+        localStorage.setItem("_x_darkMode", event.matches);
+        document.documentElement.classList.toggle("dark", event.matches);
+      });
+    })();
+  </script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#030711" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="tonal.util.html.md" rel="alternate" type="text/markdown"/>
+<link href="../llms.txt" rel="describedby" type="text/markdown"/>
+<link href="tonal.util.html.md" rel="alternate" type="text/markdown"/>
+<link href="llms.txt" rel="describedby"/>
+<title>tonal.util | tonal</title>
+<meta content="tonal.util | tonal" property="og:title"/>
+<meta content="tonal.util | tonal" name="twitter:title"/>
+<link href="../_static/pygments.css?v=d75fae25" rel="stylesheet" type="text/css"/>
+<link href="../_static/theme.css?v=d6d7c91b" rel="stylesheet" type="text/css"/>
+<link href="../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+<link href="../_static/epythet.css?v=8d29639b" rel="stylesheet" type="text/css"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="tonal.notes.html" rel="prev" title="tonal.notes"/>
+</head>
+<body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
+<div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
+      Skip to content
+    </a><header class="sticky top-0 z-40 w-full border-b shadow-xs border-border bg-background/90 backdrop-blur"><div class="container flex items-center h-14">
+<div class="hidden mr-4 md:flex">
+<a class="flex items-center mr-6" href="../index.html"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">tonal</span>
+</a><nav class="flex items-center gap-6 text-sm font-medium">
+<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://github.com/thorwhalen/tonal" rel="noopener nofollow">GitHub</a>
+</nav></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
+</svg>
+<span class="sr-only">Toggle navigation menu</span>
+</button>
+<div class="flex items-center justify-between flex-1 gap-2 sm:gap-4 md:justify-end">
+<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../search.html" class="relative flex items-center group" id="searchbox" method="get">
+<input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
+<kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+<span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form>
+</div>
+<nav class="flex items-center gap-1">
+<button @click="darkMode = !darkMode" class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9" title="Toggle color scheme" type="button">
+<svg class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0" fill="currentColor" height="16" viewbox="0 96 960 960" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z"></path>
+</svg>
+<svg class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100" fill="currentColor" height="16" viewbox="0 96 960 960" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z"></path>
+</svg>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<div class="flex-1"><div class="container md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
+<a class="justify-start text-sm md:!hidden bg-background" href="../index.html"><span class="font-bold text-clip whitespace-nowrap">tonal</span>
+</a>
+<div class="relative overflow-hidden md:overflow-auto my-4 md:my-0">
+<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="flex md:hidden flex-col font-medium mt-4">
+<a href="https://github.com/thorwhalen/tonal" rel="nofollow noopener">GitHub</a>
+</nav><nav class="table w-full min-w-full my-6 lg:my-8">
+<ul class="current">
+<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../api.html">API reference<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
+<li class="toctree-l2 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="tonal.html">tonal<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
+<li class="toctree-l3"><a class="reference internal" href="tonal.chords.html">tonal.chords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tonal.converters.html">tonal.converters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tonal.counterpoint.html">tonal.counterpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tonal.notes.html">tonal.notes</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">tonal.util</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<button @click="showSidebar = false" class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100" type="button">
+<svg class="h-4 w-4" fill="currentColor" height="24" stroke="none" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z"></path>
+</svg>
+</button>
+</aside>
+<main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+<div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../index.html">
+<span class="hidden md:inline">tonal</span>
+<svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
+<path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
+</svg>
+</a>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../api.html">API reference</a>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="tonal.html">tonal</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">tonal.util</span>
+</nav>
+<div id="content" role="main">
+<section id="module-tonal.util">
+<span id="tonal-util"></span><h1>tonal.util<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#module-tonal.util">¶</a></h1>
+<p>Utils for sonification.</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_pattern_aliases</span></code>(quality_extensions)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.add_streams" title="tonal.util.add_streams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_streams</span></code></a>(list_of_streams)</p></td>
+<td><p>Concatenates multiple streams into a single stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.util.concatenate_streams" title="tonal.util.concatenate_streams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concatenate_streams</span></code></a>(streams_list)</p></td>
+<td><p>Concatenates corresponding streams from a list of lists of streams.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.create_score_from_tracks" title="tonal.util.create_score_from_tracks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_score_from_tracks</span></code></a>(tracks)</p></td>
+<td><p>Creates a music21 Score from a list of tracks (Stream objects).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.util.delete_parts" title="tonal.util.delete_parts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_parts</span></code></a>(part_idx, score_input, *[, ...])</p></td>
+<td><p>Delete parts from a score based on the provided part indices.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.ensure_iterable_of_notes" title="tonal.util.ensure_iterable_of_notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_iterable_of_notes</span></code></a>(notes[, str_to_note])</p></td>
+<td><p>Ensures the input is an iterable of Note objects.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_part_filter</span></code>(part_filter)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.ensure_scale" title="tonal.util.ensure_scale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_scale</span></code></a>(input_scale[, scale_creator])</p></td>
+<td><p>Ensures the input is a Scale object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.util.filter_parts" title="tonal.util.filter_parts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_parts</span></code></a>(part_filter, score_input, *[, ...])</p></td>
+<td><p>Filter parts from a score based on the provided filter function or part indices.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.get_scale_notes" title="tonal.util.get_scale_notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_scale_notes</span></code></a>(input_note, input_scale)</p></td>
+<td><p>Returns the names of the pitches in the scale within one octave around the input note.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">identity_func</span></code>(x)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.is_existing_filepath" title="tonal.util.is_existing_filepath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_existing_filepath</span></code></a>(obj)</p></td>
+<td><p>Returns True if the input object is a string representing an existing file path.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.util.mk_score" title="tonal.util.mk_score"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mk_score</span></code></a>(obj, **kwargs)</p></td>
+<td><p>Creates a music21 Score object from the input object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.mk_stream" title="tonal.util.mk_stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mk_stream</span></code></a>(obj, **kwargs)</p></td>
+<td><p>Creates a music21 Stream object from the input object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.util.multi_note_names" title="tonal.util.multi_note_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multi_note_names</span></code></a>(tracks)</p></td>
+<td><p>Returns the names of the notes in the input iterable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.note_names" title="tonal.util.note_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">note_names</span></code></a>(notes[, name_attr])</p></td>
+<td><p>Returns the names of the notes in the input iterable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_note_name</span></code>(note_str)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.play_music21_object" title="tonal.util.play_music21_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">play_music21_object</span></code></a>(music21_obj)</p></td>
+<td><p>Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.util.resolve_format_from_filepath" title="tonal.util.resolve_format_from_filepath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resolve_format_from_filepath</span></code></a>(filepath)</p></td>
+<td><p>Resolves the format of a file from the file extension.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.string_to_note" title="tonal.util.string_to_note"><code class="xref py py-obj docutils literal notranslate"><span class="pre">string_to_note</span></code></a>([note_or_notes, egress])</p></td>
+<td><p>Converts a string representation of a note to a music21 Note object.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.add_streams">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">add_streams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_of_streams</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#add_streams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.add_streams" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.add_streams'">¶</a></dt>
+<dd><p>Concatenates multiple streams into a single stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>list_of_streams</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code>]</span>) – The list of streams to concatenate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single stream containing all the concatenated streams.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code></span></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">s1</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'C4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'E4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'G4'</span><span class="p">)])</span>
+</span><span id="line-2"><span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'A4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'C5'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'E5'</span><span class="p">)])</span>
+</span><span id="line-3"><span class="gp">&gt;&gt;&gt; </span><span class="n">result_stream</span> <span class="o">=</span> <span class="n">add_streams</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">])</span>
+</span><span id="line-4"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">result_stream</span><span class="p">)</span>
+</span><span id="line-5"><span class="go">['C4', 'E4', 'G4', 'A4', 'C5', 'E5']</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.concatenate_streams">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">concatenate_streams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">streams_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#concatenate_streams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.concatenate_streams" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.concatenate_streams'">¶</a></dt>
+<dd><p>Concatenates corresponding streams from a list of lists of streams.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>streams_list</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code>]]</span>) – The list of lists of streams to concatenate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of concatenated streams.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code>]</span></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">s11</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'C4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'E4'</span><span class="p">)])</span>
+</span><span id="line-2"><span class="gp">&gt;&gt;&gt; </span><span class="n">s12</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'G4'</span><span class="p">)])</span>
+</span><span id="line-3"><span class="gp">&gt;&gt;&gt; </span><span class="n">s21</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'A4'</span><span class="p">)])</span>
+</span><span id="line-4"><span class="gp">&gt;&gt;&gt; </span><span class="n">s22</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'C5'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'E5'</span><span class="p">)])</span>
+</span><span id="line-5"><span class="gp">&gt;&gt;&gt; </span><span class="n">result_streams</span> <span class="o">=</span> <span class="n">concatenate_streams</span><span class="p">([[</span><span class="n">s11</span><span class="p">,</span> <span class="n">s12</span><span class="p">],</span> <span class="p">[</span><span class="n">s21</span><span class="p">,</span> <span class="n">s22</span><span class="p">]])</span>
+</span><span id="line-6"><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">result_streams</span><span class="p">)</span>
+</span><span id="line-7"><span class="go">2</span>
+</span><span id="line-8"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">result_streams</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="line-9"><span class="go">['C4', 'E4', 'A4']</span>
+</span><span id="line-10"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">result_streams</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="line-11"><span class="go">['G4', 'C5', 'E5']</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.create_score_from_tracks">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">create_score_from_tracks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tracks</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#create_score_from_tracks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.create_score_from_tracks" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.create_score_from_tracks'">¶</a></dt>
+<dd><p>Creates a music21 Score from a list of tracks (Stream objects).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tracks</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code>]</span>) – A list of Stream objects, each representing a track (voice).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Score object containing the tracks as separate parts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Score</span></code></span></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">stream1</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'C4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'E4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'G4'</span><span class="p">)])</span>
+</span><span id="line-2"><span class="gp">&gt;&gt;&gt; </span><span class="n">stream2</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'A4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'C5'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'E5'</span><span class="p">)])</span>
+</span><span id="line-3"><span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">create_score_from_tracks</span><span class="p">([</span><span class="n">stream1</span><span class="p">,</span> <span class="n">stream2</span><span class="p">])</span>
+</span><span id="line-4"><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">score</span><span class="o">.</span><span class="n">parts</span><span class="p">)</span>
+</span><span id="line-5"><span class="go">2</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.delete_parts">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">delete_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_input</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to_filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#delete_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.delete_parts" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.delete_parts'">¶</a></dt>
+<dd><p>Delete parts from a score based on the provided part indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>part_idx</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>, <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]]</span>) – Union[int, List[int]]
+An integer or a list of integers representing the indices of parts to be deleted.</p></li>
+<li><p><strong>score_input</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Score</span></code>]</span>) – Union[str, Score]
+The input score, either as a file path or a music21 Score instance.</p></li>
+<li><p><strong>save_to_filepath</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></span>) – str
+The file path to save the modified score. Default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The score with specified parts deleted.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Score</span></code></span></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mk_score</span><span class="p">([[</span><span class="s1">'C4'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'D4'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'E4'</span><span class="p">]])</span>
+</span><span id="line-2"><span class="gp">&gt;&gt;&gt; </span><span class="n">modified_score</span> <span class="o">=</span> <span class="n">delete_parts</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">score</span><span class="p">)</span>
+</span><span id="line-3"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">modified_score</span><span class="p">)</span>
+</span><span id="line-4"><span class="go">[['C4'], ['E4']]</span>
+</span><span id="line-5"><span class="gp">&gt;&gt;&gt; </span><span class="n">modified_score</span> <span class="o">=</span> <span class="n">delete_parts</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">score</span><span class="p">)</span>
+</span><span id="line-6"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">modified_score</span><span class="p">)</span>
+</span><span id="line-7"><span class="go">[['D4']]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.ensure_iterable_of_notes">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">ensure_iterable_of_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str_to_note</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;class</span> <span class="pre">'music21.note.Note'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#ensure_iterable_of_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.ensure_iterable_of_notes" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.ensure_iterable_of_notes'">¶</a></dt>
+<dd><p>Ensures the input is an iterable of Note objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>notes</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code>, <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code>]]]</span>) – The input notes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of Note objects.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>, <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</span></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">ensure_iterable_of_notes</span><span class="p">([</span><span class="s1">'C4'</span><span class="p">,</span> <span class="s1">'E4'</span><span class="p">,</span> <span class="s1">'G4'</span><span class="p">]))</span>
+</span><span id="line-2"><span class="go">[&lt;music21.note.Note C&gt;, &lt;music21.note.Note E&gt;, &lt;music21.note.Note G&gt;]</span>
+</span><span id="line-3"><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'C4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'E4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'G4'</span><span class="p">)])</span>
+</span><span id="line-4"><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">ensure_iterable_of_notes</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+</span><span id="line-5"><span class="go">[&lt;music21.note.Note C&gt;, &lt;music21.note.Note E&gt;, &lt;music21.note.Note G&gt;]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.ensure_scale">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">ensure_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_creator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;class</span> <span class="pre">'music21.scale.MajorScale'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#ensure_scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.ensure_scale" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.ensure_scale'">¶</a></dt>
+<dd><p>Ensures the input is a Scale object. Converts a string to a Scale using the provided scale creator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_scale</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> | <code class="xref py py-class docutils literal notranslate"><span class="pre">Scale</span></code></span>) – The input scale.</p></li>
+<li><p><strong>scale_creator</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Scale</span></code>]</span>) – A function to create a Scale from a string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding Scale object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scale</span></code></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#AssertionError" rel="nofollow noopener" title="(in Python v3.14)"><strong>AssertionError</strong><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> – If the input cannot be converted to a Scale.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.filter_parts">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">filter_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_filter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_input</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to_filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#filter_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.filter_parts" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.filter_parts'">¶</a></dt>
+<dd><p>Filter parts from a score based on the provided filter function or part indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>part_filter</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>, <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>], <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">Part</span></code>], <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>], <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</span>) – PartFilterSpec
+A function that takes a music21 Part object and returns a boolean value.
+If an integer or list of integers is provided, the function will filter in
+parts based on the indices.</p></li>
+<li><p><strong>score_input</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Score</span></code>]</span>) – Union[str, Score]
+The input score, either as a file path or a music21 Score instance.</p></li>
+<li><p><strong>save_to_filepath</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></span>) – str
+The file path to save the modified score. Default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The score with the subset of parts that were filtered in.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Score</span></code></span></p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">mk_score</span><span class="p">([[</span><span class="s1">'C4'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'D4'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'E4'</span><span class="p">]])</span>
+</span><span id="line-2"><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Test filtering by index</span>
+</span><span id="line-3"><span class="gp">&gt;&gt;&gt; </span><span class="n">filtered_score</span> <span class="o">=</span> <span class="n">filter_parts</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">s</span><span class="p">)</span>
+</span><span id="line-4"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">filtered_score</span><span class="p">)</span>
+</span><span id="line-5"><span class="go">[['C4'], ['E4']]</span>
+</span><span id="line-6"><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Test filtering by function</span>
+</span><span id="line-7"><span class="gp">&gt;&gt;&gt; </span><span class="n">filtered_score</span> <span class="o">=</span> <span class="n">filter_parts</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="n">part</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s1">'D'</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+</span><span id="line-8"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">filtered_score</span><span class="p">)</span>
+</span><span id="line-9"><span class="go">[['C4'], ['E4']]</span>
+</span><span id="line-10"><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Test no filtering (return all parts)</span>
+</span><span id="line-11"><span class="gp">&gt;&gt;&gt; </span><span class="n">filtered_score</span> <span class="o">=</span> <span class="n">filter_parts</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+</span><span id="line-12"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">filtered_score</span><span class="p">)</span>
+</span><span id="line-13"><span class="go">[['C4'], ['D4'], ['E4']]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.get_scale_notes">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">get_scale_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_note</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_scale</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#get_scale_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.get_scale_notes" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.get_scale_notes'">¶</a></dt>
+<dd><p>Returns the names of the pitches in the scale within one octave around the input note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_note</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code></span>) – The input note.</p></li>
+<li><p><strong>input_scale</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scale</span></code></span>) – The scale in which to find the pitches.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of pitch names within the scale.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.is_existing_filepath">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">is_existing_filepath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#is_existing_filepath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.is_existing_filepath" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.is_existing_filepath'">¶</a></dt>
+<dd><p>Returns True if the input object is a string representing an existing file path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.mk_score">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">mk_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#mk_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.mk_score" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.mk_score'">¶</a></dt>
+<dd><p>Creates a music21 Score object from the input object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Score</span></code>]</span>) – The input object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the Score constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding Score object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Score</span></code></span></p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mk_score</span><span class="p">([[</span><span class="s1">'C4 B4'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'E4'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'G4'</span><span class="p">]])</span>
+</span><span id="line-2"><span class="gp">&gt;&gt;&gt; </span><span class="n">score</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">'text'</span><span class="p">)</span>
+</span><span id="line-3"><span class="go">{0.0} &lt;music21.stream.Part 0x...&gt;</span>
+</span><span id="line-4"><span class="go">    {0.0} &lt;music21.note.Note C&gt;</span>
+</span><span id="line-5"><span class="go">    {1.0} &lt;music21.note.Note B&gt;</span>
+</span><span id="line-6"><span class="go">{2.0} &lt;music21.stream.Part 0x...&gt;</span>
+</span><span id="line-7"><span class="go">    {0.0} &lt;music21.note.Note E&gt;</span>
+</span><span id="line-8"><span class="go">{3.0} &lt;music21.stream.Part 0x...&gt;</span>
+</span><span id="line-9"><span class="go">    {0.0} &lt;music21.note.Note G&gt;</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.mk_stream">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">mk_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#mk_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.mk_stream" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.mk_stream'">¶</a></dt>
+<dd><p>Creates a music21 Stream object from the input object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>, <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>], <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code>]</span>) – The input object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the Stream constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding Stream object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code></span></p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span> <span class="o">=</span> <span class="n">mk_stream</span><span class="p">(</span><span class="s1">'C4 E4 G4'</span><span class="p">)</span>
+</span><span id="line-2"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+</span><span id="line-3"><span class="go">['C4', 'E4', 'G4']</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.multi_note_names">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">multi_note_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tracks</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#multi_note_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.multi_note_names" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.multi_note_names'">¶</a></dt>
+<dd><p>Returns the names of the notes in the input iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tracks</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code>, <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code>]]]]</span>) – The input tracks.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of lists of note names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]]</span></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">tracks</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">'C4'</span><span class="p">,</span> <span class="s1">'E4'</span><span class="p">,</span> <span class="s1">'G4'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'A4'</span><span class="p">,</span> <span class="s1">'C5'</span><span class="p">,</span> <span class="s1">'E5'</span><span class="p">]]</span>
+</span><span id="line-2"><span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">(</span><span class="n">tracks</span><span class="p">)</span>
+</span><span id="line-3"><span class="go">[['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]</span>
+</span><span id="line-4"><span class="gp">&gt;&gt;&gt; </span><span class="n">stream1</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'C4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'E4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'G4'</span><span class="p">)])</span>
+</span><span id="line-5"><span class="gp">&gt;&gt;&gt; </span><span class="n">stream2</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'A4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'C5'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'E5'</span><span class="p">)])</span>
+</span><span id="line-6"><span class="gp">&gt;&gt;&gt; </span><span class="n">multi_note_names</span><span class="p">([</span><span class="n">stream1</span><span class="p">,</span> <span class="n">stream2</span><span class="p">])</span>
+</span><span id="line-7"><span class="go">[['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.note_names">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">note_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_attr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nameWithOctave'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#note_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.note_names" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.note_names'">¶</a></dt>
+<dd><p>Returns the names of the notes in the input iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>notes</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code>, <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code>]]]</span>) – The input notes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of note names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</span></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">([</span><span class="s1">'C4'</span><span class="p">,</span> <span class="s1">'E4'</span><span class="p">,</span> <span class="s1">'G4'</span><span class="p">])</span>
+</span><span id="line-2"><span class="go">['C4', 'E4', 'G4']</span>
+</span><span id="line-3"><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="n">Note</span><span class="p">(</span><span class="s1">'C4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'E4'</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s1">'G4'</span><span class="p">)])</span>
+</span><span id="line-4"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span id="line-5"><span class="go">['C4', 'E4', 'G4']</span>
+</span><span id="line-6"><span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mk_score</span><span class="p">([[</span><span class="s1">'C4'</span><span class="p">,</span> <span class="s1">'E4'</span><span class="p">,</span> <span class="s1">'G4'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'A4'</span><span class="p">,</span> <span class="s1">'C5'</span><span class="p">,</span> <span class="s1">'E5'</span><span class="p">]])</span>
+</span><span id="line-7"><span class="gp">&gt;&gt;&gt; </span><span class="n">note_names</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+</span><span id="line-8"><span class="go">[['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]</span>
+</span></code></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>multi_note_names</p>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.play_music21_object">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">play_music21_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">music21_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#play_music21_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.play_music21_object" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.play_music21_object'">¶</a></dt>
+<dd><p>Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>music21_obj</strong> – A music21 object (Chord, Part, Stream, etc.) to be played.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.resolve_format_from_filepath">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">resolve_format_from_filepath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#resolve_format_from_filepath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.resolve_format_from_filepath" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.resolve_format_from_filepath'">¶</a></dt>
+<dd><p>Resolves the format of a file from the file extension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></span>) – The file path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The format of the file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></span></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">resolve_format_from_filepath</span><span class="p">(</span><span class="s1">'output.mid'</span><span class="p">)</span>
+</span><span id="line-2"><span class="go">'mid'</span>
+</span><span id="line-3"><span class="gp">&gt;&gt;&gt; </span><span class="n">resolve_format_from_filepath</span><span class="p">(</span><span class="s1">'output.wav'</span><span class="p">)</span>
+</span><span id="line-4"><span class="go">'wav'</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.string_to_note">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">string_to_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_or_notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;class</span> <span class="pre">'list'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**note_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#string_to_note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.string_to_note" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.string_to_note'">¶</a></dt>
+<dd><p>Converts a string representation of a note to a music21 Note object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>note_or_notes</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> | <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>] | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" rel="nofollow noopener" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></span>) – String representation of the note(s).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The music21 Note object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code></span></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">string_to_note</span><span class="p">(</span><span class="s1">'C4'</span><span class="p">)</span>
+</span><span id="line-2"><span class="go">&lt;music21.note.Note C&gt;</span>
+</span></code></pre></div>
+</div>
+<p>If you don’t specify a string (only keyword arguments), you get a partial
+function. This is especially useful when you want to convert multiple strings.
+Note also, in the example below, that the function is applied to a list of
+strings.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">my_str_to_note</span> <span class="o">=</span> <span class="n">string_to_note</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">microtone</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="line-2"><span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">my_str_to_note</span><span class="p">([</span><span class="s1">'C4'</span><span class="p">,</span> <span class="s1">'D4'</span><span class="p">,</span> <span class="s1">'E4'</span><span class="p">]))</span>
+</span><span id="line-3"><span class="gp">&gt;&gt;&gt; </span><span class="n">note</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="line-4"><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">note</span><span class="o">.</span><span class="n">nameWithOctave</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">note</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">type</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">note</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">microtone</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="line-5"><span class="go">note.nameWithOctave='E4', note.duration.type='half', note.pitch.microtone=&lt;music21.pitch.Microtone (+50c)&gt;</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#tonal.util.add_streams'" class="reference internal" href="#tonal.util.add_streams"><code class="docutils literal notranslate"><span class="pre">add_streams()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.concatenate_streams'" class="reference internal" href="#tonal.util.concatenate_streams"><code class="docutils literal notranslate"><span class="pre">concatenate_streams()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.create_score_from_tracks'" class="reference internal" href="#tonal.util.create_score_from_tracks"><code class="docutils literal notranslate"><span class="pre">create_score_from_tracks()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.delete_parts'" class="reference internal" href="#tonal.util.delete_parts"><code class="docutils literal notranslate"><span class="pre">delete_parts()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.ensure_iterable_of_notes'" class="reference internal" href="#tonal.util.ensure_iterable_of_notes"><code class="docutils literal notranslate"><span class="pre">ensure_iterable_of_notes()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.ensure_scale'" class="reference internal" href="#tonal.util.ensure_scale"><code class="docutils literal notranslate"><span class="pre">ensure_scale()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.filter_parts'" class="reference internal" href="#tonal.util.filter_parts"><code class="docutils literal notranslate"><span class="pre">filter_parts()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.get_scale_notes'" class="reference internal" href="#tonal.util.get_scale_notes"><code class="docutils literal notranslate"><span class="pre">get_scale_notes()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.is_existing_filepath'" class="reference internal" href="#tonal.util.is_existing_filepath"><code class="docutils literal notranslate"><span class="pre">is_existing_filepath()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.mk_score'" class="reference internal" href="#tonal.util.mk_score"><code class="docutils literal notranslate"><span class="pre">mk_score()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.mk_stream'" class="reference internal" href="#tonal.util.mk_stream"><code class="docutils literal notranslate"><span class="pre">mk_stream()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.multi_note_names'" class="reference internal" href="#tonal.util.multi_note_names"><code class="docutils literal notranslate"><span class="pre">multi_note_names()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.note_names'" class="reference internal" href="#tonal.util.note_names"><code class="docutils literal notranslate"><span class="pre">note_names()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.play_music21_object'" class="reference internal" href="#tonal.util.play_music21_object"><code class="docutils literal notranslate"><span class="pre">play_music21_object()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.resolve_format_from_filepath'" class="reference internal" href="#tonal.util.resolve_format_from_filepath"><code class="docutils literal notranslate"><span class="pre">resolve_format_from_filepath()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.string_to_note'" class="reference internal" href="#tonal.util.string_to_note"><code class="docutils literal notranslate"><span class="pre">string_to_note()</span></code></a></li>
+</ul>
+</div>
+</aside>
+</main>
+</div>
+</div><footer class="py-6 border-t border-border md:py-0">
+<div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+<div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left"></p>
+</div>
+</div>
+</footer>
+</div>
+<script src="../_static/documentation_options.js?v=a11416ff"></script>
+<script src="../_static/doctools.js?v=fd6eb6e6"></script>
+<script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+<script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+<script src="../_static/copybutton.js?v=fd10adb8"></script>
+<script defer="defer" src="../_static/theme.js?v=5db23cf8"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+tonal.counterpoint
+==================
+
+.. automodule:: tonal.counterpoint
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      translate_in_scale
+      translate_notes_in_scale
+   
