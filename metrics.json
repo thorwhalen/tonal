@@ -1,7 +1,7 @@
 {
-  "collection_duration_seconds": 10.617999792098999,
-  "commit_message": "Make tonal package namespace lazy so tonal.notes skips music21/mido\n\ntonal/__init__.py now resolves its public names (and the chords,\nconverters, notes, util submodules) on first access via a PEP 562\nmodule __getattr__ with an explicit name -> submodule map, plus __dir__\nand __all__. `import tonal.notes` no longer imports music21 or mido.\n\nAdds tests asserting every previously exposed name still resolves\n(attribute access, from-import, star-import) and that importing\ntonal.notes leaves music21 and mido out of sys.modules.\n\nCloses #11",
-  "commit_sha": "1d0eee2e5837838899a8b374b623417d6c19d653",
+  "collection_duration_seconds": 6.859957933425903,
+  "commit_message": "Merge 1d0eee2e5837838899a8b374b623417d6c19d653 into b44ec8f61f066ccf1765dfd280253ba3b9fffd02",
+  "commit_sha": "94f27f4906839cd5baa164b89b8776dd47f673e3",
   "metrics": {
     "coverage": {
       "branch_coverage": 0.0,
@@ -54,6 +54,6 @@
   },
   "python_version": "3.10",
   "schema_version": "1.0",
-  "timestamp": "2026-11-10T09:53:28.620917Z",
+  "timestamp": "2026-11-10T09:53:31.294156Z",
   "workflow_status": {}
 }
