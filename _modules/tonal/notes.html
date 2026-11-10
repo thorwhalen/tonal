@@ -29,7 +29,8 @@
   <meta property="og:title" content="tonal.notes | tonal" />
   <meta name="twitter:title" content="tonal.notes | tonal" />
   <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d75fae25" />
-  <link rel="stylesheet" type="text/css" href="../../_static/theme.css?v=d6d7c91b" />
+  <link rel="stylesheet" type="text/css" href="../../_static/theme.css?v=009055c6" />
+  <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
   <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
   <link rel="stylesheet" type="text/css" href="../../_static/epythet.css?v=8d29639b" />
   <link rel="search" title="Search" href="../../search.html" />
@@ -115,9 +116,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../_autosummary/tonal.html">tonal</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.chords.html">tonal.chords</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.converters.html">tonal.converters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.counterpoint.html">tonal.counterpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.notes.html">tonal.notes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.util.html">tonal.util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.counterpoint.html">tonal.counterpoint</a></li>
 </ul>
 </li>
 </ul>
@@ -199,7 +200,7 @@
 </span><span id="line-33">
 </span><span id="line-34">
 <div class="viewcode-block" id="parse_note_name">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.parse_note_name">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.parse_note_name">[docs]</a>
 </span><span id="line-35"><span class="k">def</span><span class="w"> </span><span class="nf">parse_note_name</span><span class="p">(</span><span class="n">note_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="line-36"><span class="w">    </span><span class="sd">"""Parse a note name prefix from a string.</span>
 </span><span id="line-37">
@@ -217,7 +218,7 @@
 </span><span id="line-48">
 </span><span id="line-49">
 <div class="viewcode-block" id="add_pattern_aliases">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.add_pattern_aliases">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.add_pattern_aliases">[docs]</a>
 </span><span id="line-50"><span class="k">def</span><span class="w"> </span><span class="nf">add_pattern_aliases</span><span class="p">(</span>
 </span><span id="line-51">    <span class="n">quality_extensions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
 </span><span id="line-52"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]:</span>
@@ -617,7 +618,7 @@
 </span><span id="line-445">
 </span><span id="line-446"><span class="c1"># TODO: Need to update global root_note_re value, since root_notes changes here:</span>
 <div class="viewcode-block" id="register_root_note">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.register_root_note">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.register_root_note">[docs]</a>
 </span><span id="line-447"><span class="k">def</span><span class="w"> </span><span class="nf">register_root_note</span><span class="p">(</span><span class="n">note_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">midi_value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-448"><span class="w">    </span><span class="sd">"""Register a new root note with its MIDI value.</span>
 </span><span id="line-449">
@@ -638,7 +639,7 @@
 </span><span id="line-463">
 </span><span id="line-464">
 <div class="viewcode-block" id="register_scale_quality">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.register_scale_quality">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.register_scale_quality">[docs]</a>
 </span><span id="line-465"><span class="k">def</span><span class="w"> </span><span class="nf">register_scale_quality</span><span class="p">(</span><span class="n">quality_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">semitone_pattern</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-466"><span class="w">    </span><span class="sd">"""Register a new scale quality with its semitone pattern.</span>
 </span><span id="line-467">
@@ -660,7 +661,7 @@
 </span><span id="line-482">
 </span><span id="line-483">
 <div class="viewcode-block" id="register_scale_quality_alias">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.register_scale_quality_alias">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.register_scale_quality_alias">[docs]</a>
 </span><span id="line-484"><span class="k">def</span><span class="w"> </span><span class="nf">register_scale_quality_alias</span><span class="p">(</span><span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">canonical_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-485"><span class="w">    </span><span class="sd">"""Register an alias for an existing scale quality.</span>
 </span><span id="line-486">
@@ -684,7 +685,7 @@
 </span><span id="line-503">
 </span><span id="line-504">
 <div class="viewcode-block" id="register_chord_quality">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.register_chord_quality">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.register_chord_quality">[docs]</a>
 </span><span id="line-505"><span class="k">def</span><span class="w"> </span><span class="nf">register_chord_quality</span><span class="p">(</span><span class="n">quality_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">semitone_pattern</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-506"><span class="w">    </span><span class="sd">"""Register a new chord quality with its semitone pattern.</span>
 </span><span id="line-507">
@@ -706,7 +707,7 @@
 </span><span id="line-522">
 </span><span id="line-523">
 <div class="viewcode-block" id="list_root_notes">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.list_root_notes">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.list_root_notes">[docs]</a>
 </span><span id="line-524"><span class="k">def</span><span class="w"> </span><span class="nf">list_root_notes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 </span><span id="line-525"><span class="w">    </span><span class="sd">"""List all registered root notes.</span>
 </span><span id="line-526">
@@ -724,7 +725,7 @@
 </span><span id="line-537">
 </span><span id="line-538">
 <div class="viewcode-block" id="list_scale_qualities">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.list_scale_qualities">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.list_scale_qualities">[docs]</a>
 </span><span id="line-539"><span class="k">def</span><span class="w"> </span><span class="nf">list_scale_qualities</span><span class="p">(</span><span class="n">include_aliases</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 </span><span id="line-540"><span class="w">    </span><span class="sd">"""List all registered scale qualities.</span>
 </span><span id="line-541">
@@ -757,7 +758,7 @@
 </span><span id="line-567">
 </span><span id="line-568">
 <div class="viewcode-block" id="list_scale_quality_aliases">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.list_scale_quality_aliases">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.list_scale_quality_aliases">[docs]</a>
 </span><span id="line-569"><span class="k">def</span><span class="w"> </span><span class="nf">list_scale_quality_aliases</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 </span><span id="line-570"><span class="w">    </span><span class="sd">"""List all registered scale quality aliases.</span>
 </span><span id="line-571">
@@ -775,7 +776,7 @@
 </span><span id="line-582">
 </span><span id="line-583">
 <div class="viewcode-block" id="list_chord_qualities">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.list_chord_qualities">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.list_chord_qualities">[docs]</a>
 </span><span id="line-584"><span class="k">def</span><span class="w"> </span><span class="nf">list_chord_qualities</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 </span><span id="line-585"><span class="w">    </span><span class="sd">"""List all registered chord qualities.</span>
 </span><span id="line-586">
@@ -804,14 +805,14 @@
 </span><span id="line-608">
 </span><span id="line-609"><span class="c1"># Define a specific error for incorrect scale specifications</span>
 <div class="viewcode-block" id="IncorrectScaleSpecification">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.IncorrectScaleSpecification">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.IncorrectScaleSpecification">[docs]</a>
 </span><span id="line-610"><span class="k">class</span><span class="w"> </span><span class="nc">IncorrectScaleSpecification</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
 </span><span id="line-611"><span class="w">    </span><span class="sd">"""Raised when a scale string cannot be parsed/validated into root and quality."""</span></div>
 
 </span><span id="line-612">
 </span><span id="line-613">
 <div class="viewcode-block" id="list_scales_string">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.list_scales_string">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.list_scales_string">[docs]</a>
 </span><span id="line-614"><span class="k">def</span><span class="w"> </span><span class="nf">list_scales_string</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="line-615"><span class="w">    </span><span class="sd">"""Return a user-friendly help string describing scale syntax and valid values.</span>
 </span><span id="line-616">
@@ -851,7 +852,7 @@
 </span><span id="line-649">
 </span><span id="line-650">
 <div class="viewcode-block" id="validate_scale_semitone_pattern_uniquness">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.validate_scale_semitone_pattern_uniquness">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.validate_scale_semitone_pattern_uniquness">[docs]</a>
 </span><span id="line-651"><span class="k">def</span><span class="w"> </span><span class="nf">validate_scale_semitone_pattern_uniquness</span><span class="p">(</span><span class="n">scale_quality</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="line-652"><span class="w">    </span><span class="sd">"""</span>
 </span><span id="line-653"><span class="sd">    Validates that all scale qualities have unique semitone patterns.</span>
@@ -870,7 +871,7 @@
 </span><span id="line-665">
 </span><span id="line-666">
 <div class="viewcode-block" id="validate_scale_aliases">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.validate_scale_aliases">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.validate_scale_aliases">[docs]</a>
 </span><span id="line-667"><span class="k">def</span><span class="w"> </span><span class="nf">validate_scale_aliases</span><span class="p">(</span><span class="n">scale_quality</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">scale_aliases</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="line-668"><span class="w">    </span><span class="sd">"""</span>
 </span><span id="line-669"><span class="sd">    Validates that all values in the scale_aliases dictionary are valid keys</span>
@@ -909,7 +910,7 @@
 </span><span id="line-701">
 </span><span id="line-702">
 <div class="viewcode-block" id="semitone_pattern">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.semitone_pattern">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.semitone_pattern">[docs]</a>
 </span><span id="line-703"><span class="k">def</span><span class="w"> </span><span class="nf">semitone_pattern</span><span class="p">(</span><span class="n">quality</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
 </span><span id="line-704"><span class="w">    </span><span class="sd">"""</span>
 </span><span id="line-705"><span class="sd">    Get the semitone pattern for a given scale quality string.</span>
@@ -940,7 +941,7 @@
 </span><span id="line-729">
 </span><span id="line-730">
 <div class="viewcode-block" id="canonical_quality_name">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.canonical_quality_name">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.canonical_quality_name">[docs]</a>
 </span><span id="line-731"><span class="k">def</span><span class="w"> </span><span class="nf">canonical_quality_name</span><span class="p">(</span><span class="n">quality</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="line-732"><span class="w">    </span><span class="sd">"""Return the canonical quality key from `scale_quality`.</span>
 </span><span id="line-733">
@@ -985,7 +986,7 @@
 </span><span id="line-771">
 </span><span id="line-772">
 <div class="viewcode-block" id="scale_params">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.scale_params">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.scale_params">[docs]</a>
 </span><span id="line-773"><span class="k">def</span><span class="w"> </span><span class="nf">scale_params</span><span class="p">(</span><span class="n">scale</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">midi_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 </span><span id="line-774"><span class="w">    </span><span class="sd">"""</span>
 </span><span id="line-775"><span class="sd">    Parse a scale specification string and return (root_note, scale_quality).</span>
@@ -1069,7 +1070,7 @@
 </span><span id="line-852">
 </span><span id="line-853">
 <div class="viewcode-block" id="scale_midi_notes">
-<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.notes.scale_midi_notes">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.notes.html#tonal.scale_midi_notes">[docs]</a>
 </span><span id="line-854"><span class="k">def</span><span class="w"> </span><span class="nf">scale_midi_notes</span><span class="p">(</span>
 </span><span id="line-855">    <span class="n">scale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"C major"</span><span class="p">,</span>
 </span><span id="line-856">    <span class="n">midi_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">127</span><span class="p">),</span>
@@ -1152,12 +1153,12 @@
 </footer>
     </div>
     
-    <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+    <script src="../../_static/documentation_options.js?v=96ec9c95"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=fd10adb8"></script>
-    <script defer="defer" src="../../_static/theme.js?v=5db23cf8"></script>
+    <script defer="defer" src="../../_static/theme.js?v=49cc6205"></script>
     <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
 

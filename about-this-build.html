@@ -29,7 +29,8 @@
 <meta content="About this build | tonal" property="og:title"/>
 <meta content="About this build | tonal" name="twitter:title"/>
 <link href="_static/pygments.css?v=d75fae25" rel="stylesheet" type="text/css"/>
-<link href="_static/theme.css?v=d6d7c91b" rel="stylesheet" type="text/css"/>
+<link href="_static/theme.css?v=009055c6" rel="stylesheet" type="text/css"/>
+<link href="_static/sphinx_autodoc_typehints.css?v=057ac668" rel="stylesheet" type="text/css"/>
 <link href="_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
 <link href="_static/epythet.css?v=8d29639b" rel="stylesheet" type="text/css"/>
 <link href="search.html" rel="search" title="Search"/>
@@ -83,9 +84,9 @@
 <li class="toctree-l2" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="_autosummary/tonal.html">tonal<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/tonal.chords.html">tonal.chords</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/tonal.converters.html">tonal.converters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="_autosummary/tonal.counterpoint.html">tonal.counterpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/tonal.notes.html">tonal.notes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/tonal.util.html">tonal.util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/tonal.counterpoint.html">tonal.counterpoint</a></li>
 </ul>
 </li>
 </ul>
@@ -115,7 +116,7 @@
 
 <section id="about-this-build">
 <h1>About this build<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#about-this-build">¶</a></h1>
-<p>This documentation was built on <strong>2026-09-22 14:43 UTC</strong> from commit <a href="https://github.com/thorwhalen/tonal/commit/b44ec8f61f066ccf1765dfd280253ba3b9fffd02"><code>b44ec8f</code></a> on branch <code>main</code>, for <strong>tonal 0.0.21</strong> (from <code>pyproject.toml</code>).</p>
+<p>This documentation was built on <strong>2026-11-10 10:00 UTC</strong> from commit <a href="https://github.com/thorwhalen/tonal/commit/d5260d00ccfb0dcf67419bfbc0b9123ac048cb32"><code>d5260d0</code></a> on branch <code>main</code>, for <strong>tonal 0.0.22</strong> (from <code>pyproject.toml</code>).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.</p>
@@ -130,13 +131,13 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Commit</p></td>
-<td><p><a href="https://github.com/thorwhalen/tonal/commit/b44ec8f61f066ccf1765dfd280253ba3b9fffd02"><code>b44ec8f61f066ccf1765dfd280253ba3b9fffd02</code></a></p></td>
+<td><p><a href="https://github.com/thorwhalen/tonal/commit/d5260d00ccfb0dcf67419bfbc0b9123ac048cb32"><code>d5260d00ccfb0dcf67419bfbc0b9123ac048cb32</code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Branch</p></td>
 <td><p><code>main</code></p></td>
 </tr>
 <tr class="row-even"><td><p>Tags at this commit</p></td>
-<td><p><code>0.0.21</code></p></td>
+<td><p><code>0.0.22</code></p></td>
 </tr>
 <tr class="row-odd"><td><p>Working tree</p></td>
 <td><p>clean</p></td>
@@ -160,13 +161,13 @@
 <td><p><code>thorwhalen/tonal</code></p></td>
 </tr>
 <tr class="row-odd"><td><p>Run</p></td>
-<td><p><a href="https://github.com/thorwhalen/tonal/actions/runs/35741979889">35741979889</a></p></td>
+<td><p><a href="https://github.com/thorwhalen/tonal/actions/runs/42795086892">42795086892</a></p></td>
 </tr>
 <tr class="row-even"><td><p>Ref</p></td>
 <td><p><code>refs/heads/main</code></p></td>
 </tr>
 <tr class="row-odd"><td><p>Event commit</p></td>
-<td><p><code>787385407e3dd645d5dd60134af453ec615ea1cf</code> (in the history of the built commit)</p></td>
+<td><p><code>df8fe481e37610090ebe56744c5fd277c00722cb</code> (in the history of the built commit)</p></td>
 </tr>
 </tbody>
 </table>
@@ -181,16 +182,16 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p>epythet</p></td>
-<td><p>0.2.12</p></td>
+<td><p>0.2.22</p></td>
 </tr>
 <tr class="row-odd"><td><p>Sphinx</p></td>
-<td><p>9.1.0</p></td>
+<td><p>9.1.1</p></td>
 </tr>
 <tr class="row-even"><td><p>docutils</p></td>
 <td><p>0.22.4</p></td>
 </tr>
 <tr class="row-odd"><td><p>Python</p></td>
-<td><p>3.12.14</p></td>
+<td><p>3.12.16</p></td>
 </tr>
 </tbody>
 </table>
@@ -230,14 +231,14 @@
 </section>
 <section id="package-on-pypi">
 <h2>Package on PyPI<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#package-on-pypi" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#package-on-pypi'">¶</a></h2>
-<p>Latest release: <a href="https://pypi.org/project/tonal/0.0.21/">0.0.21</a>, the same as the documented version.</p>
+<p>Latest release: <a href="https://pypi.org/project/tonal/0.0.22/">0.0.22</a>, the same as the documented version.</p>
 </section>
-<section id="site"><h2>Site</h2><table class="docutils align-default"><tbody><tr><td><p>Modules documented</p></td><td><p>6</p></td></tr><tr><td><p>Objects documented</p></td><td><p>48</p></td></tr></tbody></table></section>
+<section id="site"><h2>Site</h2><table class="docutils align-default"><tbody><tr><td><p>Modules documented</p></td><td><p>6</p></td></tr><tr><td><p>Objects documented</p></td><td><p>53</p></td></tr></tbody></table></section>
 <section id="reproduce">
 <h2>Reproduce<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#reproduce" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#reproduce'">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/thorwhalen/tonal<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>tonal
-</span><span id="line-2">git<span class="w"> </span>checkout<span class="w"> </span>b44ec8f61f066ccf1765dfd280253ba3b9fffd02
-</span><span id="line-3">pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"epythet==0.2.12"</span>
+</span><span id="line-2">git<span class="w"> </span>checkout<span class="w"> </span>d5260d00ccfb0dcf67419bfbc0b9123ac048cb32
+</span><span id="line-3">pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"epythet==0.2.22"</span>
 </span><span id="line-4">epythet<span class="w"> </span>quickstart<span class="w"> </span>.<span class="w"> </span>--ignore<span class="w"> </span>tests/<span class="w"> </span>scrap/<span class="w"> </span>examples/
 </span></code></pre></div>
 </div>
@@ -266,11 +267,11 @@
 </div>
 </footer>
 </div>
-<script src="_static/documentation_options.js?v=a11416ff"></script>
+<script src="_static/documentation_options.js?v=96ec9c95"></script>
 <script src="_static/doctools.js?v=fd6eb6e6"></script>
 <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="_static/clipboard.min.js?v=a7894cd8"></script>
 <script src="_static/copybutton.js?v=fd10adb8"></script>
-<script defer="defer" src="_static/theme.js?v=5db23cf8"></script>
+<script defer="defer" src="_static/theme.js?v=49cc6205"></script>
 </body>
 </html>

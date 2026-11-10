@@ -1,41 +1,41 @@
 {
   "schema_version": 1,
-  "built_at": "2026-09-22T14:43:23Z",
+  "built_at": "2026-11-10T10:00:14Z",
   "package": {
     "name": "tonal",
-    "version": "0.0.21",
+    "version": "0.0.22",
     "display_name": "tonal",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "b44ec8f61f066ccf1765dfd280253ba3b9fffd02",
-    "short_commit": "b44ec8f",
+    "commit": "d5260d00ccfb0dcf67419bfbc0b9123ac048cb32",
+    "short_commit": "d5260d0",
     "branch": "main",
     "tags": [
-      "0.0.21"
+      "0.0.22"
     ],
     "dirty": false,
     "remote_url": "https://github.com/thorwhalen/tonal",
-    "commit_url": "https://github.com/thorwhalen/tonal/commit/b44ec8f61f066ccf1765dfd280253ba3b9fffd02",
+    "commit_url": "https://github.com/thorwhalen/tonal/commit/d5260d00ccfb0dcf67419bfbc0b9123ac048cb32",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "thorwhalen/tonal",
-    "sha": "787385407e3dd645d5dd60134af453ec615ea1cf",
+    "sha": "df8fe481e37610090ebe56744c5fd277c00722cb",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "35741979889",
-    "run_url": "https://github.com/thorwhalen/tonal/actions/runs/35741979889",
+    "run_id": "42795086892",
+    "run_url": "https://github.com/thorwhalen/tonal/actions/runs/42795086892",
     "server_url": "https://github.com"
   },
   "tools": {
-    "epythet": "0.2.12",
-    "sphinx": "9.1.0",
+    "epythet": "0.2.22",
+    "sphinx": "9.1.1",
     "docutils": "0.22.4",
-    "python": "3.12.14"
+    "python": "3.12.16"
   },
   "config": {
     "theme": "auto",
@@ -58,15 +58,15 @@
   },
   "site": {
     "modules_documented": 6,
-    "objects_documented": 48
+    "objects_documented": 53
   },
   "pypi": {
     "checked": true,
-    "latest": "0.0.21",
+    "latest": "0.0.22",
     "relation": "same",
     "error": null
   },
-  "reproduce": "git clone https://github.com/thorwhalen/tonal && cd tonal\ngit checkout b44ec8f61f066ccf1765dfd280253ba3b9fffd02\npip install \"epythet==0.2.12\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/thorwhalen/tonal && cd tonal\ngit checkout d5260d00ccfb0dcf67419bfbc0b9123ac048cb32\npip install \"epythet==0.2.22\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
     "aligned": true,

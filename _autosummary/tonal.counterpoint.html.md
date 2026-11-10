@@ -68,7 +68,7 @@ of a partial function to get a translator with a fixed input scale:
 Translates the input notes or tracks by the given number of steps within the given scale.
 
 * **Parameters:**
-  * **motif** (`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]], [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]]]) – The motif; input notes or tracks.
+  * **motif** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]], [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]]]) – The motif; input notes or tracks.
   * **translation** ([`int`](https://docs.python.org/3/builtins/functions.html#int) | [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]) – The number of steps to translate the notes.
   * **input_scale** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str) | `Scale`) – The scale in which to perform the translation.
   * **scale_creator** ([`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)], `Scale`]) – A function to create a Scale from a string.
@@ -139,7 +139,7 @@ of a partial function to get a translator with a fixed input scale:
 Translates a sequence of notes by the given number of steps within the given scale.
 
 * **Parameters:**
-  * **input_notes** (`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
+  * **input_notes** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
   * **translation** ([`int`](https://docs.python.org/3/builtins/functions.html#int)) – The number of steps to translate the notes.
   * **input_scale** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str) | `Scale`) – The scale in which to perform the translation.
   * **scale_creator** ([`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)], `Scale`]) – A function to create a Scale from a string.

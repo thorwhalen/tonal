@@ -56,14 +56,14 @@ Generate common textual aliases for quality-extension keys.
 
 This is shared logic used by several modules (e.g. mapping maj->M, min->m).
 
-* **Return type:**
-  [`Iterator`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator)[[`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]]
-
 ```pycon
 >>> d = {'maj7': (0, 4, 7, 11), 'min7': (0, 3, 7, 10)}
 >>> dict(add_pattern_aliases(d))['M7']
 (0, 4, 7, 11)
 ```
+
+* **Return type:**
+  [`Iterator`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator)[[`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]]
 
 ### tonal.notes.canonical_quality_name(quality)
 
@@ -72,14 +72,14 @@ Return the canonical quality key from `scale_quality`.
 Accepts aliases (including chains) and normalizes spaces to underscores.
 Raises ValueError if no mapping exists.
 
-* **Return type:**
-  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
-
 ### Examples
 
 - “minor” -> “natural_minor”
 - “bebop_dom” -> “bebop_dominant”
 - “minor pentatonic” -> “minor_pentatonic”
+
+* **Return type:**
+  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
 
 ### tonal.notes.list_chord_qualities()
 
@@ -168,15 +168,15 @@ Includes:
 
 Parse a note name prefix from a string.
 
-* **Return type:**
-  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
-
 ```pycon
 >>> parse_note_name('C#4')
 'C#'
 >>> parse_note_name('Eb')
 'Eb'
 ```
+
+* **Return type:**
+  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
 
 ### tonal.notes.register_chord_quality(quality_name, semitone_pattern)
 
@@ -316,9 +316,6 @@ Get the semitone pattern for a given scale quality string.
 Looks in scale_quality, then in scale_quality_alias (using the alias to look in scale_quality).
 Raises ValueError if not found.
 
-* **Return type:**
-  [`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)
-
 ```pycon
 >>> semitone_pattern('major')
 (0, 2, 4, 5, 7, 9, 11)
@@ -329,6 +326,9 @@ Raises ValueError if not found.
 >>> semitone_pattern('dorian')
 (0, 2, 3, 5, 7, 9, 10)
 ```
+
+* **Return type:**
+  [`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)
 
 ### tonal.notes.validate_scale_aliases(scale_quality, scale_aliases)
 

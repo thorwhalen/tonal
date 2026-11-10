@@ -1,4 +1,4 @@
-> built 2026-09-22 14:43 UTC from b44ec8f (main) · tonal 0.0.21. Details: build_info.json
+> built 2026-11-10 10:00 UTC from d5260d0 (main) · tonal 0.0.22. Details: build_info.json
 
 # index.html.md
 
@@ -419,7 +419,7 @@ of a partial function to get a translator with a fixed input scale:
 Translates the input notes or tracks by the given number of steps within the given scale.
 
 * **Parameters:**
-  * **motif** (`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]], [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]]]) – The motif; input notes or tracks.
+  * **motif** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]], [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]]]) – The motif; input notes or tracks.
   * **translation** ([`int`](https://docs.python.org/3/builtins/functions.html#int) | [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]) – The number of steps to translate the notes.
   * **input_scale** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str) | `Scale`) – The scale in which to perform the translation.
   * **scale_creator** ([`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)], `Scale`]) – A function to create a Scale from a string.
@@ -490,7 +490,7 @@ of a partial function to get a translator with a fixed input scale:
 Translates a sequence of notes by the given number of steps within the given scale.
 
 * **Parameters:**
-  * **input_notes** (`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
+  * **input_notes** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
   * **translation** ([`int`](https://docs.python.org/3/builtins/functions.html#int)) – The number of steps to translate the notes.
   * **input_scale** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str) | `Scale`) – The scale in which to perform the translation.
   * **scale_creator** ([`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)], `Scale`]) – A function to create a Scale from a string.
@@ -512,16 +512,148 @@ Translates a sequence of notes by the given number of steps within the given sca
 
 # tonal
 
-Tools to generate music
+Tools to generate music.
+
+The package namespace is lazy (PEP 562): the names below are imported from their
+submodules on first access, so `import tonal.notes` does not pull in the heavy
+dependencies (music21, mido) that `tonal.chords` and `tonal.util` need.
+
+### Functions
+
+| [`chords_to_wav`](_autosummary/tonal.html.md#tonal.chords_to_wav)([chord_sequence, name, ...])      | Generate a WAV file directly from a chord sequence.                                            |
+|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| [`chords_to_midi`](_autosummary/tonal.html.md#tonal.chords_to_midi)([chord_sequence, ...])           | Generate a MIDI file from a chord sequence.                                                    |
+| [`convert`](_autosummary/tonal.html.md#tonal.convert)(src[, dest, src_format, ...])           | Convert between different music formats.                                                       |
+| [`midi_to_wav`](_autosummary/tonal.html.md#tonal.midi_to_wav)(midi_file[, output_wav, soundfont]) | Synthesize audio from a MIDI file using FluidSynth.                                            |
+| [`scale_midi_notes`](_autosummary/tonal.html.md#tonal.scale_midi_notes)([scale, midi_range, ...])      | Return a tuple of all MIDI note numbers in the given range that belong to the specified scale. |
+
+### tonal.chords_to_midi(chord_sequence=[('Bdim', 120), ('Em11', 120), ('Amin9', 120), ('Dm7', 120), 'G7', 'Cmaj7'], \*, output_file=None, render_chord=<function play_simultaneously>, chord_definitions=<function chord_to_notes>)
+
+Generate a MIDI file from a chord sequence.
+
+* **Parameters:**
+  * **chord_sequence** ([`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]]) – List of tuples containing chords and their duration.
+  * **chord_definitions** ([`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)], [`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]) – Dictionary mapping chords to MIDI note patterns.
+  * **output_file** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – Name of the output MIDI file.
+  * **render_chord** ([`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)], `any`, [`int`](https://docs.python.org/3/builtins/functions.html#int)], [`None`](https://docs.python.org/3/builtins/constants.html#None)]) – Function defining how the chords should be played.
+
+### tonal.chords_to_wav(chord_sequence=[('Bdim', 120), ('Em11', 120), ('Amin9', 120), ('Dm7', 120), 'G7', 'Cmaj7'], name='audio_output', \*, chord_definitions=<function chord_to_notes>, soundfont='/home/runner/work/tonal/tonal/tonal/data/Caeds Small Trash GM v1.06.sf2', render_chord=<function play_simultaneously>)
+
+Generate a WAV file directly from a chord sequence.
+
+* **Parameters:**
+  * **chord_sequence** ([`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]]) – List of tuples containing chords and their duration.
+  * **name** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – Base name for the output MIDI and WAV files.
+  * **chord_definitions** ([`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)], [`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]) – Dictionary mapping chords to MIDI note patterns.
+  * **soundfont** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – Path to the SoundFont file.
+  * **render_chord** ([`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)], `any`, [`int`](https://docs.python.org/3/builtins/functions.html#int)], [`None`](https://docs.python.org/3/builtins/constants.html#None)]) – Function defining how the chords should be played.
+
+### tonal.convert(src, dest=None, , src_format=None, dest_format=None, format_for_extension={'.jpeg': 'image', '.jpg': 'image', '.mid': 'midi', '.midi': 'midi', '.musicxml': 'musicxml', '.png': 'image', '.wav': 'wav', '.xml': 'musicxml'})
+
+Convert between different music formats.
+
+* **Parameters:**
+  * **src** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str) | [`bytes`](https://docs.python.org/3/builtins/stdtypes.html#bytes)) – Source as a filepath or bytes data
+  * **dest** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str) | [`None`](https://docs.python.org/3/builtins/constants.html#None)) – Destination filepath, format string, or None to return bytes
+  * **src_format** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str) | [`None`](https://docs.python.org/3/builtins/constants.html#None)) – Source format, inferred from filepath extension if None
+  * **dest_format** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str) | [`None`](https://docs.python.org/3/builtins/constants.html#None)) – Destination format, inferred from dest if None
+  * **format_for_extension** – Mapping of file extensions to format names
+* **Returns:**
+  returns the destination filepath
+  If dest is None or a format string or src is bytes: returns the converted bytes
+* **Return type:**
+  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str) | [`bytes`](https://docs.python.org/3/builtins/stdtypes.html#bytes)
+
+### Examples
+
+# File to file conversion
+convert(‘my_score.musicxml’, ‘my_score.mid’)
+
+### File to bytes with specified format
+
+midi_bytes = convert(‘my_score.musicxml’, dest_format=’midi’)
+
+### File to bytes using format string shorthand
+
+midi_bytes = convert(‘my_score.musicxml’, ‘midi’)
+
+### Bytes to file
+
+convert(midi_bytes, ‘output.wav’, src_format=’midi’)
+
+### Bytes to bytes
+
+wav_bytes = convert(midi_bytes, src_format=’midi’, dest_format=’wav’)
+
+### Bytes to bytes with format string shorthand
+
+wav_bytes = convert(midi_bytes, ‘wav’, src_format=’midi’)
+
+### tonal.midi_to_wav(midi_file, output_wav=None, , soundfont='/home/runner/work/tonal/tonal/tonal/data/Caeds Small Trash GM v1.06.sf2')
+
+Synthesize audio from a MIDI file using FluidSynth.
+
+* **Parameters:**
+  * **midi_file** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – Name of the input MIDI file.
+  * **output_wav** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – Name of the output WAV file.
+  * **soundfont** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – Path to the SoundFont file.
+
+### tonal.scale_midi_notes(scale='C major', midi_range=(0, 127), , default_root='C')
+
+Return a tuple of all MIDI note numbers in the given range that belong to the specified scale.
+
+* **Parameters:**
+  * **scale** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – The scale string, e.g., ‘C major’, ‘D# minor pentatonic’.
+  * **midi_range** ([`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)[[`int`](https://docs.python.org/3/builtins/functions.html#int), [`int`](https://docs.python.org/3/builtins/functions.html#int)]) – The (min, max) MIDI note numbers to include.
+  * **default_root** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – The root note to use if not found in the scale string (default ‘C’).
+* **Returns:**
+  MIDI note numbers in the scale within the specified range.
+* **Return type:**
+  [`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)
+
+```pycon
+>>> scale_midi_notes('E')
+(1, 3, 4, 6, 8, 9, 11, 13, 15, 16, ...114, 116, 117, 119, 121, 123, 124, 126)
+```
+
+If it’s suprising that it starts at 1, because you were expecting ‘E’ (major)
+to start with 4, remember that scale_midi_notes is designed to return all notes in the scale
+within the MIDI range, not just the notes starting from the root note.
+The first note in that range that is in E major is actually a C#, which the
+midi note 1 is. You can control the range through:
+
+```pycon
+>>> scale_midi_notes('E', midi_range=(4, 30))
+(4, 6, 8, 9, 11, 13, 15, 16, 18, 20, 21, 23, 25, 27, 28, 30)
+```
+
+You see that if no scale quality is specified, it defaults to ‘major’.
+On the other hand, if no root note is specified, it defaults to ‘C’, or what ever
+you tell `default_root` is should be.
+
+```pycon
+>>> assert (
+...     scale_midi_notes('', midi_range=(60, 72))
+...     == scale_midi_notes('C', midi_range=(60, 72))
+...     == scale_midi_notes('major', midi_range=(60, 72))
+...     == scale_midi_notes('C major', midi_range=(60, 72))
+...     == (60, 62, 64, 65, 67, 69, 71, 72)
+... )
+```
+
+```pycon
+>>> scale_midi_notes('Db minor pentatonic', midi_range=(60, 72))
+(61, 64, 66, 68, 71)
+```
 
 ### Modules
 
 | [`chords`](_autosummary/tonal.chords.html.md#module-tonal.chords)             | Tools for chords and chord progressions.   |
 |-----------------------------------------------------------------------------------------|--------------------------------------------|
 | [`converters`](_autosummary/tonal.converters.html.md#module-tonal.converters)     | Convert music into various formats.        |
-| [`counterpoint`](_autosummary/tonal.counterpoint.html.md#module-tonal.counterpoint) | Tools for counterpoint.                    |
 | [`notes`](_autosummary/tonal.notes.html.md#module-tonal.notes)               | Notes, scales, and chords definitions.     |
 | [`util`](_autosummary/tonal.util.html.md#module-tonal.util)                 | Utils for sonification.                    |
+| [`counterpoint`](_autosummary/tonal.counterpoint.html.md#module-tonal.counterpoint) | Tools for counterpoint.                    |
 
 
 # _autosummary/tonal.notes.html.md
@@ -584,14 +716,14 @@ Generate common textual aliases for quality-extension keys.
 
 This is shared logic used by several modules (e.g. mapping maj->M, min->m).
 
-* **Return type:**
-  [`Iterator`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator)[[`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]]
-
 ```pycon
 >>> d = {'maj7': (0, 4, 7, 11), 'min7': (0, 3, 7, 10)}
 >>> dict(add_pattern_aliases(d))['M7']
 (0, 4, 7, 11)
 ```
+
+* **Return type:**
+  [`Iterator`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator)[[`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]]
 
 ### tonal.notes.canonical_quality_name(quality)
 
@@ -600,14 +732,14 @@ Return the canonical quality key from `scale_quality`.
 Accepts aliases (including chains) and normalizes spaces to underscores.
 Raises ValueError if no mapping exists.
 
-* **Return type:**
-  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
-
 ### Examples
 
 - “minor” -> “natural_minor”
 - “bebop_dom” -> “bebop_dominant”
 - “minor pentatonic” -> “minor_pentatonic”
+
+* **Return type:**
+  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
 
 ### tonal.notes.list_chord_qualities()
 
@@ -696,15 +828,15 @@ Includes:
 
 Parse a note name prefix from a string.
 
-* **Return type:**
-  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
-
 ```pycon
 >>> parse_note_name('C#4')
 'C#'
 >>> parse_note_name('Eb')
 'Eb'
 ```
+
+* **Return type:**
+  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
 
 ### tonal.notes.register_chord_quality(quality_name, semitone_pattern)
 
@@ -844,9 +976,6 @@ Get the semitone pattern for a given scale quality string.
 Looks in scale_quality, then in scale_quality_alias (using the alias to look in scale_quality).
 Raises ValueError if not found.
 
-* **Return type:**
-  [`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)
-
 ```pycon
 >>> semitone_pattern('major')
 (0, 2, 4, 5, 7, 9, 11)
@@ -857,6 +986,9 @@ Raises ValueError if not found.
 >>> semitone_pattern('dorian')
 (0, 2, 3, 5, 7, 9, 10)
 ```
+
+* **Return type:**
+  [`tuple`](https://docs.python.org/3/builtins/stdtypes.html#tuple)
 
 ### tonal.notes.validate_scale_aliases(scale_quality, scale_aliases)
 
@@ -983,9 +1115,9 @@ Creates a music21 Score from a list of tracks (Stream objects).
 Delete parts from a score based on the provided part indices.
 
 * **Parameters:**
-  * **part_idx** (`Union`[[`int`](https://docs.python.org/3/builtins/functions.html#int), [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]) – Union[int, List[int]]
+  * **part_idx** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`int`](https://docs.python.org/3/builtins/functions.html#int), [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]) – Union[int, List[int]]
     An integer or a list of integers representing the indices of parts to be deleted.
-  * **score_input** (`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – Union[str, Score]
+  * **score_input** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – Union[str, Score]
     The input score, either as a file path or a music21 Score instance.
   * **save_to_filepath** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – str
     The file path to save the modified score. Default is None.
@@ -1011,7 +1143,7 @@ Delete parts from a score based on the provided part indices.
 Ensures the input is an iterable of Note objects.
 
 * **Parameters:**
-  **notes** (`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
+  **notes** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
 * **Returns:**
   A generator of Note objects.
 * **Return type:**
@@ -1046,11 +1178,11 @@ Ensures the input is a Scale object. Converts a string to a Scale using the prov
 Filter parts from a score based on the provided filter function or part indices.
 
 * **Parameters:**
-  * **part_filter** (`Union`[[`int`](https://docs.python.org/3/builtins/functions.html#int), [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`int`](https://docs.python.org/3/builtins/functions.html#int)], [`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[`Part`], [`bool`](https://docs.python.org/3/builtins/functions.html#bool)], [`None`](https://docs.python.org/3/builtins/constants.html#None)]) – PartFilterSpec
+  * **part_filter** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`int`](https://docs.python.org/3/builtins/functions.html#int), [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`int`](https://docs.python.org/3/builtins/functions.html#int)], [`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[`Part`], [`bool`](https://docs.python.org/3/builtins/functions.html#bool)], [`None`](https://docs.python.org/3/builtins/constants.html#None)]) – PartFilterSpec
     A function that takes a music21 Part object and returns a boolean value.
     If an integer or list of integers is provided, the function will filter in
     parts based on the indices.
-  * **score_input** (`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – Union[str, Score]
+  * **score_input** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – Union[str, Score]
     The input score, either as a file path or a music21 Score instance.
   * **save_to_filepath** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – str
     The file path to save the modified score. Default is None.
@@ -1099,7 +1231,7 @@ Returns True if the input object is a string representing an existing file path.
 Creates a music21 Score object from the input object.
 
 * **Parameters:**
-  * **obj** (`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – The input object.
+  * **obj** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – The input object.
   * **\*\*kwargs** – Additional keyword arguments to pass to the Score constructor.
 * **Returns:**
   The corresponding Score object.
@@ -1123,7 +1255,7 @@ Creates a music21 Score object from the input object.
 Creates a music21 Stream object from the input object.
 
 * **Parameters:**
-  * **obj** (`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)], [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[`Note`], `Stream`]) – The input object.
+  * **obj** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)], [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[`Note`], `Stream`]) – The input object.
   * **\*\*kwargs** – Additional keyword arguments to pass to the Stream constructor.
 * **Returns:**
   The corresponding Stream object.
@@ -1141,7 +1273,7 @@ Creates a music21 Stream object from the input object.
 Returns the names of the notes in the input iterable.
 
 * **Parameters:**
-  **tracks** ([`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]]) – The input tracks.
+  **tracks** ([`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]]) – The input tracks.
 * **Returns:**
   A list of lists of note names.
 * **Return type:**
@@ -1164,7 +1296,7 @@ Returns the names of the notes in the input iterable.
 Returns the names of the notes in the input iterable.
 
 * **Parameters:**
-  **notes** (`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
+  **notes** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
 * **Returns:**
   A list of note names.
 * **Return type:**
@@ -1251,7 +1383,7 @@ note.nameWithOctave='E4', note.duration.type='half', note.pitch.microtone=<music
 
 # About this build
 
-This documentation was built on **2026-09-22 14:43 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/b44ec8f61f066ccf1765dfd280253ba3b9fffd02"><code>b44ec8f</code></a> on branch <code>main</code>, for **tonal 0.0.21** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-10 10:00 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/d5260d00ccfb0dcf67419bfbc0b9123ac048cb32"><code>d5260d0</code></a> on branch <code>main</code>, for **tonal 0.0.22** (from <code>pyproject.toml</code>).
 
 #### NOTE
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -1260,9 +1392,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/b44ec8f61f066ccf1765dfd280253ba3b9fffd02"><code>b44ec8f61f066ccf1765dfd280253ba3b9fffd02</code></a> |
+| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/d5260d00ccfb0dcf67419bfbc0b9123ac048cb32"><code>d5260d00ccfb0dcf67419bfbc0b9123ac048cb32</code></a> |
 | Branch              | <code>main</code>                                                                                                                                       |
-| Tags at this commit | <code>0.0.21</code>                                                                                                                                     |
+| Tags at this commit | <code>0.0.22</code>                                                                                                                                     |
 | Working tree        | clean                                                                                                                                                   |
 | Remote              | <code>https://github.com/thorwhalen/tonal</code>                                                                                                        |
 
@@ -1271,18 +1403,18 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>thorwhalen/tonal</code>                                                              |
-| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/35741979889">35741979889</a>     |
+| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/42795086892">42795086892</a>     |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>787385407e3dd645d5dd60134af453ec615ea1cf</code> (in the history of the built commit) |
+| Event commit | <code>df8fe481e37610090ebe56744c5fd277c00722cb</code> (in the history of the built commit) |
 
 ## Tools
 
 |          |         |
 |----------|---------|
-| epythet  | 0.2.12  |
-| Sphinx   | 9.1.0   |
+| epythet  | 0.2.22  |
+| Sphinx   | 9.1.1   |
 | docutils | 0.22.4  |
-| Python   | 3.12.14 |
+| Python   | 3.12.16 |
 
 ## Configuration as resolved
 
@@ -1298,14 +1430,14 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/tonal/0.0.21/">0.0.21</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/tonal/0.0.22/">0.0.22</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/tonal && cd tonal
-git checkout b44ec8f61f066ccf1765dfd280253ba3b9fffd02
-pip install "epythet==0.2.12"
+git checkout d5260d00ccfb0dcf67419bfbc0b9123ac048cb32
+pip install "epythet==0.2.22"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
 
@@ -1316,7 +1448,7 @@ The same data, for machines: <a href="build_info.json"><code>build_info.json</co
 
 # API reference
 
-| [`tonal`](_autosummary/tonal.html.md#module-tonal)   | Tools to generate music   |
-|-----------------------------------------------------------------------|---------------------------|
+| [`tonal`](_autosummary/tonal.html.md#module-tonal)   | Tools to generate music.   |
+|-----------------------------------------------------------------------|----------------------------|
 
 

@@ -100,9 +100,9 @@ Creates a music21 Score from a list of tracks (Stream objects).
 Delete parts from a score based on the provided part indices.
 
 * **Parameters:**
-  * **part_idx** (`Union`[[`int`](https://docs.python.org/3/builtins/functions.html#int), [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]) – Union[int, List[int]]
+  * **part_idx** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`int`](https://docs.python.org/3/builtins/functions.html#int), [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`int`](https://docs.python.org/3/builtins/functions.html#int)]]) – Union[int, List[int]]
     An integer or a list of integers representing the indices of parts to be deleted.
-  * **score_input** (`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – Union[str, Score]
+  * **score_input** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – Union[str, Score]
     The input score, either as a file path or a music21 Score instance.
   * **save_to_filepath** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – str
     The file path to save the modified score. Default is None.
@@ -128,7 +128,7 @@ Delete parts from a score based on the provided part indices.
 Ensures the input is an iterable of Note objects.
 
 * **Parameters:**
-  **notes** (`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
+  **notes** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
 * **Returns:**
   A generator of Note objects.
 * **Return type:**
@@ -163,11 +163,11 @@ Ensures the input is a Scale object. Converts a string to a Scale using the prov
 Filter parts from a score based on the provided filter function or part indices.
 
 * **Parameters:**
-  * **part_filter** (`Union`[[`int`](https://docs.python.org/3/builtins/functions.html#int), [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`int`](https://docs.python.org/3/builtins/functions.html#int)], [`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[`Part`], [`bool`](https://docs.python.org/3/builtins/functions.html#bool)], [`None`](https://docs.python.org/3/builtins/constants.html#None)]) – PartFilterSpec
+  * **part_filter** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`int`](https://docs.python.org/3/builtins/functions.html#int), [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`int`](https://docs.python.org/3/builtins/functions.html#int)], [`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[`Part`], [`bool`](https://docs.python.org/3/builtins/functions.html#bool)], [`None`](https://docs.python.org/3/builtins/constants.html#None)]) – PartFilterSpec
     A function that takes a music21 Part object and returns a boolean value.
     If an integer or list of integers is provided, the function will filter in
     parts based on the indices.
-  * **score_input** (`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – Union[str, Score]
+  * **score_input** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – Union[str, Score]
     The input score, either as a file path or a music21 Score instance.
   * **save_to_filepath** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – str
     The file path to save the modified score. Default is None.
@@ -216,7 +216,7 @@ Returns True if the input object is a string representing an existing file path.
 Creates a music21 Score object from the input object.
 
 * **Parameters:**
-  * **obj** (`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – The input object.
+  * **obj** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Score`]) – The input object.
   * **\*\*kwargs** – Additional keyword arguments to pass to the Score constructor.
 * **Returns:**
   The corresponding Score object.
@@ -240,7 +240,7 @@ Creates a music21 Score object from the input object.
 Creates a music21 Stream object from the input object.
 
 * **Parameters:**
-  * **obj** (`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)], [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[`Note`], `Stream`]) – The input object.
+  * **obj** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)], [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[`Note`], `Stream`]) – The input object.
   * **\*\*kwargs** – Additional keyword arguments to pass to the Stream constructor.
 * **Returns:**
   The corresponding Stream object.
@@ -258,7 +258,7 @@ Creates a music21 Stream object from the input object.
 Returns the names of the notes in the input iterable.
 
 * **Parameters:**
-  **tracks** ([`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]]) – The input tracks.
+  **tracks** ([`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]]) – The input tracks.
 * **Returns:**
   A list of lists of note names.
 * **Return type:**
@@ -281,7 +281,7 @@ Returns the names of the notes in the input iterable.
 Returns the names of the notes in the input iterable.
 
 * **Parameters:**
-  **notes** (`Union`[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[`Union`[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
+  **notes** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[`Stream`, [`Iterable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), `Note`]]]) – The input notes.
 * **Returns:**
   A list of note names.
 * **Return type:**

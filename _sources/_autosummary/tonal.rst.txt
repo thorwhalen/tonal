@@ -4,6 +4,16 @@
 .. automodule:: tonal
 
    
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      chords_to_wav
+      chords_to_midi
+      convert
+      midi_to_wav
+      scale_midi_notes
+   
 .. rubric:: Modules
 
 .. autosummary::
@@ -12,6 +22,6 @@
 
    chords
    converters
-   counterpoint
    notes
    util
+   counterpoint

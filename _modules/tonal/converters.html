@@ -29,7 +29,8 @@
   <meta property="og:title" content="tonal.converters | tonal" />
   <meta name="twitter:title" content="tonal.converters | tonal" />
   <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d75fae25" />
-  <link rel="stylesheet" type="text/css" href="../../_static/theme.css?v=d6d7c91b" />
+  <link rel="stylesheet" type="text/css" href="../../_static/theme.css?v=009055c6" />
+  <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
   <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
   <link rel="stylesheet" type="text/css" href="../../_static/epythet.css?v=8d29639b" />
   <link rel="search" title="Search" href="../../search.html" />
@@ -115,9 +116,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../_autosummary/tonal.html">tonal</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.chords.html">tonal.chords</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.converters.html">tonal.converters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.counterpoint.html">tonal.counterpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.notes.html">tonal.notes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.util.html">tonal.util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/tonal.counterpoint.html">tonal.counterpoint</a></li>
 </ul>
 </li>
 </ul>
@@ -208,7 +209,7 @@
 </span><span id="line-42">
 </span><span id="line-43">
 <div class="viewcode-block" id="format_of_filepath">
-<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.converters.format_of_filepath">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.format_of_filepath">[docs]</a>
 </span><span id="line-44"><span class="k">def</span><span class="w"> </span><span class="nf">format_of_filepath</span><span class="p">(</span>
 </span><span id="line-45">    <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">format_for_extension</span><span class="o">=</span><span class="n">dflt_format_for_extension</span>
 </span><span id="line-46"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -219,7 +220,7 @@
 </span><span id="line-50">
 </span><span id="line-51">
 <div class="viewcode-block" id="replace_extension">
-<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.converters.replace_extension">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.replace_extension">[docs]</a>
 </span><span id="line-52"><span class="k">def</span><span class="w"> </span><span class="nf">replace_extension</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dest_extension</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="line-53"><span class="w">    </span><span class="sd">"""Replace the extension of a filepath with a new one."""</span>
 </span><span id="line-54">    <span class="k">return</span> <span class="n">src</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">src</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dest_extension</span><span class="p">)</span></div>
@@ -227,7 +228,7 @@
 </span><span id="line-55">
 </span><span id="line-56">
 <div class="viewcode-block" id="ensure_dest_filepath">
-<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.converters.ensure_dest_filepath">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.ensure_dest_filepath">[docs]</a>
 </span><span id="line-57"><span class="k">def</span><span class="w"> </span><span class="nf">ensure_dest_filepath</span><span class="p">(</span>
 </span><span id="line-58">    <span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 </span><span id="line-59">    <span class="n">dest</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -246,7 +247,7 @@
 </span><span id="line-71">
 </span><span id="line-72"><span class="c1"># Use dol.written_bytes to use file functions as bytes functions</span>
 <div class="viewcode-block" id="convert">
-<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.converters.convert">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.convert">[docs]</a>
 </span><span id="line-73"><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span>
 </span><span id="line-74">    <span class="n">src</span><span class="p">:</span> <span class="n">FilePath</span> <span class="o">|</span> <span class="n">BytesData</span><span class="p">,</span>
 </span><span id="line-75">    <span class="n">dest</span><span class="p">:</span> <span class="n">FilePath</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -345,7 +346,7 @@
 </span><span id="line-167">
 </span><span id="line-168">
 <div class="viewcode-block" id="guess_format_from_bytes">
-<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.converters.guess_format_from_bytes">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.guess_format_from_bytes">[docs]</a>
 </span><span id="line-169"><span class="k">def</span><span class="w"> </span><span class="nf">guess_format_from_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-170"><span class="w">    </span><span class="sd">"""</span>
 </span><span id="line-171"><span class="sd">    Attempt to guess the format of a file from its bytes content.</span>
@@ -451,7 +452,7 @@
 </span><span id="line-270">
 </span><span id="line-271">
 <div class="viewcode-block" id="image_to_musicxml">
-<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.converters.image_to_musicxml">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.image_to_musicxml">[docs]</a>
 </span><span id="line-272"><span class="k">def</span><span class="w"> </span><span class="nf">image_to_musicxml</span><span class="p">(</span>
 </span><span id="line-273">    <span class="n">image</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">enable_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">enable_cache</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">remove_teaser_file</span><span class="o">=</span><span class="kc">True</span>
 </span><span id="line-274"><span class="p">):</span>
@@ -470,7 +471,7 @@
 </span><span id="line-286">
 </span><span id="line-287">
 <div class="viewcode-block" id="musicxml_to_midi">
-<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.converters.musicxml_to_midi">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.musicxml_to_midi">[docs]</a>
 </span><span id="line-288"><span class="k">def</span><span class="w"> </span><span class="nf">musicxml_to_midi</span><span class="p">(</span><span class="n">musicxml_path</span><span class="p">,</span> <span class="n">midi_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 </span><span id="line-289"><span class="w">    </span><span class="sd">"""Convert a MusicXML file to MIDI."""</span>
 </span><span id="line-290">    <span class="kn">from</span><span class="w"> </span><span class="nn">music21</span><span class="w"> </span><span class="kn">import</span> <span class="n">converter</span>
@@ -484,7 +485,7 @@
 </span><span id="line-297">
 </span><span id="line-298">
 <div class="viewcode-block" id="midi_to_wav">
-<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.converters.midi_to_wav">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.midi_to_wav">[docs]</a>
 </span><span id="line-299"><span class="k">def</span><span class="w"> </span><span class="nf">midi_to_wav</span><span class="p">(</span>
 </span><span id="line-300">    <span class="n">midi_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 </span><span id="line-301">    <span class="n">output_wav</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -528,12 +529,12 @@
 </footer>
     </div>
     
-    <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+    <script src="../../_static/documentation_options.js?v=96ec9c95"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=fd10adb8"></script>
-    <script defer="defer" src="../../_static/theme.js?v=5db23cf8"></script>
+    <script defer="defer" src="../../_static/theme.js?v=49cc6205"></script>
     <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
 
