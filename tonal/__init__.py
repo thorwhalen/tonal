@@ -5,7 +5,14 @@ submodules on first access, so ``import tonal.notes`` does not pull in the heavy
 dependencies (music21, mido) that ``tonal.chords`` and ``tonal.util`` need.
 """
 
-from importlib import import_module
+from importlib import import_module as _import_module
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:  # static tools see the names the lazy loader serves
+    from tonal.chords import chords_to_midi, chords_to_wav
+    from tonal.converters import convert, midi_to_wav
+    from tonal.notes import scale_midi_notes
+    from tonal.util import DFLT_SOUNDFONT
 
 # Public name -> submodule that defines it.
 _LAZY_ATTRS = {
@@ -25,9 +32,9 @@ __all__ = [*_LAZY_ATTRS, *_LAZY_SUBMODULES]
 
 def __getattr__(name):
     if name in _LAZY_ATTRS:
-        value = getattr(import_module(_LAZY_ATTRS[name]), name)
+        value = getattr(_import_module(_LAZY_ATTRS[name]), name)
     elif name in _LAZY_SUBMODULES:
-        value = import_module(f"{__name__}.{name}")
+        value = _import_module(f"{__name__}.{name}")
     else:
         raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
     globals()[name] = value  # cache, so __getattr__ is not called again

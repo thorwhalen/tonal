@@ -1,7 +1,9 @@
 """Test the lazy package namespace of ``tonal``."""
 
+import os
 import subprocess
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -47,4 +49,10 @@ def test_importing_notes_does_not_load_heavy_deps():
         "import tonal.notes, sys; "
         "assert 'music21' not in sys.modules and 'mido' not in sys.modules"
     )
-    subprocess.run([sys.executable, "-c", code], check=True)
+    import tonal
+
+    # Run the child against THIS tonal, not whatever copy is installed.
+    src_root = str(Path(tonal.__file__).resolve().parents[1])
+    env = {**os.environ, "PYTHONPATH": os.pathsep.join([src_root, os.environ.get("PYTHONPATH", "")])}
+    code += f"; import tonal; assert tonal.__file__.startswith({src_root!r}), tonal.__file__"
+    subprocess.run([sys.executable, "-c", code], check=True, env=env)
