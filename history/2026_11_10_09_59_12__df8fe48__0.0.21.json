@@ -1,0 +1,52 @@
+{
+  "collection_duration_seconds": 12.286258220672607,
+  "commit_message": "Lazy package namespace: importing tonal.notes no longer loads music21 and mido (#12)\n\nCloses #11.",
+  "commit_sha": "df8fe481e37610090ebe56744c5fd277c00722cb",
+  "metrics": {
+    "coverage": {
+      "branch_coverage": 0.0,
+      "error": "No coverage file found",
+      "line_coverage": 0.0,
+      "statements_covered": 0,
+      "statements_total": 0
+    },
+    "umpyre_stats": {
+      "comment_lines": 70055,
+      "comment_lines_ratio": 0.061272130298720764,
+      "docs_lines": 244497,
+      "empty_lines": 165775,
+      "empty_lines_ratio": 0.14499161230847812,
+      "errors": [
+        "testFiles.py: invalid non-printable character U+FEFF (testFiles.py, line 1)",
+        "test_func_inspect_special_encoding.py: 'utf-8' codec can't decode byte 0xa4 in position 64: invalid start byte"
+      ],
+      "files_analyzed": 2052,
+      "function_lines": 739877,
+      "function_lines_ratio": 0.6471178352583916,
+      "mean_lines_per_function": 20.449889441680487,
+      "num_classes": 6076,
+      "num_functions": 36180,
+      "pypi_version": "0.0.21",
+      "total_errors": 2,
+      "total_lines": 1143342
+    },
+    "wily": {
+      "cyclomatic_avg": 0.0,
+      "error": "wily report failed: Usage: wily report [OPTIONS] FILE [METRICS]...\nTry 'wily report --help' for help.\n\nError: Invalid value for '-f' / '--format': 'json' is not one of 'CONSOLE', 'HTML'.\n",
+      "files_analyzed": 0,
+      "maintainability_index": 0.0,
+      "total_loc": 0
+    },
+    "workflow_status": {
+      "last_run_status": "success",
+      "last_success_timestamp": "2026-11-10T09:57:30Z",
+      "recent_failure_count": 0,
+      "run_url": "https://github.com/thorwhalen/tonal/actions/runs/42794859387",
+      "total_runs_analyzed": 10
+    }
+  },
+  "python_version": "3.10",
+  "schema_version": "1.0",
+  "timestamp": "2026-11-10T09:59:12.225369Z",
+  "workflow_status": {}
+}
