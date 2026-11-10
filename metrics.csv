@@ -1,6 +1,6 @@
 metric,value
 schema_version,1.0
-timestamp,2026-11-10T09:53:19.795119Z
+timestamp,2026-11-10T09:53:28.620917Z
 commit_sha,1d0eee2e5837838899a8b374b623417d6c19d653
 commit_message,"Make tonal package namespace lazy so tonal.notes skips music21/mido
 
@@ -15,21 +15,21 @@ tonal.notes leaves music21 and mido out of sys.modules.
 
 Closes #11"
 python_version,3.10
-metrics.umpyre_stats.num_functions,36180
-metrics.umpyre_stats.num_classes,6076
-metrics.umpyre_stats.total_lines,1143335
-metrics.umpyre_stats.empty_lines,165774
-metrics.umpyre_stats.comment_lines,70055
-metrics.umpyre_stats.docs_lines,244497
-metrics.umpyre_stats.function_lines,739877
-metrics.umpyre_stats.empty_lines_ratio,0.1449916253766394
-metrics.umpyre_stats.comment_lines_ratio,0.061272505433665546
-metrics.umpyre_stats.function_lines_ratio,0.6471217971985463
-metrics.umpyre_stats.mean_lines_per_function,20.449889441680487
-metrics.umpyre_stats.files_analyzed,2052
+metrics.umpyre_stats.num_functions,35258
+metrics.umpyre_stats.num_classes,5836
+metrics.umpyre_stats.total_lines,1137573
+metrics.umpyre_stats.empty_lines,162535
+metrics.umpyre_stats.comment_lines,68705
+metrics.umpyre_stats.docs_lines,243384
+metrics.umpyre_stats.function_lines,735608
+metrics.umpyre_stats.empty_lines_ratio,0.1428787427268404
+metrics.umpyre_stats.comment_lines_ratio,0.06039612402896342
+metrics.umpyre_stats.function_lines_ratio,0.6466468525536383
+metrics.umpyre_stats.mean_lines_per_function,20.86357706052527
+metrics.umpyre_stats.files_analyzed,1982
 metrics.umpyre_stats.pypi_version,0.0.21
-metrics.umpyre_stats.errors,"['testFiles.py: invalid non-printable character U+FEFF (testFiles.py, line 1)', ""test_func_inspect_special_encoding.py: 'utf-8' codec can't decode byte 0xa4 in position 64: invalid start byte""]"
-metrics.umpyre_stats.total_errors,2
+metrics.umpyre_stats.errors,"['mypy_plugin.py: invalid syntax (mypy_plugin.py, line 118)', '_array_like.py: invalid syntax (_array_like.py, line 15)', '_char_codes.py: invalid syntax (_char_codes.py, line 3)', '_nbit.py: invalid syntax (_nbit.py, line 6)', '_dtype_like.py: invalid syntax (_dtype_like.py, line 21)', '_scalars.py: invalid syntax (_scalars.py, line 7)', '_shape.py: invalid syntax (_shape.py, line 4)', 'testFiles.py: invalid non-printable character U+FEFF (testFiles.py, line 1)', ""test_func_inspect_special_encoding.py: 'utf-8' codec can't decode byte 0xa4 in position 64: invalid start byte""]"
+metrics.umpyre_stats.total_errors,9
 metrics.workflow_status.last_run_status,success
 metrics.workflow_status.last_success_timestamp,2026-09-22T14:45:46Z
 metrics.workflow_status.recent_failure_count,0
@@ -49,4 +49,4 @@ metrics.coverage.branch_coverage,0.0
 metrics.coverage.statements_covered,0
 metrics.coverage.statements_total,0
 metrics.coverage.error,No coverage file found
-collection_duration_seconds,7.48451566696167
+collection_duration_seconds,10.617999792098999
