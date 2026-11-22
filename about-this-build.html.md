@@ -2,18 +2,20 @@
 
 # About this build
 
-This documentation was built on **2026-11-22 17:35 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/d5cb5aea651c76369810990278ece2616d9f820e"><code>d5cb5ae</code></a> on branch <code>main</code>, for **tonal 0.0.23** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-22 19:13 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/dcc5939f412ade1dcf147a3fe941be3d37bbccf5"><code>dcc5939</code></a> on branch <code>main</code>, for **tonal 0.0.24** (from <code>pyproject.toml</code>).
 
-#### NOTE
-Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
+#### WARNING
+The documentation and the package may be misaligned:
+
+- The documented version (0.0.24) is ahead of the latest release on PyPI (0.0.23): these docs describe unreleased code.
 
 ## Source
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/d5cb5aea651c76369810990278ece2616d9f820e"><code>d5cb5aea651c76369810990278ece2616d9f820e</code></a> |
+| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/dcc5939f412ade1dcf147a3fe941be3d37bbccf5"><code>dcc5939f412ade1dcf147a3fe941be3d37bbccf5</code></a> |
 | Branch              | <code>main</code>                                                                                                                                       |
-| Tags at this commit | <code>0.0.23</code>                                                                                                                                     |
+| Tags at this commit | <code>0.0.24</code>                                                                                                                                     |
 | Working tree        | clean                                                                                                                                                   |
 | Remote              | <code>https://github.com/thorwhalen/tonal</code>                                                                                                        |
 
@@ -22,9 +24,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>thorwhalen/tonal</code>                                                              |
-| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/45050137926">45050137926</a>     |
+| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/45059366764">45059366764</a>     |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>0ee2f2db69c9f4e9bbdadeeec6c2c48ebd5d3f8b</code> (in the history of the built commit) |
+| Event commit | <code>3189484270907dcacec738950c4ebbf5e6543215</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -49,13 +51,13 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/tonal/0.0.23/">0.0.23</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/tonal/0.0.23/">0.0.23</a>, older than the documented version (0.0.24).
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/tonal && cd tonal
-git checkout d5cb5aea651c76369810990278ece2616d9f820e
+git checkout dcc5939f412ade1dcf147a3fe941be3d37bbccf5
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

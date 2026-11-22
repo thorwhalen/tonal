@@ -223,7 +223,7 @@
 <a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.replace_extension">[docs]</a>
 </span><span id="line-52"><span class="k">def</span><span class="w"> </span><span class="nf">replace_extension</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dest_extension</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="line-53"><span class="w">    </span><span class="sd">"""Replace the extension of a filepath with a new one."""</span>
-</span><span id="line-54">    <span class="k">return</span> <span class="n">src</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">src</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dest_extension</span><span class="p">)</span></div>
+</span><span id="line-54">    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">src</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dest_extension</span></div>
 
 </span><span id="line-55">
 </span><span id="line-56">
@@ -238,283 +238,282 @@
 </span><span id="line-63"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="line-64"><span class="w">    </span><span class="sd">"""Ensure that a destination filepath is given."""</span>
 </span><span id="line-65">    <span class="k">if</span> <span class="n">dest</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-66">        <span class="n">src_ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">src</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span><span id="line-67">        <span class="n">dest_ext</span> <span class="o">=</span> <span class="n">extension_for_format</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dest_format</span><span class="p">,</span> <span class="sa">f</span><span class="s2">".</span><span class="si">{</span><span class="n">dest_format</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</span><span id="line-68">        <span class="n">dest</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">src_ext</span><span class="p">,</span> <span class="n">dest_ext</span><span class="p">)</span>
-</span><span id="line-69">    <span class="k">return</span> <span class="n">dest</span></div>
+</span><span id="line-66">        <span class="n">dest_ext</span> <span class="o">=</span> <span class="n">extension_for_format</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dest_format</span><span class="p">,</span> <span class="sa">f</span><span class="s2">".</span><span class="si">{</span><span class="n">dest_format</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="line-67">        <span class="n">dest</span> <span class="o">=</span> <span class="n">replace_extension</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest_ext</span><span class="p">)</span>
+</span><span id="line-68">    <span class="k">return</span> <span class="n">dest</span></div>
 
+</span><span id="line-69">
 </span><span id="line-70">
-</span><span id="line-71">
-</span><span id="line-72"><span class="c1"># Use dol.written_bytes to use file functions as bytes functions</span>
+</span><span id="line-71"><span class="c1"># Use dol.written_bytes to use file functions as bytes functions</span>
 <div class="viewcode-block" id="convert">
 <a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.convert">[docs]</a>
-</span><span id="line-73"><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span>
-</span><span id="line-74">    <span class="n">src</span><span class="p">:</span> <span class="n">FilePath</span> <span class="o">|</span> <span class="n">BytesData</span><span class="p">,</span>
-</span><span id="line-75">    <span class="n">dest</span><span class="p">:</span> <span class="n">FilePath</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="line-76">    <span class="o">*</span><span class="p">,</span>
-</span><span id="line-77">    <span class="n">src_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="line-78">    <span class="n">dest_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="line-79">    <span class="n">format_for_extension</span><span class="o">=</span><span class="n">dflt_format_for_extension</span><span class="p">,</span>
-</span><span id="line-80"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FilePath</span> <span class="o">|</span> <span class="n">BytesData</span><span class="p">:</span>
-</span><span id="line-81"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-82"><span class="sd">    Convert between different music formats.</span>
-</span><span id="line-83">
-</span><span id="line-84"><span class="sd">    Args:</span>
-</span><span id="line-85"><span class="sd">        src: Source as a filepath or bytes data</span>
-</span><span id="line-86"><span class="sd">        dest: Destination filepath, format string, or None to return bytes</span>
-</span><span id="line-87"><span class="sd">        src_format: Source format, inferred from filepath extension if None</span>
-</span><span id="line-88"><span class="sd">        dest_format: Destination format, inferred from dest if None</span>
-</span><span id="line-89"><span class="sd">        format_for_extension: Mapping of file extensions to format names</span>
-</span><span id="line-90">
-</span><span id="line-91"><span class="sd">    Returns:</span>
-</span><span id="line-92"><span class="sd">        If dest is a filepath: returns the destination filepath</span>
-</span><span id="line-93"><span class="sd">        If dest is None or a format string or src is bytes: returns the converted bytes</span>
-</span><span id="line-94">
-</span><span id="line-95"><span class="sd">    Examples:</span>
-</span><span id="line-96"><span class="sd">        # File to file conversion</span>
-</span><span id="line-97"><span class="sd">        convert('my_score.musicxml', 'my_score.mid')</span>
-</span><span id="line-98">
-</span><span id="line-99"><span class="sd">        # File to bytes with specified format</span>
-</span><span id="line-100"><span class="sd">        midi_bytes = convert('my_score.musicxml', dest_format='midi')</span>
-</span><span id="line-101">
-</span><span id="line-102"><span class="sd">        # File to bytes using format string shorthand</span>
-</span><span id="line-103"><span class="sd">        midi_bytes = convert('my_score.musicxml', 'midi')</span>
-</span><span id="line-104">
-</span><span id="line-105"><span class="sd">        # Bytes to file</span>
-</span><span id="line-106"><span class="sd">        convert(midi_bytes, 'output.wav', src_format='midi')</span>
-</span><span id="line-107">
-</span><span id="line-108"><span class="sd">        # Bytes to bytes</span>
-</span><span id="line-109"><span class="sd">        wav_bytes = convert(midi_bytes, src_format='midi', dest_format='wav')</span>
-</span><span id="line-110">
-</span><span id="line-111"><span class="sd">        # Bytes to bytes with format string shorthand</span>
-</span><span id="line-112"><span class="sd">        wav_bytes = convert(midi_bytes, 'wav', src_format='midi')</span>
-</span><span id="line-113"><span class="sd">    """</span>
-</span><span id="line-114">    <span class="n">is_src_bytes</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
-</span><span id="line-115">
-</span><span id="line-116">    <span class="c1"># If dest is a format string in our known formats, use it as dest_format and set dest to None</span>
-</span><span id="line-117">    <span class="n">format_values</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">dflt_format_for_extension</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-</span><span id="line-118">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dest</span> <span class="ow">in</span> <span class="n">format_values</span><span class="p">:</span>
-</span><span id="line-119">        <span class="n">dest_format</span> <span class="o">=</span> <span class="n">dest</span>
-</span><span id="line-120">        <span class="n">dest</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="line-121">
-</span><span id="line-122">    <span class="n">return_bytes</span> <span class="o">=</span> <span class="n">dest</span> <span class="ow">is</span> <span class="kc">None</span>
-</span><span id="line-123">
-</span><span id="line-124">    <span class="c1"># Determine source format</span>
-</span><span id="line-125">    <span class="k">if</span> <span class="n">src_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-126">        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_src_bytes</span><span class="p">:</span>
-</span><span id="line-127">            <span class="c1"># If src is a filepath, infer format from extension</span>
-</span><span id="line-128">            <span class="n">src_format</span> <span class="o">=</span> <span class="n">format_of_filepath</span><span class="p">(</span>
-</span><span id="line-129">                <span class="n">src</span><span class="p">,</span> <span class="n">format_for_extension</span><span class="o">=</span><span class="n">format_for_extension</span>
-</span><span id="line-130">            <span class="p">)</span>
-</span><span id="line-131">        <span class="k">else</span><span class="p">:</span>
-</span><span id="line-132">            <span class="c1"># Try to guess format from bytes magic numbers/headers</span>
-</span><span id="line-133">            <span class="n">src_format</span> <span class="o">=</span> <span class="n">guess_format_from_bytes</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
-</span><span id="line-134">
-</span><span id="line-135">    <span class="c1"># If dest is just an extension, add it to the source filename to make the actual filepath</span>
-</span><span id="line-136">    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_src_bytes</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dest</span> <span class="ow">in</span> <span class="n">format_for_extension</span><span class="p">:</span>
-</span><span id="line-137">        <span class="n">dest_extension</span> <span class="o">=</span> <span class="n">dest</span>
-</span><span id="line-138">        <span class="n">dest</span> <span class="o">=</span> <span class="n">replace_extension</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest_extension</span><span class="p">)</span>
-</span><span id="line-139">
-</span><span id="line-140">    <span class="c1"># Determine destination format</span>
-</span><span id="line-141">    <span class="k">if</span> <span class="n">dest_format</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dest</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-142">        <span class="n">dest_format</span> <span class="o">=</span> <span class="n">format_of_filepath</span><span class="p">(</span>
-</span><span id="line-143">            <span class="n">dest</span><span class="p">,</span> <span class="n">format_for_extension</span><span class="o">=</span><span class="n">format_for_extension</span>
-</span><span id="line-144">        <span class="p">)</span>
-</span><span id="line-145">
-</span><span id="line-146">    <span class="k">if</span> <span class="ow">not</span> <span class="n">src_format</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">dest_format</span><span class="p">:</span>
-</span><span id="line-147">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-</span><span id="line-148">            <span class="sa">f</span><span class="s2">"Could not determine formats: src_format=</span><span class="si">{</span><span class="n">src_format</span><span class="si">}</span><span class="s2">, dest_format=</span><span class="si">{</span><span class="n">dest_format</span><span class="si">}</span><span class="s2">. "</span>
-</span><span id="line-149">            <span class="sa">f</span><span class="s2">"Please specify src_format and dest_format explicitly."</span>
-</span><span id="line-150">        <span class="p">)</span>
-</span><span id="line-151">
-</span><span id="line-152">    <span class="c1"># Handle bytes conversion path</span>
-</span><span id="line-153">    <span class="k">if</span> <span class="n">is_src_bytes</span><span class="p">:</span>
-</span><span id="line-154">        <span class="k">return</span> <span class="n">_convert_from_bytes</span><span class="p">(</span>
-</span><span id="line-155">            <span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">src_format</span><span class="o">=</span><span class="n">src_format</span><span class="p">,</span> <span class="n">dest_format</span><span class="o">=</span><span class="n">dest_format</span>
-</span><span id="line-156">        <span class="p">)</span>
-</span><span id="line-157">
-</span><span id="line-158">    <span class="c1"># Handle file conversion path</span>
-</span><span id="line-159">    <span class="n">conversion_func</span> <span class="o">=</span> <span class="n">_get_conversion_func</span><span class="p">(</span><span class="n">src_format</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">)</span>
-</span><span id="line-160">
-</span><span id="line-161">    <span class="k">if</span> <span class="n">return_bytes</span><span class="p">:</span>
-</span><span id="line-162">        <span class="c1"># Convert file to bytes</span>
-</span><span id="line-163">        <span class="k">return</span> <span class="n">_convert_file_to_bytes</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">conversion_func</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">)</span>
-</span><span id="line-164">    <span class="k">else</span><span class="p">:</span>
-</span><span id="line-165">        <span class="c1"># Regular file to file conversion</span>
-</span><span id="line-166">        <span class="k">return</span> <span class="n">conversion_func</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span></div>
+</span><span id="line-72"><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span>
+</span><span id="line-73">    <span class="n">src</span><span class="p">:</span> <span class="n">FilePath</span> <span class="o">|</span> <span class="n">BytesData</span><span class="p">,</span>
+</span><span id="line-74">    <span class="n">dest</span><span class="p">:</span> <span class="n">FilePath</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="line-75">    <span class="o">*</span><span class="p">,</span>
+</span><span id="line-76">    <span class="n">src_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="line-77">    <span class="n">dest_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="line-78">    <span class="n">format_for_extension</span><span class="o">=</span><span class="n">dflt_format_for_extension</span><span class="p">,</span>
+</span><span id="line-79"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FilePath</span> <span class="o">|</span> <span class="n">BytesData</span><span class="p">:</span>
+</span><span id="line-80"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-81"><span class="sd">    Convert between different music formats.</span>
+</span><span id="line-82">
+</span><span id="line-83"><span class="sd">    Args:</span>
+</span><span id="line-84"><span class="sd">        src: Source as a filepath or bytes data</span>
+</span><span id="line-85"><span class="sd">        dest: Destination filepath, format string, or None to return bytes</span>
+</span><span id="line-86"><span class="sd">        src_format: Source format, inferred from filepath extension if None</span>
+</span><span id="line-87"><span class="sd">        dest_format: Destination format, inferred from dest if None</span>
+</span><span id="line-88"><span class="sd">        format_for_extension: Mapping of file extensions to format names</span>
+</span><span id="line-89">
+</span><span id="line-90"><span class="sd">    Returns:</span>
+</span><span id="line-91"><span class="sd">        If dest is a filepath: returns the destination filepath</span>
+</span><span id="line-92"><span class="sd">        If dest is None or a format string or src is bytes: returns the converted bytes</span>
+</span><span id="line-93">
+</span><span id="line-94"><span class="sd">    Examples:</span>
+</span><span id="line-95"><span class="sd">        # File to file conversion</span>
+</span><span id="line-96"><span class="sd">        convert('my_score.musicxml', 'my_score.mid')</span>
+</span><span id="line-97">
+</span><span id="line-98"><span class="sd">        # File to bytes with specified format</span>
+</span><span id="line-99"><span class="sd">        midi_bytes = convert('my_score.musicxml', dest_format='midi')</span>
+</span><span id="line-100">
+</span><span id="line-101"><span class="sd">        # File to bytes using format string shorthand</span>
+</span><span id="line-102"><span class="sd">        midi_bytes = convert('my_score.musicxml', 'midi')</span>
+</span><span id="line-103">
+</span><span id="line-104"><span class="sd">        # Bytes to file</span>
+</span><span id="line-105"><span class="sd">        convert(midi_bytes, 'output.wav', src_format='midi')</span>
+</span><span id="line-106">
+</span><span id="line-107"><span class="sd">        # Bytes to bytes</span>
+</span><span id="line-108"><span class="sd">        wav_bytes = convert(midi_bytes, src_format='midi', dest_format='wav')</span>
+</span><span id="line-109">
+</span><span id="line-110"><span class="sd">        # Bytes to bytes with format string shorthand</span>
+</span><span id="line-111"><span class="sd">        wav_bytes = convert(midi_bytes, 'wav', src_format='midi')</span>
+</span><span id="line-112"><span class="sd">    """</span>
+</span><span id="line-113">    <span class="n">is_src_bytes</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
+</span><span id="line-114">
+</span><span id="line-115">    <span class="c1"># If dest is a format string in our known formats, use it as dest_format and set dest to None</span>
+</span><span id="line-116">    <span class="n">format_values</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">dflt_format_for_extension</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</span><span id="line-117">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dest</span> <span class="ow">in</span> <span class="n">format_values</span><span class="p">:</span>
+</span><span id="line-118">        <span class="n">dest_format</span> <span class="o">=</span> <span class="n">dest</span>
+</span><span id="line-119">        <span class="n">dest</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="line-120">
+</span><span id="line-121">    <span class="n">return_bytes</span> <span class="o">=</span> <span class="n">dest</span> <span class="ow">is</span> <span class="kc">None</span>
+</span><span id="line-122">
+</span><span id="line-123">    <span class="c1"># Determine source format</span>
+</span><span id="line-124">    <span class="k">if</span> <span class="n">src_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-125">        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_src_bytes</span><span class="p">:</span>
+</span><span id="line-126">            <span class="c1"># If src is a filepath, infer format from extension</span>
+</span><span id="line-127">            <span class="n">src_format</span> <span class="o">=</span> <span class="n">format_of_filepath</span><span class="p">(</span>
+</span><span id="line-128">                <span class="n">src</span><span class="p">,</span> <span class="n">format_for_extension</span><span class="o">=</span><span class="n">format_for_extension</span>
+</span><span id="line-129">            <span class="p">)</span>
+</span><span id="line-130">        <span class="k">else</span><span class="p">:</span>
+</span><span id="line-131">            <span class="c1"># Try to guess format from bytes magic numbers/headers</span>
+</span><span id="line-132">            <span class="n">src_format</span> <span class="o">=</span> <span class="n">guess_format_from_bytes</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+</span><span id="line-133">
+</span><span id="line-134">    <span class="c1"># If dest is just an extension, add it to the source filename to make the actual filepath</span>
+</span><span id="line-135">    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_src_bytes</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dest</span> <span class="ow">in</span> <span class="n">format_for_extension</span><span class="p">:</span>
+</span><span id="line-136">        <span class="n">dest_extension</span> <span class="o">=</span> <span class="n">dest</span>
+</span><span id="line-137">        <span class="n">dest</span> <span class="o">=</span> <span class="n">replace_extension</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest_extension</span><span class="p">)</span>
+</span><span id="line-138">
+</span><span id="line-139">    <span class="c1"># Determine destination format</span>
+</span><span id="line-140">    <span class="k">if</span> <span class="n">dest_format</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dest</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-141">        <span class="n">dest_format</span> <span class="o">=</span> <span class="n">format_of_filepath</span><span class="p">(</span>
+</span><span id="line-142">            <span class="n">dest</span><span class="p">,</span> <span class="n">format_for_extension</span><span class="o">=</span><span class="n">format_for_extension</span>
+</span><span id="line-143">        <span class="p">)</span>
+</span><span id="line-144">
+</span><span id="line-145">    <span class="k">if</span> <span class="ow">not</span> <span class="n">src_format</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">dest_format</span><span class="p">:</span>
+</span><span id="line-146">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="line-147">            <span class="sa">f</span><span class="s2">"Could not determine formats: src_format=</span><span class="si">{</span><span class="n">src_format</span><span class="si">}</span><span class="s2">, dest_format=</span><span class="si">{</span><span class="n">dest_format</span><span class="si">}</span><span class="s2">. "</span>
+</span><span id="line-148">            <span class="sa">f</span><span class="s2">"Please specify src_format and dest_format explicitly."</span>
+</span><span id="line-149">        <span class="p">)</span>
+</span><span id="line-150">
+</span><span id="line-151">    <span class="c1"># Handle bytes conversion path</span>
+</span><span id="line-152">    <span class="k">if</span> <span class="n">is_src_bytes</span><span class="p">:</span>
+</span><span id="line-153">        <span class="k">return</span> <span class="n">_convert_from_bytes</span><span class="p">(</span>
+</span><span id="line-154">            <span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">src_format</span><span class="o">=</span><span class="n">src_format</span><span class="p">,</span> <span class="n">dest_format</span><span class="o">=</span><span class="n">dest_format</span>
+</span><span id="line-155">        <span class="p">)</span>
+</span><span id="line-156">
+</span><span id="line-157">    <span class="c1"># Handle file conversion path</span>
+</span><span id="line-158">    <span class="n">conversion_func</span> <span class="o">=</span> <span class="n">_get_conversion_func</span><span class="p">(</span><span class="n">src_format</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">)</span>
+</span><span id="line-159">
+</span><span id="line-160">    <span class="k">if</span> <span class="n">return_bytes</span><span class="p">:</span>
+</span><span id="line-161">        <span class="c1"># Convert file to bytes</span>
+</span><span id="line-162">        <span class="k">return</span> <span class="n">_convert_file_to_bytes</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">conversion_func</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">)</span>
+</span><span id="line-163">    <span class="k">else</span><span class="p">:</span>
+</span><span id="line-164">        <span class="c1"># Regular file to file conversion</span>
+</span><span id="line-165">        <span class="k">return</span> <span class="n">conversion_func</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span></div>
 
+</span><span id="line-166">
 </span><span id="line-167">
-</span><span id="line-168">
 <div class="viewcode-block" id="guess_format_from_bytes">
 <a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.guess_format_from_bytes">[docs]</a>
-</span><span id="line-169"><span class="k">def</span><span class="w"> </span><span class="nf">guess_format_from_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-170"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-171"><span class="sd">    Attempt to guess the format of a file from its bytes content.</span>
-</span><span id="line-172">
-</span><span id="line-173"><span class="sd">    Args:</span>
-</span><span id="line-174"><span class="sd">        data: The bytes data to analyze</span>
-</span><span id="line-175">
-</span><span id="line-176"><span class="sd">    Returns:</span>
-</span><span id="line-177"><span class="sd">        The format string or None if the format couldn't be determined</span>
-</span><span id="line-178"><span class="sd">    """</span>
-</span><span id="line-179">    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-</span><span id="line-180">        <span class="k">return</span> <span class="kc">None</span>
-</span><span id="line-181">
-</span><span id="line-182">    <span class="c1"># Check for known file signatures</span>
-</span><span id="line-183">    <span class="k">for</span> <span class="n">signature</span><span class="p">,</span> <span class="n">format_name</span> <span class="ow">in</span> <span class="n">FORMAT_SIGNATURES</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span id="line-184">        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">signature</span><span class="p">):</span>
-</span><span id="line-185">            <span class="k">return</span> <span class="n">format_name</span>
-</span><span id="line-186">
-</span><span id="line-187">    <span class="c1"># Check for MusicXML by looking for common tags if it's likely XML</span>
-</span><span id="line-188">    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">"&lt;"</span><span class="p">)</span> <span class="ow">or</span> <span class="sa">b</span><span class="s2">"&lt;?xml"</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[:</span><span class="mi">100</span><span class="p">]:</span>
-</span><span id="line-189">        <span class="k">if</span> <span class="sa">b</span><span class="s2">"&lt;score-partwise"</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span> <span class="ow">or</span> <span class="sa">b</span><span class="s2">"&lt;score-timewise"</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]:</span>
-</span><span id="line-190">            <span class="k">return</span> <span class="s2">"musicxml"</span>
-</span><span id="line-191">
-</span><span id="line-192">    <span class="c1"># Check for MIDI by looking for track chunks if the file starts with MThd</span>
-</span><span id="line-193">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">14</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"MThd"</span> <span class="ow">and</span> <span class="sa">b</span><span class="s2">"MTrk"</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]:</span>
-</span><span id="line-194">        <span class="k">return</span> <span class="s2">"midi"</span>
-</span><span id="line-195">
-</span><span id="line-196">    <span class="k">return</span> <span class="kc">None</span></div>
+</span><span id="line-168"><span class="k">def</span><span class="w"> </span><span class="nf">guess_format_from_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-169"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-170"><span class="sd">    Attempt to guess the format of a file from its bytes content.</span>
+</span><span id="line-171">
+</span><span id="line-172"><span class="sd">    Args:</span>
+</span><span id="line-173"><span class="sd">        data: The bytes data to analyze</span>
+</span><span id="line-174">
+</span><span id="line-175"><span class="sd">    Returns:</span>
+</span><span id="line-176"><span class="sd">        The format string or None if the format couldn't be determined</span>
+</span><span id="line-177"><span class="sd">    """</span>
+</span><span id="line-178">    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+</span><span id="line-179">        <span class="k">return</span> <span class="kc">None</span>
+</span><span id="line-180">
+</span><span id="line-181">    <span class="c1"># Check for known file signatures</span>
+</span><span id="line-182">    <span class="k">for</span> <span class="n">signature</span><span class="p">,</span> <span class="n">format_name</span> <span class="ow">in</span> <span class="n">FORMAT_SIGNATURES</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span id="line-183">        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">signature</span><span class="p">):</span>
+</span><span id="line-184">            <span class="k">return</span> <span class="n">format_name</span>
+</span><span id="line-185">
+</span><span id="line-186">    <span class="c1"># Check for MusicXML by looking for common tags if it's likely XML</span>
+</span><span id="line-187">    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">"&lt;"</span><span class="p">)</span> <span class="ow">or</span> <span class="sa">b</span><span class="s2">"&lt;?xml"</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[:</span><span class="mi">100</span><span class="p">]:</span>
+</span><span id="line-188">        <span class="k">if</span> <span class="sa">b</span><span class="s2">"&lt;score-partwise"</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span> <span class="ow">or</span> <span class="sa">b</span><span class="s2">"&lt;score-timewise"</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]:</span>
+</span><span id="line-189">            <span class="k">return</span> <span class="s2">"musicxml"</span>
+</span><span id="line-190">
+</span><span id="line-191">    <span class="c1"># Check for MIDI by looking for track chunks if the file starts with MThd</span>
+</span><span id="line-192">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">14</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"MThd"</span> <span class="ow">and</span> <span class="sa">b</span><span class="s2">"MTrk"</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]:</span>
+</span><span id="line-193">        <span class="k">return</span> <span class="s2">"midi"</span>
+</span><span id="line-194">
+</span><span id="line-195">    <span class="k">return</span> <span class="kc">None</span></div>
 
+</span><span id="line-196">
 </span><span id="line-197">
-</span><span id="line-198">
-</span><span id="line-199"><span class="k">def</span><span class="w"> </span><span class="nf">_get_conversion_func</span><span class="p">(</span><span class="n">src_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
-</span><span id="line-200"><span class="w">    </span><span class="sd">"""Get the appropriate conversion function based on formats."""</span>
-</span><span id="line-201">    <span class="k">if</span> <span class="n">src_format</span> <span class="o">==</span> <span class="s2">"musicxml"</span> <span class="ow">and</span> <span class="n">dest_format</span> <span class="o">==</span> <span class="s2">"midi"</span><span class="p">:</span>
-</span><span id="line-202">        <span class="k">return</span> <span class="n">musicxml_to_midi</span>
-</span><span id="line-203">    <span class="k">elif</span> <span class="n">src_format</span> <span class="o">==</span> <span class="s2">"midi"</span> <span class="ow">and</span> <span class="n">dest_format</span> <span class="o">==</span> <span class="s2">"wav"</span><span class="p">:</span>
-</span><span id="line-204">        <span class="k">return</span> <span class="n">midi_to_wav</span>
-</span><span id="line-205">    <span class="k">elif</span> <span class="n">src_format</span> <span class="o">==</span> <span class="s2">"image"</span> <span class="ow">and</span> <span class="n">dest_format</span> <span class="o">==</span> <span class="s2">"musicxml"</span><span class="p">:</span>
-</span><span id="line-206">        <span class="k">return</span> <span class="n">image_to_musicxml</span>
-</span><span id="line-207">    <span class="k">else</span><span class="p">:</span>
-</span><span id="line-208">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsupported conversion: </span><span class="si">{</span><span class="n">src_format</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">dest_format</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="line-198"><span class="k">def</span><span class="w"> </span><span class="nf">_get_conversion_func</span><span class="p">(</span><span class="n">src_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+</span><span id="line-199"><span class="w">    </span><span class="sd">"""Get the appropriate conversion function based on formats."""</span>
+</span><span id="line-200">    <span class="k">if</span> <span class="n">src_format</span> <span class="o">==</span> <span class="s2">"musicxml"</span> <span class="ow">and</span> <span class="n">dest_format</span> <span class="o">==</span> <span class="s2">"midi"</span><span class="p">:</span>
+</span><span id="line-201">        <span class="k">return</span> <span class="n">musicxml_to_midi</span>
+</span><span id="line-202">    <span class="k">elif</span> <span class="n">src_format</span> <span class="o">==</span> <span class="s2">"midi"</span> <span class="ow">and</span> <span class="n">dest_format</span> <span class="o">==</span> <span class="s2">"wav"</span><span class="p">:</span>
+</span><span id="line-203">        <span class="k">return</span> <span class="n">midi_to_wav</span>
+</span><span id="line-204">    <span class="k">elif</span> <span class="n">src_format</span> <span class="o">==</span> <span class="s2">"image"</span> <span class="ow">and</span> <span class="n">dest_format</span> <span class="o">==</span> <span class="s2">"musicxml"</span><span class="p">:</span>
+</span><span id="line-205">        <span class="k">return</span> <span class="n">image_to_musicxml</span>
+</span><span id="line-206">    <span class="k">else</span><span class="p">:</span>
+</span><span id="line-207">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsupported conversion: </span><span class="si">{</span><span class="n">src_format</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">dest_format</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="line-208">
 </span><span id="line-209">
-</span><span id="line-210">
-</span><span id="line-211"><span class="k">def</span><span class="w"> </span><span class="nf">_convert_from_bytes</span><span class="p">(</span>
-</span><span id="line-212">    <span class="n">src_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">dest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">src_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="line-213"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FilePath</span> <span class="o">|</span> <span class="nb">bytes</span><span class="p">:</span>
-</span><span id="line-214"><span class="w">    </span><span class="sd">"""Handle conversions where the source is bytes."""</span>
-</span><span id="line-215">    <span class="c1"># Write bytes to a temporary file with the correct extension</span>
-</span><span id="line-216">    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span>
-</span><span id="line-217">        <span class="n">suffix</span><span class="o">=</span><span class="n">dflt_extension_for_format</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">src_format</span><span class="p">,</span> <span class="sa">f</span><span class="s2">".</span><span class="si">{</span><span class="n">src_format</span><span class="si">}</span><span class="s2">"</span><span class="p">),</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span>
-</span><span id="line-218">    <span class="p">)</span> <span class="k">as</span> <span class="n">temp_file</span><span class="p">:</span>
-</span><span id="line-219">        <span class="n">temp_src</span> <span class="o">=</span> <span class="n">temp_file</span><span class="o">.</span><span class="n">name</span>
-</span><span id="line-220">        <span class="n">temp_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">src_bytes</span><span class="p">)</span>
-</span><span id="line-221">
-</span><span id="line-222">    <span class="k">try</span><span class="p">:</span>
-</span><span id="line-223">        <span class="n">conversion_func</span> <span class="o">=</span> <span class="n">_get_conversion_func</span><span class="p">(</span><span class="n">src_format</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">)</span>
-</span><span id="line-224">
-</span><span id="line-225">        <span class="k">if</span> <span class="n">dest</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-226">            <span class="c1"># Return bytes</span>
-</span><span id="line-227">            <span class="n">temp_dest</span> <span class="o">=</span> <span class="n">temp_src</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
-</span><span id="line-228">                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">temp_src</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span>
-</span><span id="line-229">                <span class="n">dflt_extension_for_format</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dest_format</span><span class="p">,</span> <span class="sa">f</span><span class="s2">".</span><span class="si">{</span><span class="n">dest_format</span><span class="si">}</span><span class="s2">"</span><span class="p">),</span>
-</span><span id="line-230">            <span class="p">)</span>
-</span><span id="line-231">            <span class="n">conversion_func</span><span class="p">(</span><span class="n">temp_src</span><span class="p">,</span> <span class="n">temp_dest</span><span class="p">)</span>
-</span><span id="line-232">
-</span><span id="line-233">            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temp_dest</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-</span><span id="line-234">                <span class="n">result</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span><span id="line-235">
-</span><span id="line-236">            <span class="k">try</span><span class="p">:</span>
-</span><span id="line-237">                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temp_dest</span><span class="p">)</span>
-</span><span id="line-238">            <span class="k">except</span><span class="p">:</span>
-</span><span id="line-239">                <span class="k">pass</span>
-</span><span id="line-240">
-</span><span id="line-241">            <span class="k">return</span> <span class="n">result</span>
-</span><span id="line-242">        <span class="k">else</span><span class="p">:</span>
-</span><span id="line-243">            <span class="c1"># Write to the specified destination</span>
-</span><span id="line-244">            <span class="k">return</span> <span class="n">conversion_func</span><span class="p">(</span><span class="n">temp_src</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
-</span><span id="line-245">    <span class="k">finally</span><span class="p">:</span>
-</span><span id="line-246">        <span class="k">try</span><span class="p">:</span>
-</span><span id="line-247">            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temp_src</span><span class="p">)</span>
-</span><span id="line-248">        <span class="k">except</span><span class="p">:</span>
-</span><span id="line-249">            <span class="k">pass</span>
+</span><span id="line-210"><span class="k">def</span><span class="w"> </span><span class="nf">_convert_from_bytes</span><span class="p">(</span>
+</span><span id="line-211">    <span class="n">src_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">dest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">src_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="line-212"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FilePath</span> <span class="o">|</span> <span class="nb">bytes</span><span class="p">:</span>
+</span><span id="line-213"><span class="w">    </span><span class="sd">"""Handle conversions where the source is bytes."""</span>
+</span><span id="line-214">    <span class="c1"># Write bytes to a temporary file with the correct extension</span>
+</span><span id="line-215">    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span>
+</span><span id="line-216">        <span class="n">suffix</span><span class="o">=</span><span class="n">dflt_extension_for_format</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">src_format</span><span class="p">,</span> <span class="sa">f</span><span class="s2">".</span><span class="si">{</span><span class="n">src_format</span><span class="si">}</span><span class="s2">"</span><span class="p">),</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span>
+</span><span id="line-217">    <span class="p">)</span> <span class="k">as</span> <span class="n">temp_file</span><span class="p">:</span>
+</span><span id="line-218">        <span class="n">temp_src</span> <span class="o">=</span> <span class="n">temp_file</span><span class="o">.</span><span class="n">name</span>
+</span><span id="line-219">        <span class="n">temp_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">src_bytes</span><span class="p">)</span>
+</span><span id="line-220">
+</span><span id="line-221">    <span class="k">try</span><span class="p">:</span>
+</span><span id="line-222">        <span class="n">conversion_func</span> <span class="o">=</span> <span class="n">_get_conversion_func</span><span class="p">(</span><span class="n">src_format</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">)</span>
+</span><span id="line-223">
+</span><span id="line-224">        <span class="k">if</span> <span class="n">dest</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-225">            <span class="c1"># Return bytes</span>
+</span><span id="line-226">            <span class="n">temp_dest</span> <span class="o">=</span> <span class="n">temp_src</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+</span><span id="line-227">                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">temp_src</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span>
+</span><span id="line-228">                <span class="n">dflt_extension_for_format</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dest_format</span><span class="p">,</span> <span class="sa">f</span><span class="s2">".</span><span class="si">{</span><span class="n">dest_format</span><span class="si">}</span><span class="s2">"</span><span class="p">),</span>
+</span><span id="line-229">            <span class="p">)</span>
+</span><span id="line-230">            <span class="n">conversion_func</span><span class="p">(</span><span class="n">temp_src</span><span class="p">,</span> <span class="n">temp_dest</span><span class="p">)</span>
+</span><span id="line-231">
+</span><span id="line-232">            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temp_dest</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span id="line-233">                <span class="n">result</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span id="line-234">
+</span><span id="line-235">            <span class="k">try</span><span class="p">:</span>
+</span><span id="line-236">                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temp_dest</span><span class="p">)</span>
+</span><span id="line-237">            <span class="k">except</span><span class="p">:</span>
+</span><span id="line-238">                <span class="k">pass</span>
+</span><span id="line-239">
+</span><span id="line-240">            <span class="k">return</span> <span class="n">result</span>
+</span><span id="line-241">        <span class="k">else</span><span class="p">:</span>
+</span><span id="line-242">            <span class="c1"># Write to the specified destination</span>
+</span><span id="line-243">            <span class="k">return</span> <span class="n">conversion_func</span><span class="p">(</span><span class="n">temp_src</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
+</span><span id="line-244">    <span class="k">finally</span><span class="p">:</span>
+</span><span id="line-245">        <span class="k">try</span><span class="p">:</span>
+</span><span id="line-246">            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temp_src</span><span class="p">)</span>
+</span><span id="line-247">        <span class="k">except</span><span class="p">:</span>
+</span><span id="line-248">            <span class="k">pass</span>
+</span><span id="line-249">
 </span><span id="line-250">
-</span><span id="line-251">
-</span><span id="line-252"><span class="k">def</span><span class="w"> </span><span class="nf">_convert_file_to_bytes</span><span class="p">(</span>
-</span><span id="line-253">    <span class="n">src_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">conversion_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="line-254"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-</span><span id="line-255"><span class="w">    </span><span class="sd">"""Convert a file to bytes using the specified conversion function."""</span>
-</span><span id="line-256">    <span class="c1"># Create a temporary output file</span>
-</span><span id="line-257">    <span class="n">ext</span> <span class="o">=</span> <span class="n">dflt_extension_for_format</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dest_format</span><span class="p">,</span> <span class="sa">f</span><span class="s2">".</span><span class="si">{</span><span class="n">dest_format</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</span><span id="line-258">    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="n">ext</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">temp_file</span><span class="p">:</span>
-</span><span id="line-259">        <span class="n">temp_dest</span> <span class="o">=</span> <span class="n">temp_file</span><span class="o">.</span><span class="n">name</span>
-</span><span id="line-260">
-</span><span id="line-261">    <span class="k">try</span><span class="p">:</span>
-</span><span id="line-262">        <span class="n">conversion_func</span><span class="p">(</span><span class="n">src_file</span><span class="p">,</span> <span class="n">temp_dest</span><span class="p">)</span>
-</span><span id="line-263">        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temp_dest</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-</span><span id="line-264">            <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span><span id="line-265">    <span class="k">finally</span><span class="p">:</span>
-</span><span id="line-266">        <span class="k">try</span><span class="p">:</span>
-</span><span id="line-267">            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temp_dest</span><span class="p">)</span>
-</span><span id="line-268">        <span class="k">except</span><span class="p">:</span>
-</span><span id="line-269">            <span class="k">pass</span>
+</span><span id="line-251"><span class="k">def</span><span class="w"> </span><span class="nf">_convert_file_to_bytes</span><span class="p">(</span>
+</span><span id="line-252">    <span class="n">src_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">conversion_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">dest_format</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="line-253"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span><span id="line-254"><span class="w">    </span><span class="sd">"""Convert a file to bytes using the specified conversion function."""</span>
+</span><span id="line-255">    <span class="c1"># Create a temporary output file</span>
+</span><span id="line-256">    <span class="n">ext</span> <span class="o">=</span> <span class="n">dflt_extension_for_format</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dest_format</span><span class="p">,</span> <span class="sa">f</span><span class="s2">".</span><span class="si">{</span><span class="n">dest_format</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="line-257">    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="n">ext</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">temp_file</span><span class="p">:</span>
+</span><span id="line-258">        <span class="n">temp_dest</span> <span class="o">=</span> <span class="n">temp_file</span><span class="o">.</span><span class="n">name</span>
+</span><span id="line-259">
+</span><span id="line-260">    <span class="k">try</span><span class="p">:</span>
+</span><span id="line-261">        <span class="n">conversion_func</span><span class="p">(</span><span class="n">src_file</span><span class="p">,</span> <span class="n">temp_dest</span><span class="p">)</span>
+</span><span id="line-262">        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temp_dest</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span id="line-263">            <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span id="line-264">    <span class="k">finally</span><span class="p">:</span>
+</span><span id="line-265">        <span class="k">try</span><span class="p">:</span>
+</span><span id="line-266">            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temp_dest</span><span class="p">)</span>
+</span><span id="line-267">        <span class="k">except</span><span class="p">:</span>
+</span><span id="line-268">            <span class="k">pass</span>
+</span><span id="line-269">
 </span><span id="line-270">
-</span><span id="line-271">
 <div class="viewcode-block" id="image_to_musicxml">
 <a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.image_to_musicxml">[docs]</a>
-</span><span id="line-272"><span class="k">def</span><span class="w"> </span><span class="nf">image_to_musicxml</span><span class="p">(</span>
-</span><span id="line-273">    <span class="n">image</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">enable_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">enable_cache</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">remove_teaser_file</span><span class="o">=</span><span class="kc">True</span>
-</span><span id="line-274"><span class="p">):</span>
-</span><span id="line-275"><span class="w">    </span><span class="sd">"""Convert and image of a music score into a musicxml file."""</span>
-</span><span id="line-276">    <span class="kn">from</span><span class="w"> </span><span class="nn">homr.main</span><span class="w"> </span><span class="kn">import</span> <span class="n">process_image</span>
-</span><span id="line-277">
-</span><span id="line-278">    <span class="n">musicxml_filepath</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">teaser_filepath</span> <span class="o">=</span> <span class="n">process_image</span><span class="p">(</span>
-</span><span id="line-279">        <span class="n">image</span><span class="p">,</span> <span class="n">enable_debug</span><span class="o">=</span><span class="n">enable_debug</span><span class="p">,</span> <span class="n">enable_cache</span><span class="o">=</span><span class="n">enable_cache</span>
-</span><span id="line-280">    <span class="p">)</span>
-</span><span id="line-281">
-</span><span id="line-282">    <span class="k">if</span> <span class="n">remove_teaser_file</span><span class="p">:</span>
-</span><span id="line-283">        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">teaser_filepath</span><span class="p">)</span>
-</span><span id="line-284">
-</span><span id="line-285">    <span class="k">return</span> <span class="n">musicxml_filepath</span></div>
+</span><span id="line-271"><span class="k">def</span><span class="w"> </span><span class="nf">image_to_musicxml</span><span class="p">(</span>
+</span><span id="line-272">    <span class="n">image</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">enable_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">enable_cache</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">remove_teaser_file</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="line-273"><span class="p">):</span>
+</span><span id="line-274"><span class="w">    </span><span class="sd">"""Convert and image of a music score into a musicxml file."""</span>
+</span><span id="line-275">    <span class="kn">from</span><span class="w"> </span><span class="nn">homr.main</span><span class="w"> </span><span class="kn">import</span> <span class="n">process_image</span>
+</span><span id="line-276">
+</span><span id="line-277">    <span class="n">musicxml_filepath</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">teaser_filepath</span> <span class="o">=</span> <span class="n">process_image</span><span class="p">(</span>
+</span><span id="line-278">        <span class="n">image</span><span class="p">,</span> <span class="n">enable_debug</span><span class="o">=</span><span class="n">enable_debug</span><span class="p">,</span> <span class="n">enable_cache</span><span class="o">=</span><span class="n">enable_cache</span>
+</span><span id="line-279">    <span class="p">)</span>
+</span><span id="line-280">
+</span><span id="line-281">    <span class="k">if</span> <span class="n">remove_teaser_file</span><span class="p">:</span>
+</span><span id="line-282">        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">teaser_filepath</span><span class="p">)</span>
+</span><span id="line-283">
+</span><span id="line-284">    <span class="k">return</span> <span class="n">musicxml_filepath</span></div>
 
+</span><span id="line-285">
 </span><span id="line-286">
-</span><span id="line-287">
 <div class="viewcode-block" id="musicxml_to_midi">
 <a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.musicxml_to_midi">[docs]</a>
-</span><span id="line-288"><span class="k">def</span><span class="w"> </span><span class="nf">musicxml_to_midi</span><span class="p">(</span><span class="n">musicxml_path</span><span class="p">,</span> <span class="n">midi_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="line-289"><span class="w">    </span><span class="sd">"""Convert a MusicXML file to MIDI."""</span>
-</span><span id="line-290">    <span class="kn">from</span><span class="w"> </span><span class="nn">music21</span><span class="w"> </span><span class="kn">import</span> <span class="n">converter</span>
-</span><span id="line-291">
-</span><span id="line-292">    <span class="k">if</span> <span class="n">midi_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-293">        <span class="n">midi_path</span> <span class="o">=</span> <span class="n">musicxml_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">".musicxml"</span><span class="p">,</span> <span class="s2">".mid"</span><span class="p">)</span>
-</span><span id="line-294">    <span class="n">score</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">musicxml_path</span><span class="p">)</span>
-</span><span id="line-295">    <span class="n">score</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"midi"</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="n">midi_path</span><span class="p">)</span>
-</span><span id="line-296">    <span class="k">return</span> <span class="n">midi_path</span></div>
+</span><span id="line-287"><span class="k">def</span><span class="w"> </span><span class="nf">musicxml_to_midi</span><span class="p">(</span><span class="n">musicxml_path</span><span class="p">,</span> <span class="n">midi_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="line-288"><span class="w">    </span><span class="sd">"""Convert a MusicXML file to MIDI."""</span>
+</span><span id="line-289">    <span class="kn">from</span><span class="w"> </span><span class="nn">music21</span><span class="w"> </span><span class="kn">import</span> <span class="n">converter</span>
+</span><span id="line-290">
+</span><span id="line-291">    <span class="k">if</span> <span class="n">midi_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-292">        <span class="n">midi_path</span> <span class="o">=</span> <span class="n">musicxml_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">".musicxml"</span><span class="p">,</span> <span class="s2">".mid"</span><span class="p">)</span>
+</span><span id="line-293">    <span class="n">score</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">musicxml_path</span><span class="p">)</span>
+</span><span id="line-294">    <span class="n">score</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"midi"</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="n">midi_path</span><span class="p">)</span>
+</span><span id="line-295">    <span class="k">return</span> <span class="n">midi_path</span></div>
 
+</span><span id="line-296">
 </span><span id="line-297">
-</span><span id="line-298">
 <div class="viewcode-block" id="midi_to_wav">
 <a class="viewcode-back" href="../../_autosummary/tonal.converters.html#tonal.midi_to_wav">[docs]</a>
-</span><span id="line-299"><span class="k">def</span><span class="w"> </span><span class="nf">midi_to_wav</span><span class="p">(</span>
-</span><span id="line-300">    <span class="n">midi_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span id="line-301">    <span class="n">output_wav</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="line-302">    <span class="o">*</span><span class="p">,</span>
-</span><span id="line-303">    <span class="n">soundfont</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_SOUNDFONT</span><span class="p">,</span>
-</span><span id="line-304"><span class="p">):</span>
-</span><span id="line-305"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-306"><span class="sd">    Synthesize audio from a MIDI file using FluidSynth.</span>
-</span><span id="line-307">
-</span><span id="line-308"><span class="sd">    Args:</span>
-</span><span id="line-309"><span class="sd">        midi_file: Name of the input MIDI file.</span>
-</span><span id="line-310"><span class="sd">        output_wav: Name of the output WAV file.</span>
-</span><span id="line-311"><span class="sd">        soundfont: Path to the SoundFont file.</span>
-</span><span id="line-312"><span class="sd">    """</span>
-</span><span id="line-313">    <span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
-</span><span id="line-314">
-</span><span id="line-315">    <span class="n">output_wav</span> <span class="o">=</span> <span class="n">ensure_dest_filepath</span><span class="p">(</span><span class="n">midi_file</span><span class="p">,</span> <span class="n">output_wav</span><span class="p">,</span> <span class="n">dest_format</span><span class="o">=</span><span class="s2">"wav"</span><span class="p">)</span>
-</span><span id="line-316">
-</span><span id="line-317">    <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-</span><span id="line-318">        <span class="p">[</span><span class="s2">"fluidsynth"</span><span class="p">,</span> <span class="s2">"-ni"</span><span class="p">,</span> <span class="s2">"-F"</span><span class="p">,</span> <span class="n">output_wav</span><span class="p">,</span> <span class="s2">"-r"</span><span class="p">,</span> <span class="s2">"44100"</span><span class="p">,</span> <span class="n">soundfont</span><span class="p">,</span> <span class="n">midi_file</span><span class="p">],</span>
-</span><span id="line-319">        <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="line-320">        <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="line-321">    <span class="p">)</span>
-</span><span id="line-322">    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_wav</span><span class="p">):</span>
-</span><span id="line-323">        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-</span><span id="line-324">            <span class="sa">f</span><span class="s2">"fluidsynth failed to render </span><span class="si">{</span><span class="n">midi_file</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">output_wav</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">"</span>
-</span><span id="line-325">        <span class="p">)</span>
-</span><span id="line-326">
-</span><span id="line-327">    <span class="k">return</span> <span class="n">output_wav</span></div>
+</span><span id="line-298"><span class="k">def</span><span class="w"> </span><span class="nf">midi_to_wav</span><span class="p">(</span>
+</span><span id="line-299">    <span class="n">midi_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="line-300">    <span class="n">output_wav</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="line-301">    <span class="o">*</span><span class="p">,</span>
+</span><span id="line-302">    <span class="n">soundfont</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_SOUNDFONT</span><span class="p">,</span>
+</span><span id="line-303"><span class="p">):</span>
+</span><span id="line-304"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-305"><span class="sd">    Synthesize audio from a MIDI file using FluidSynth.</span>
+</span><span id="line-306">
+</span><span id="line-307"><span class="sd">    Args:</span>
+</span><span id="line-308"><span class="sd">        midi_file: Name of the input MIDI file.</span>
+</span><span id="line-309"><span class="sd">        output_wav: Name of the output WAV file.</span>
+</span><span id="line-310"><span class="sd">        soundfont: Path to the SoundFont file.</span>
+</span><span id="line-311"><span class="sd">    """</span>
+</span><span id="line-312">    <span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+</span><span id="line-313">
+</span><span id="line-314">    <span class="n">output_wav</span> <span class="o">=</span> <span class="n">ensure_dest_filepath</span><span class="p">(</span><span class="n">midi_file</span><span class="p">,</span> <span class="n">output_wav</span><span class="p">,</span> <span class="n">dest_format</span><span class="o">=</span><span class="s2">"wav"</span><span class="p">)</span>
+</span><span id="line-315">
+</span><span id="line-316">    <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+</span><span id="line-317">        <span class="p">[</span><span class="s2">"fluidsynth"</span><span class="p">,</span> <span class="s2">"-ni"</span><span class="p">,</span> <span class="s2">"-F"</span><span class="p">,</span> <span class="n">output_wav</span><span class="p">,</span> <span class="s2">"-r"</span><span class="p">,</span> <span class="s2">"44100"</span><span class="p">,</span> <span class="n">soundfont</span><span class="p">,</span> <span class="n">midi_file</span><span class="p">],</span>
+</span><span id="line-318">        <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="line-319">        <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="line-320">    <span class="p">)</span>
+</span><span id="line-321">    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_wav</span><span class="p">):</span>
+</span><span id="line-322">        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+</span><span id="line-323">            <span class="sa">f</span><span class="s2">"fluidsynth failed to render </span><span class="si">{</span><span class="n">midi_file</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">output_wav</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="line-324">        <span class="p">)</span>
+</span><span id="line-325">
+</span><span id="line-326">    <span class="k">return</span> <span class="n">output_wav</span></div>
 
 </span></code></pre></div>
     </div></div>
@@ -529,7 +528,7 @@
 </footer>
     </div>
     
-    <script src="../../_static/documentation_options.js?v=3294188c"></script>
+    <script src="../../_static/documentation_options.js?v=f91d8841"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>

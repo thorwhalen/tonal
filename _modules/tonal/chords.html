@@ -302,7 +302,7 @@
 </span><span id="line-130"><span class="w">    </span><span class="sd">"""Register a chord renderer (usable as a decorator) so it can be named in ``chords_to_midi``."""</span>
 </span><span id="line-131">    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-132">        <span class="n">name</span> <span class="o">=</span> <span class="n">chord_renderer</span><span class="o">.</span><span class="vm">__name__</span>
-</span><span id="line-133">    <span class="n">chord_renders</span><span class="p">[</span><span class="n">chord_renderer</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">chord_renderer</span>
+</span><span id="line-133">    <span class="n">chord_renders</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">chord_renderer</span>
 </span><span id="line-134">    <span class="k">return</span> <span class="n">chord_renderer</span></div>
 
 </span><span id="line-135">
@@ -352,7 +352,7 @@
 </span><span id="line-171">        <span class="k">if</span> <span class="n">chord_renderer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-172">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
 </span><span id="line-173">                <span class="sa">f</span><span class="s2">"Unknown chord renderer: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">. "</span>
-</span><span id="line-174">                <span class="s1">'(Available: {", ".join(chord_renders)}). '</span>
+</span><span id="line-174">                <span class="sa">f</span><span class="s2">"(Available: </span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chord_renders</span><span class="p">)</span><span class="si">}</span><span class="s2">). "</span>
 </span><span id="line-175">                <span class="s2">"You can register a new chord renderer with `register_chord_render`."</span>
 </span><span id="line-176">            <span class="p">)</span>
 </span><span id="line-177">        <span class="k">return</span> <span class="n">chord_renderer</span>
@@ -464,7 +464,7 @@
 </footer>
     </div>
     
-    <script src="../../_static/documentation_options.js?v=3294188c"></script>
+    <script src="../../_static/documentation_options.js?v=f91d8841"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
