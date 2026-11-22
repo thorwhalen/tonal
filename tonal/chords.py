@@ -171,7 +171,7 @@ def resolve_chord_render(chord_renderer: ChordRenderer) -> ChordRenderer:
         if chord_renderer is None:
             raise ValueError(
                 f"Unknown chord renderer: {name}. "
-                f'(Available: {", ".join(chord_renders)}). '
+                f"(Available: {', '.join(chord_renders)}). "
                 "You can register a new chord renderer with `register_chord_render`."
             )
         return chord_renderer
