@@ -1,41 +1,38 @@
 metric,value
 schema_version,1.0
-timestamp,2026-11-22T17:34:53.415847Z
-commit_sha,0ee2f2db69c9f4e9bbdadeeec6c2c48ebd5d3f8b
-commit_message,"tonal: coverage and docstring pass (converters, chords, util; 8 docstrings) [skip publish] (#16)"
+timestamp,2026-11-22T19:11:02.130615Z
+commit_sha,e4249afb36e32128032ec541a8cd9c66d0f566ed
+commit_message,"Fix replace_extension, ensure_dest_filepath and chord renderer registration/error message"
 python_version,3.10
-metrics.umpyre_stats.num_functions,35266
+metrics.umpyre_stats.num_functions,35267
 metrics.umpyre_stats.num_classes,5836
-metrics.umpyre_stats.total_lines,1137894
-metrics.umpyre_stats.empty_lines,162589
-metrics.umpyre_stats.comment_lines,68748
-metrics.umpyre_stats.docs_lines,243479
-metrics.umpyre_stats.function_lines,735823
-metrics.umpyre_stats.empty_lines_ratio,0.1428858927105688
-metrics.umpyre_stats.comment_lines_ratio,0.06041687538558073
-metrics.umpyre_stats.function_lines_ratio,0.646653378961485
-metrics.umpyre_stats.mean_lines_per_function,20.864940736119774
+metrics.umpyre_stats.total_lines,1137926
+metrics.umpyre_stats.empty_lines,162591
+metrics.umpyre_stats.comment_lines,68751
+metrics.umpyre_stats.docs_lines,243500
+metrics.umpyre_stats.function_lines,735867
+metrics.umpyre_stats.empty_lines_ratio,0.1428836321518271
+metrics.umpyre_stats.comment_lines_ratio,0.060417812757595835
+metrics.umpyre_stats.function_lines_ratio,0.6466738610419307
+metrics.umpyre_stats.mean_lines_per_function,20.865596733490232
 metrics.umpyre_stats.files_analyzed,1983
-metrics.umpyre_stats.pypi_version,0.0.22
+metrics.umpyre_stats.pypi_version,0.0.23
 metrics.umpyre_stats.errors,"['testFiles.py: invalid non-printable character U+FEFF (testFiles.py, line 1)', '_shape.py: invalid syntax (_shape.py, line 4)', '_array_like.py: invalid syntax (_array_like.py, line 15)', '_nbit.py: invalid syntax (_nbit.py, line 6)', '_scalars.py: invalid syntax (_scalars.py, line 7)', '_char_codes.py: invalid syntax (_char_codes.py, line 3)', '_dtype_like.py: invalid syntax (_dtype_like.py, line 21)', 'mypy_plugin.py: invalid syntax (mypy_plugin.py, line 118)', ""test_func_inspect_special_encoding.py: 'utf-8' codec can't decode byte 0xa4 in position 64: invalid start byte""]"
 metrics.umpyre_stats.total_errors,9
 metrics.workflow_status.last_run_status,success
-metrics.workflow_status.last_success_timestamp,2026-11-22T17:30:18Z
+metrics.workflow_status.last_success_timestamp,2026-11-22T17:36:35Z
 metrics.workflow_status.recent_failure_count,0
-metrics.workflow_status.run_url,https://github.com/thorwhalen/tonal/actions/runs/45049675541
+metrics.workflow_status.run_url,https://github.com/thorwhalen/tonal/actions/runs/45050362357
 metrics.workflow_status.total_runs_analyzed,10
 metrics.wily.cyclomatic_avg,0.0
 metrics.wily.maintainability_index,0.0
 metrics.wily.total_loc,0
 metrics.wily.files_analyzed,0
-metrics.wily.error,"wily report failed: Usage: wily report [OPTIONS] FILE [METRICS]...
-Try 'wily report --help' for help.
-
-Error: Invalid value for '-f' / '--format': 'json' is not one of 'CONSOLE', 'HTML'.
+metrics.wily.error,"wily build failed: [31mFailed to setup archiver: 'Dirty repository, make sure you commit/stash files first'[0m
 "
 metrics.coverage.line_coverage,0.0
 metrics.coverage.branch_coverage,0.0
 metrics.coverage.statements_covered,0
 metrics.coverage.statements_total,0
 metrics.coverage.error,No coverage file found
-collection_duration_seconds,11.409870147705078
+collection_duration_seconds,6.16672682762146
