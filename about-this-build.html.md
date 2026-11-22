@@ -2,20 +2,18 @@
 
 # About this build
 
-This documentation was built on **2026-11-22 19:13 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/dcc5939f412ade1dcf147a3fe941be3d37bbccf5"><code>dcc5939</code></a> on branch <code>main</code>, for **tonal 0.0.24** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-22 20:53 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/ffa53db92355cca9fdfe02bfd695841b73ff181b"><code>ffa53db</code></a> on branch <code>main</code>, for **tonal 0.0.25** (from <code>pyproject.toml</code>).
 
-#### WARNING
-The documentation and the package may be misaligned:
-
-- The documented version (0.0.24) is ahead of the latest release on PyPI (0.0.23): these docs describe unreleased code.
+#### NOTE
+Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
 
 ## Source
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/dcc5939f412ade1dcf147a3fe941be3d37bbccf5"><code>dcc5939f412ade1dcf147a3fe941be3d37bbccf5</code></a> |
+| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/ffa53db92355cca9fdfe02bfd695841b73ff181b"><code>ffa53db92355cca9fdfe02bfd695841b73ff181b</code></a> |
 | Branch              | <code>main</code>                                                                                                                                       |
-| Tags at this commit | <code>0.0.24</code>                                                                                                                                     |
+| Tags at this commit | <code>0.0.25</code>                                                                                                                                     |
 | Working tree        | clean                                                                                                                                                   |
 | Remote              | <code>https://github.com/thorwhalen/tonal</code>                                                                                                        |
 
@@ -24,9 +22,9 @@ The documentation and the package may be misaligned:
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>thorwhalen/tonal</code>                                                              |
-| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/45059366764">45059366764</a>     |
+| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/45068770592">45068770592</a>     |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>3189484270907dcacec738950c4ebbf5e6543215</code> (in the history of the built commit) |
+| Event commit | <code>9904f0c0b09a970412e31918960503bfa6378dcb</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -51,13 +49,13 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/tonal/0.0.23/">0.0.23</a>, older than the documented version (0.0.24).
+Latest release: <a href="https://pypi.org/project/tonal/0.0.25/">0.0.25</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/tonal && cd tonal
-git checkout dcc5939f412ade1dcf147a3fe941be3d37bbccf5
+git checkout ffa53db92355cca9fdfe02bfd695841b73ff181b
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

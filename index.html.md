@@ -87,6 +87,7 @@ wav_filepath = chords_to_wav(chord_sequence)
 If you have [hum](https://pypi.org/project/hum/) you can use it to diplay (and hear)
 the sound:
 
+<!-- wads-docs: skip - needs hum's Sound, which the installed hum no longer provides, and plays audio -->
 ```python
 from hum import Sound
 
@@ -98,6 +99,7 @@ Sound.from_file(wav_filepath).display()
 Change the way the chords are played, and what the name (really, filepath) of the
 midi and wav files produce are.
 
+<!-- wads-docs: skip - continues the hum Sound example above and plays audio -->
 ```python
 from tonal.chords import play_arpeggio
 
@@ -114,6 +116,8 @@ Sound.from_file(
 The `translate_in_scale` allows you to translate a sequence of notes, or multiple 
 tracks of notes by the given number of steps within the given scale.
 
+>>> from tonal.counterpoint import translate_in_scale
+>>> from tonal.util import note_names, multi_note_names
 >>> stream = translate_in_scale(['C4', 'E4', 'B3', 'C4'], -2, 'C')
 >>> stream  # doctest: +ELLIPSIS
 <music21.stream.Stream ...>
@@ -159,9 +163,10 @@ of a partial function to get a translator with a fixed input scale:
 
 Let’s make a four part cycling V-I progression.
 
+<!-- wads-docs: skip - opens a score viewer and plays audio -->
 ```python
-from tonal.counterpoint import translate_in_scale, create_score_from_tracks
-from tonal.util import play_music21_object
+from tonal.counterpoint import translate_in_scale
+from tonal.util import create_score_from_tracks, play_music21_object
 
 motif = [
     "C4 C4".split(),
