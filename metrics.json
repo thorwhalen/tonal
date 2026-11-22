@@ -1,7 +1,7 @@
 {
-  "collection_duration_seconds": 8.032874822616577,
-  "commit_message": "Merge e4249afb36e32128032ec541a8cd9c66d0f566ed into d5cb5aea651c76369810990278ece2616d9f820e",
-  "commit_sha": "83374927124b64fbdf657514d9fa1f5eb607d1dc",
+  "collection_duration_seconds": 8.761762380599976,
+  "commit_message": "Fix replace_extension, ensure_dest_filepath and chord renderer registration/error message",
+  "commit_sha": "e4249afb36e32128032ec541a8cd9c66d0f566ed",
   "metrics": {
     "coverage": {
       "branch_coverage": 0.0,
@@ -47,6 +47,6 @@
   },
   "python_version": "3.10",
   "schema_version": "1.0",
-  "timestamp": "2026-11-22T19:11:07.355117Z",
+  "timestamp": "2026-11-22T19:11:11.627693Z",
   "workflow_status": {}
 }

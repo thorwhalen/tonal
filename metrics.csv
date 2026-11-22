@@ -1,8 +1,8 @@
 metric,value
 schema_version,1.0
-timestamp,2026-11-22T19:11:07.355117Z
-commit_sha,83374927124b64fbdf657514d9fa1f5eb607d1dc
-commit_message,Merge e4249afb36e32128032ec541a8cd9c66d0f566ed into d5cb5aea651c76369810990278ece2616d9f820e
+timestamp,2026-11-22T19:11:11.627693Z
+commit_sha,e4249afb36e32128032ec541a8cd9c66d0f566ed
+commit_message,"Fix replace_extension, ensure_dest_filepath and chord renderer registration/error message"
 python_version,3.10
 metrics.umpyre_stats.num_functions,36188
 metrics.umpyre_stats.num_classes,6076
@@ -35,4 +35,4 @@ metrics.coverage.branch_coverage,0.0
 metrics.coverage.statements_covered,0
 metrics.coverage.statements_total,0
 metrics.coverage.error,No coverage file found
-collection_duration_seconds,8.032874822616577
+collection_duration_seconds,8.761762380599976
