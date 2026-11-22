@@ -1,7 +1,7 @@
 {
-  "collection_duration_seconds": 9.794590473175049,
-  "commit_message": "Merge 93e885c02e0f89f3b0a5c51af603d31e04f8fc71 into ffa53db92355cca9fdfe02bfd695841b73ff181b",
-  "commit_sha": "272c0cf9cc2a37206cfb81aa10dd282c697091dc",
+  "collection_duration_seconds": 8.097589015960693,
+  "commit_message": "docs: README opening (what it is, install, shortest example); fix unfenced counterpoint block (#19)",
+  "commit_sha": "6ff073588fbb34d3c58b1c8ea4b2d12a8fb08ac6",
   "metrics": {
     "coverage": {
       "branch_coverage": 0.0,
@@ -11,31 +11,24 @@
       "statements_total": 0
     },
     "umpyre_stats": {
-      "comment_lines": 68751,
-      "comment_lines_ratio": 0.06041749419121705,
-      "docs_lines": 243500,
-      "empty_lines": 162591,
-      "empty_lines_ratio": 0.14288287876604225,
+      "comment_lines": 70081,
+      "comment_lines_ratio": 0.06127643426604855,
+      "docs_lines": 244617,
+      "empty_lines": 165832,
+      "empty_lines_ratio": 0.1449978403163106,
       "errors": [
         "testFiles.py: invalid non-printable character U+FEFF (testFiles.py, line 1)",
-        "_shape.py: invalid syntax (_shape.py, line 4)",
-        "_array_like.py: invalid syntax (_array_like.py, line 15)",
-        "_nbit.py: invalid syntax (_nbit.py, line 6)",
-        "_scalars.py: invalid syntax (_scalars.py, line 7)",
-        "_char_codes.py: invalid syntax (_char_codes.py, line 3)",
-        "_dtype_like.py: invalid syntax (_dtype_like.py, line 21)",
-        "mypy_plugin.py: invalid syntax (mypy_plugin.py, line 118)",
         "test_func_inspect_special_encoding.py: 'utf-8' codec can't decode byte 0xa4 in position 64: invalid start byte"
       ],
-      "files_analyzed": 1983,
-      "function_lines": 735873,
-      "function_lines_ratio": 0.646675724032719,
-      "mean_lines_per_function": 20.865766864207334,
-      "num_classes": 5836,
-      "num_functions": 35267,
+      "files_analyzed": 2053,
+      "function_lines": 740125,
+      "function_lines_ratio": 0.6471400366883917,
+      "mean_lines_per_function": 20.45165658072895,
+      "num_classes": 6077,
+      "num_functions": 36189,
       "pypi_version": "0.0.25",
-      "total_errors": 9,
-      "total_lines": 1137932
+      "total_errors": 2,
+      "total_lines": 1143686
     },
     "wily": {
       "cyclomatic_avg": 0.0,
@@ -46,14 +39,14 @@
     },
     "workflow_status": {
       "last_run_status": "success",
-      "last_success_timestamp": "2026-11-22T20:54:06Z",
+      "last_success_timestamp": "2026-11-22T23:24:22Z",
       "recent_failure_count": 0,
-      "run_url": "https://github.com/thorwhalen/tonal/actions/runs/45068992443",
+      "run_url": "https://github.com/thorwhalen/tonal/actions/runs/45082970140",
       "total_runs_analyzed": 10
     }
   },
   "python_version": "3.10",
   "schema_version": "1.0",
-  "timestamp": "2026-11-22T23:24:15.419979Z",
+  "timestamp": "2026-11-22T23:25:27.717434Z",
   "workflow_status": {}
 }
