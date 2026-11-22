@@ -93,9 +93,6 @@ def test_resolve_chord_render_by_name_and_by_callable():
         chords.resolve_chord_render("nope")
 
 
-@pytest.mark.xfail(
-    strict=True, reason="https://github.com/thorwhalen/tonal/issues/14: name ignored"
-)
 def test_register_chord_render_honours_an_explicit_name():
     def my_render(notes, track, duration, *, velocity=64): ...
 
@@ -117,10 +114,6 @@ def test_register_chord_render_defaults_to_the_function_name():
         chords.chord_renders.pop("another", None)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="https://github.com/thorwhalen/tonal/issues/14: missing f prefix",
-)
 def test_unknown_renderer_message_lists_the_available_ones():
     with pytest.raises(ValueError) as exc:
         chords.resolve_chord_render("nope")
