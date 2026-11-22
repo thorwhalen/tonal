@@ -296,144 +296,160 @@
 </span><span id="line-126"><span class="n">chord_renders</span> <span class="o">=</span> <span class="p">{}</span>
 </span><span id="line-127">
 </span><span id="line-128">
+<div class="viewcode-block" id="register_chord_render">
+<a class="viewcode-back" href="../../_autosummary/tonal.chords.html#tonal.register_chord_render">[docs]</a>
 </span><span id="line-129"><span class="k">def</span><span class="w"> </span><span class="nf">register_chord_render</span><span class="p">(</span><span class="n">chord_renderer</span><span class="p">:</span> <span class="n">ChordRenderer</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="line-130">    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-131">        <span class="n">name</span> <span class="o">=</span> <span class="n">chord_renderer</span><span class="o">.</span><span class="vm">__name__</span>
-</span><span id="line-132">    <span class="n">chord_renders</span><span class="p">[</span><span class="n">chord_renderer</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">chord_renderer</span>
-</span><span id="line-133">    <span class="k">return</span> <span class="n">chord_renderer</span>
-</span><span id="line-134">
+</span><span id="line-130"><span class="w">    </span><span class="sd">"""Register a chord renderer (usable as a decorator) so it can be named in ``chords_to_midi``."""</span>
+</span><span id="line-131">    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-132">        <span class="n">name</span> <span class="o">=</span> <span class="n">chord_renderer</span><span class="o">.</span><span class="vm">__name__</span>
+</span><span id="line-133">    <span class="n">chord_renders</span><span class="p">[</span><span class="n">chord_renderer</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">chord_renderer</span>
+</span><span id="line-134">    <span class="k">return</span> <span class="n">chord_renderer</span></div>
+
 </span><span id="line-135">
-</span><span id="line-136"><span class="nd">@register_chord_render</span>
-</span><span id="line-137"><span class="k">def</span><span class="w"> </span><span class="nf">play_simultaneously</span><span class="p">(</span>
-</span><span id="line-138">    <span class="n">notes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">track</span><span class="p">:</span> <span class="n">MidiTrack</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">64</span>
-</span><span id="line-139"><span class="p">):</span>
-</span><span id="line-140">    <span class="n">v</span> <span class="o">=</span> <span class="n">velocity</span>
-</span><span id="line-141">    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
-</span><span id="line-142">        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"note_on"</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-</span><span id="line-143">    <span class="n">_notes</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
-</span><span id="line-144">    <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"note_off"</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">_notes</span><span class="p">),</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">duration</span><span class="p">))</span>
-</span><span id="line-145">    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">_notes</span><span class="p">:</span>
-</span><span id="line-146">        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"note_off"</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-</span><span id="line-147">
-</span><span id="line-148">
-</span><span id="line-149"><span class="c1"># TODO: Need a better implementation for arpeggios.</span>
-</span><span id="line-150"><span class="nd">@register_chord_render</span>
-</span><span id="line-151"><span class="k">def</span><span class="w"> </span><span class="nf">play_arpeggio</span><span class="p">(</span>
-</span><span id="line-152">    <span class="n">notes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">track</span><span class="p">:</span> <span class="n">MidiTrack</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">64</span>
-</span><span id="line-153"><span class="p">):</span>
-</span><span id="line-154">    <span class="n">v</span> <span class="o">=</span> <span class="n">velocity</span>
-</span><span id="line-155">    <span class="n">note_duration</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
-</span><span id="line-156">    <span class="n">current_time</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="line-157">    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
-</span><span id="line-158">        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"note_on"</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">current_time</span><span class="p">))</span>
-</span><span id="line-159">        <span class="n">current_time</span> <span class="o">+=</span> <span class="n">note_duration</span>
-</span><span id="line-160">        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"note_off"</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">current_time</span><span class="p">))</span>
-</span><span id="line-161">
-</span><span id="line-162">
-</span><span id="line-163"><span class="k">def</span><span class="w"> </span><span class="nf">resolve_chord_render</span><span class="p">(</span><span class="n">chord_renderer</span><span class="p">:</span> <span class="n">ChordRenderer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ChordRenderer</span><span class="p">:</span>
-</span><span id="line-164">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chord_renderer</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-165">        <span class="n">name</span> <span class="o">=</span> <span class="n">chord_renderer</span>
-</span><span id="line-166">        <span class="n">chord_renderer</span> <span class="o">=</span> <span class="n">chord_renders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-</span><span id="line-167">        <span class="k">if</span> <span class="n">chord_renderer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-168">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-</span><span id="line-169">                <span class="sa">f</span><span class="s2">"Unknown chord renderer: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">. "</span>
-</span><span id="line-170">                <span class="s1">'(Available: {", ".join(chord_renders)}). '</span>
-</span><span id="line-171">                <span class="s2">"You can register a new chord renderer with `register_chord_render`."</span>
-</span><span id="line-172">            <span class="p">)</span>
-</span><span id="line-173">        <span class="k">return</span> <span class="n">chord_renderer</span>
-</span><span id="line-174">    <span class="k">return</span> <span class="n">chord_renderer</span>
-</span><span id="line-175">
-</span><span id="line-176">
-</span><span id="line-177"><span class="n">DFLT_DURATION</span> <span class="o">=</span> <span class="mi">240</span> <span class="o">*</span> <span class="mi">4</span>
-</span><span id="line-178">
+</span><span id="line-136">
+<div class="viewcode-block" id="play_simultaneously">
+<a class="viewcode-back" href="../../_autosummary/tonal.chords.html#tonal.play_simultaneously">[docs]</a>
+</span><span id="line-137"><span class="nd">@register_chord_render</span>
+</span><span id="line-138"><span class="k">def</span><span class="w"> </span><span class="nf">play_simultaneously</span><span class="p">(</span>
+</span><span id="line-139">    <span class="n">notes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">track</span><span class="p">:</span> <span class="n">MidiTrack</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">64</span>
+</span><span id="line-140"><span class="p">):</span>
+</span><span id="line-141"><span class="w">    </span><span class="sd">"""Play all ``notes`` at once, releasing them together after ``duration`` ticks."""</span>
+</span><span id="line-142">    <span class="n">v</span> <span class="o">=</span> <span class="n">velocity</span>
+</span><span id="line-143">    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
+</span><span id="line-144">        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"note_on"</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</span><span id="line-145">    <span class="n">_notes</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+</span><span id="line-146">    <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"note_off"</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">_notes</span><span class="p">),</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">duration</span><span class="p">))</span>
+</span><span id="line-147">    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">_notes</span><span class="p">:</span>
+</span><span id="line-148">        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"note_off"</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span></div>
+
+</span><span id="line-149">
+</span><span id="line-150">
+</span><span id="line-151"><span class="c1"># TODO: Need a better implementation for arpeggios.</span>
+<div class="viewcode-block" id="play_arpeggio">
+<a class="viewcode-back" href="../../_autosummary/tonal.chords.html#tonal.play_arpeggio">[docs]</a>
+</span><span id="line-152"><span class="nd">@register_chord_render</span>
+</span><span id="line-153"><span class="k">def</span><span class="w"> </span><span class="nf">play_arpeggio</span><span class="p">(</span>
+</span><span id="line-154">    <span class="n">notes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">track</span><span class="p">:</span> <span class="n">MidiTrack</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">64</span>
+</span><span id="line-155"><span class="p">):</span>
+</span><span id="line-156"><span class="w">    </span><span class="sd">"""Play ``notes`` one after the other, sharing ``duration`` ticks equally."""</span>
+</span><span id="line-157">    <span class="n">v</span> <span class="o">=</span> <span class="n">velocity</span>
+</span><span id="line-158">    <span class="n">note_duration</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+</span><span id="line-159">    <span class="n">current_time</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="line-160">    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
+</span><span id="line-161">        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"note_on"</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">current_time</span><span class="p">))</span>
+</span><span id="line-162">        <span class="n">current_time</span> <span class="o">+=</span> <span class="n">note_duration</span>
+</span><span id="line-163">        <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"note_off"</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">current_time</span><span class="p">))</span></div>
+
+</span><span id="line-164">
+</span><span id="line-165">
+<div class="viewcode-block" id="resolve_chord_render">
+<a class="viewcode-back" href="../../_autosummary/tonal.chords.html#tonal.resolve_chord_render">[docs]</a>
+</span><span id="line-166"><span class="k">def</span><span class="w"> </span><span class="nf">resolve_chord_render</span><span class="p">(</span><span class="n">chord_renderer</span><span class="p">:</span> <span class="n">ChordRenderer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ChordRenderer</span><span class="p">:</span>
+</span><span id="line-167"><span class="w">    </span><span class="sd">"""Return a chord renderer given its registered name, or the callable itself."""</span>
+</span><span id="line-168">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chord_renderer</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-169">        <span class="n">name</span> <span class="o">=</span> <span class="n">chord_renderer</span>
+</span><span id="line-170">        <span class="n">chord_renderer</span> <span class="o">=</span> <span class="n">chord_renders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</span><span id="line-171">        <span class="k">if</span> <span class="n">chord_renderer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-172">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="line-173">                <span class="sa">f</span><span class="s2">"Unknown chord renderer: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">. "</span>
+</span><span id="line-174">                <span class="s1">'(Available: {", ".join(chord_renders)}). '</span>
+</span><span id="line-175">                <span class="s2">"You can register a new chord renderer with `register_chord_render`."</span>
+</span><span id="line-176">            <span class="p">)</span>
+</span><span id="line-177">        <span class="k">return</span> <span class="n">chord_renderer</span>
+</span><span id="line-178">    <span class="k">return</span> <span class="n">chord_renderer</span></div>
+
 </span><span id="line-179">
+</span><span id="line-180">
+</span><span id="line-181"><span class="n">DFLT_DURATION</span> <span class="o">=</span> <span class="mi">240</span> <span class="o">*</span> <span class="mi">4</span>
+</span><span id="line-182">
+</span><span id="line-183">
 <div class="viewcode-block" id="process_chord_sequence">
 <a class="viewcode-back" href="../../_autosummary/tonal.chords.html#tonal.process_chord_sequence">[docs]</a>
-</span><span id="line-180"><span class="k">def</span><span class="w"> </span><span class="nf">process_chord_sequence</span><span class="p">(</span>
-</span><span id="line-181">    <span class="n">chord_sequence</span><span class="p">:</span> <span class="n">ChordSequence</span><span class="p">,</span> <span class="n">default_duration</span><span class="o">=</span><span class="n">DFLT_DURATION</span>
-</span><span id="line-182"><span class="p">):</span>
-</span><span id="line-183"><span class="w">    </span><span class="sd">"""Preprocess a chord sequence, to make sure to add time, etc."""</span>
-</span><span id="line-184">    <span class="k">for</span> <span class="n">chord</span> <span class="ow">in</span> <span class="n">chord_sequence</span><span class="p">:</span>
-</span><span id="line-185">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chord</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-186">            <span class="k">yield</span> <span class="n">chord</span><span class="p">,</span> <span class="n">default_duration</span>
-</span><span id="line-187">        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chord</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-</span><span id="line-188">            <span class="k">yield</span> <span class="n">chord</span>
-</span><span id="line-189">        <span class="k">else</span><span class="p">:</span>
-</span><span id="line-190">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid chord: </span><span class="si">{</span><span class="n">chord</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
+</span><span id="line-184"><span class="k">def</span><span class="w"> </span><span class="nf">process_chord_sequence</span><span class="p">(</span>
+</span><span id="line-185">    <span class="n">chord_sequence</span><span class="p">:</span> <span class="n">ChordSequence</span><span class="p">,</span> <span class="n">default_duration</span><span class="o">=</span><span class="n">DFLT_DURATION</span>
+</span><span id="line-186"><span class="p">):</span>
+</span><span id="line-187"><span class="w">    </span><span class="sd">"""Preprocess a chord sequence, to make sure to add time, etc."""</span>
+</span><span id="line-188">    <span class="k">for</span> <span class="n">chord</span> <span class="ow">in</span> <span class="n">chord_sequence</span><span class="p">:</span>
+</span><span id="line-189">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chord</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-190">            <span class="k">yield</span> <span class="n">chord</span><span class="p">,</span> <span class="n">default_duration</span>
+</span><span id="line-191">        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chord</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+</span><span id="line-192">            <span class="k">yield</span> <span class="n">chord</span>
+</span><span id="line-193">        <span class="k">else</span><span class="p">:</span>
+</span><span id="line-194">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid chord: </span><span class="si">{</span><span class="n">chord</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
 
-</span><span id="line-191">
-</span><span id="line-192">
+</span><span id="line-195">
+</span><span id="line-196">
 <div class="viewcode-block" id="chords_to_midi">
 <a class="viewcode-back" href="../../_autosummary/tonal.chords.html#tonal.chords_to_midi">[docs]</a>
-</span><span id="line-193"><span class="k">def</span><span class="w"> </span><span class="nf">chords_to_midi</span><span class="p">(</span>
-</span><span id="line-194">    <span class="n">chord_sequence</span><span class="p">:</span> <span class="n">ChordSequence</span> <span class="o">=</span> <span class="n">DFLT_CHORD_SEQUENCE</span><span class="p">,</span>
-</span><span id="line-195">    <span class="o">*</span><span class="p">,</span>
-</span><span id="line-196">    <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># DFLT_MIDI_OUTPUT,</span>
-</span><span id="line-197">    <span class="n">render_chord</span><span class="p">:</span> <span class="n">ChordRenderer</span> <span class="o">=</span> <span class="n">play_simultaneously</span><span class="p">,</span>
-</span><span id="line-198">    <span class="n">chord_definitions</span><span class="p">:</span> <span class="n">ChordDefinitions</span> <span class="o">=</span> <span class="n">chord_to_notes</span><span class="p">,</span>
-</span><span id="line-199"><span class="p">):</span>
-</span><span id="line-200"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-201"><span class="sd">    Generate a MIDI file from a chord sequence.</span>
-</span><span id="line-202">
-</span><span id="line-203"><span class="sd">    :param chord_sequence: List of tuples containing chords and their duration.</span>
-</span><span id="line-204"><span class="sd">    :param chord_definitions: Dictionary mapping chords to MIDI note patterns.</span>
-</span><span id="line-205"><span class="sd">    :param output_file: Name of the output MIDI file.</span>
-</span><span id="line-206"><span class="sd">    :param render_chord: Function defining how the chords should be played.</span>
-</span><span id="line-207"><span class="sd">    """</span>
-</span><span id="line-208">    <span class="n">midi</span> <span class="o">=</span> <span class="n">MidiFile</span><span class="p">()</span>
-</span><span id="line-209">    <span class="n">track</span> <span class="o">=</span> <span class="n">MidiTrack</span><span class="p">()</span>
-</span><span id="line-210">    <span class="n">midi</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">)</span>
-</span><span id="line-211">
-</span><span id="line-212">    <span class="n">render_chord</span> <span class="o">=</span> <span class="n">resolve_chord_render</span><span class="p">(</span><span class="n">render_chord</span><span class="p">)</span>
-</span><span id="line-213">    <span class="n">chord_sequence</span> <span class="o">=</span> <span class="n">process_chord_sequence</span><span class="p">(</span><span class="n">chord_sequence</span><span class="p">)</span>
-</span><span id="line-214">
-</span><span id="line-215">    <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"program_change"</span><span class="p">,</span> <span class="n">program</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># Acoustic Grand Piano</span>
-</span><span id="line-216">
-</span><span id="line-217">    <span class="k">for</span> <span class="n">chord</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">chord_sequence</span><span class="p">:</span>
-</span><span id="line-218">        <span class="n">pattern</span> <span class="o">=</span> <span class="n">chord_definitions</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
-</span><span id="line-219">        <span class="k">if</span> <span class="n">pattern</span><span class="p">:</span>
-</span><span id="line-220">            <span class="n">render_chord</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
-</span><span id="line-221">
-</span><span id="line-222">    <span class="k">if</span> <span class="n">output_file</span><span class="p">:</span>
-</span><span id="line-223">        <span class="n">midi</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
-</span><span id="line-224">        <span class="k">return</span> <span class="n">output_file</span>
-</span><span id="line-225">    <span class="k">else</span><span class="p">:</span>
-</span><span id="line-226">        <span class="k">return</span> <span class="n">midi</span></div>
+</span><span id="line-197"><span class="k">def</span><span class="w"> </span><span class="nf">chords_to_midi</span><span class="p">(</span>
+</span><span id="line-198">    <span class="n">chord_sequence</span><span class="p">:</span> <span class="n">ChordSequence</span> <span class="o">=</span> <span class="n">DFLT_CHORD_SEQUENCE</span><span class="p">,</span>
+</span><span id="line-199">    <span class="o">*</span><span class="p">,</span>
+</span><span id="line-200">    <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># DFLT_MIDI_OUTPUT,</span>
+</span><span id="line-201">    <span class="n">render_chord</span><span class="p">:</span> <span class="n">ChordRenderer</span> <span class="o">=</span> <span class="n">play_simultaneously</span><span class="p">,</span>
+</span><span id="line-202">    <span class="n">chord_definitions</span><span class="p">:</span> <span class="n">ChordDefinitions</span> <span class="o">=</span> <span class="n">chord_to_notes</span><span class="p">,</span>
+</span><span id="line-203"><span class="p">):</span>
+</span><span id="line-204"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-205"><span class="sd">    Generate a MIDI file from a chord sequence.</span>
+</span><span id="line-206">
+</span><span id="line-207"><span class="sd">    :param chord_sequence: List of tuples containing chords and their duration.</span>
+</span><span id="line-208"><span class="sd">    :param chord_definitions: Dictionary mapping chords to MIDI note patterns.</span>
+</span><span id="line-209"><span class="sd">    :param output_file: Name of the output MIDI file.</span>
+</span><span id="line-210"><span class="sd">    :param render_chord: Function defining how the chords should be played.</span>
+</span><span id="line-211"><span class="sd">    """</span>
+</span><span id="line-212">    <span class="n">midi</span> <span class="o">=</span> <span class="n">MidiFile</span><span class="p">()</span>
+</span><span id="line-213">    <span class="n">track</span> <span class="o">=</span> <span class="n">MidiTrack</span><span class="p">()</span>
+</span><span id="line-214">    <span class="n">midi</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">)</span>
+</span><span id="line-215">
+</span><span id="line-216">    <span class="n">render_chord</span> <span class="o">=</span> <span class="n">resolve_chord_render</span><span class="p">(</span><span class="n">render_chord</span><span class="p">)</span>
+</span><span id="line-217">    <span class="n">chord_sequence</span> <span class="o">=</span> <span class="n">process_chord_sequence</span><span class="p">(</span><span class="n">chord_sequence</span><span class="p">)</span>
+</span><span id="line-218">
+</span><span id="line-219">    <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="s2">"program_change"</span><span class="p">,</span> <span class="n">program</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># Acoustic Grand Piano</span>
+</span><span id="line-220">
+</span><span id="line-221">    <span class="k">for</span> <span class="n">chord</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">chord_sequence</span><span class="p">:</span>
+</span><span id="line-222">        <span class="n">pattern</span> <span class="o">=</span> <span class="n">chord_definitions</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</span><span id="line-223">        <span class="k">if</span> <span class="n">pattern</span><span class="p">:</span>
+</span><span id="line-224">            <span class="n">render_chord</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
+</span><span id="line-225">
+</span><span id="line-226">    <span class="k">if</span> <span class="n">output_file</span><span class="p">:</span>
+</span><span id="line-227">        <span class="n">midi</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+</span><span id="line-228">        <span class="k">return</span> <span class="n">output_file</span>
+</span><span id="line-229">    <span class="k">else</span><span class="p">:</span>
+</span><span id="line-230">        <span class="k">return</span> <span class="n">midi</span></div>
 
-</span><span id="line-227">
-</span><span id="line-228">
+</span><span id="line-231">
+</span><span id="line-232">
 <div class="viewcode-block" id="chords_to_wav">
 <a class="viewcode-back" href="../../_autosummary/tonal.chords.html#tonal.chords_to_wav">[docs]</a>
-</span><span id="line-229"><span class="k">def</span><span class="w"> </span><span class="nf">chords_to_wav</span><span class="p">(</span>
-</span><span id="line-230">    <span class="n">chord_sequence</span><span class="p">:</span> <span class="n">ChordSequence</span> <span class="o">=</span> <span class="n">DFLT_CHORD_SEQUENCE</span><span class="p">,</span>
-</span><span id="line-231">    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_OUTPUT_NAME</span><span class="p">,</span>
-</span><span id="line-232">    <span class="o">*</span><span class="p">,</span>
-</span><span id="line-233">    <span class="n">chord_definitions</span><span class="p">:</span> <span class="n">ChordDefinitions</span> <span class="o">=</span> <span class="n">chord_to_notes</span><span class="p">,</span>
-</span><span id="line-234">    <span class="n">soundfont</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_SOUNDFONT</span><span class="p">,</span>
-</span><span id="line-235">    <span class="n">render_chord</span><span class="p">:</span> <span class="n">ChordRenderer</span> <span class="o">=</span> <span class="n">play_simultaneously</span><span class="p">,</span>
-</span><span id="line-236"><span class="p">):</span>
-</span><span id="line-237"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-238"><span class="sd">    Generate a WAV file directly from a chord sequence.</span>
-</span><span id="line-239">
-</span><span id="line-240"><span class="sd">    :param chord_sequence: List of tuples containing chords and their duration.</span>
-</span><span id="line-241"><span class="sd">    :param name: Base name for the output MIDI and WAV files.</span>
-</span><span id="line-242"><span class="sd">    :param chord_definitions: Dictionary mapping chords to MIDI note patterns.</span>
-</span><span id="line-243"><span class="sd">    :param soundfont: Path to the SoundFont file.</span>
-</span><span id="line-244"><span class="sd">    :param render_chord: Function defining how the chords should be played.</span>
-</span><span id="line-245"><span class="sd">    """</span>
-</span><span id="line-246">    <span class="kn">from</span><span class="w"> </span><span class="nn">sonification.converters</span><span class="w"> </span><span class="kn">import</span> <span class="n">midi_to_wav</span>
-</span><span id="line-247">
-</span><span id="line-248">    <span class="n">midi_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.mid"</span>
-</span><span id="line-249">    <span class="n">wav_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.wav"</span>
-</span><span id="line-250">
-</span><span id="line-251">    <span class="n">chords_to_midi</span><span class="p">(</span>
-</span><span id="line-252">        <span class="n">chord_sequence</span><span class="p">,</span>
-</span><span id="line-253">        <span class="n">chord_definitions</span><span class="o">=</span><span class="n">chord_definitions</span><span class="p">,</span>
-</span><span id="line-254">        <span class="n">output_file</span><span class="o">=</span><span class="n">midi_file</span><span class="p">,</span>
-</span><span id="line-255">        <span class="n">render_chord</span><span class="o">=</span><span class="n">render_chord</span><span class="p">,</span>
-</span><span id="line-256">    <span class="p">)</span>
-</span><span id="line-257">    <span class="n">midi_to_wav</span><span class="p">(</span><span class="n">midi_file</span><span class="o">=</span><span class="n">midi_file</span><span class="p">,</span> <span class="n">output_wav</span><span class="o">=</span><span class="n">wav_file</span><span class="p">,</span> <span class="n">soundfont</span><span class="o">=</span><span class="n">soundfont</span><span class="p">)</span>
-</span><span id="line-258">    <span class="k">return</span> <span class="n">wav_file</span></div>
+</span><span id="line-233"><span class="k">def</span><span class="w"> </span><span class="nf">chords_to_wav</span><span class="p">(</span>
+</span><span id="line-234">    <span class="n">chord_sequence</span><span class="p">:</span> <span class="n">ChordSequence</span> <span class="o">=</span> <span class="n">DFLT_CHORD_SEQUENCE</span><span class="p">,</span>
+</span><span id="line-235">    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_OUTPUT_NAME</span><span class="p">,</span>
+</span><span id="line-236">    <span class="o">*</span><span class="p">,</span>
+</span><span id="line-237">    <span class="n">chord_definitions</span><span class="p">:</span> <span class="n">ChordDefinitions</span> <span class="o">=</span> <span class="n">chord_to_notes</span><span class="p">,</span>
+</span><span id="line-238">    <span class="n">soundfont</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_SOUNDFONT</span><span class="p">,</span>
+</span><span id="line-239">    <span class="n">render_chord</span><span class="p">:</span> <span class="n">ChordRenderer</span> <span class="o">=</span> <span class="n">play_simultaneously</span><span class="p">,</span>
+</span><span id="line-240"><span class="p">):</span>
+</span><span id="line-241"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-242"><span class="sd">    Generate a WAV file directly from a chord sequence.</span>
+</span><span id="line-243">
+</span><span id="line-244"><span class="sd">    :param chord_sequence: List of tuples containing chords and their duration.</span>
+</span><span id="line-245"><span class="sd">    :param name: Base name for the output MIDI and WAV files.</span>
+</span><span id="line-246"><span class="sd">    :param chord_definitions: Dictionary mapping chords to MIDI note patterns.</span>
+</span><span id="line-247"><span class="sd">    :param soundfont: Path to the SoundFont file.</span>
+</span><span id="line-248"><span class="sd">    :param render_chord: Function defining how the chords should be played.</span>
+</span><span id="line-249"><span class="sd">    """</span>
+</span><span id="line-250">    <span class="kn">from</span><span class="w"> </span><span class="nn">sonification.converters</span><span class="w"> </span><span class="kn">import</span> <span class="n">midi_to_wav</span>
+</span><span id="line-251">
+</span><span id="line-252">    <span class="n">midi_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.mid"</span>
+</span><span id="line-253">    <span class="n">wav_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.wav"</span>
+</span><span id="line-254">
+</span><span id="line-255">    <span class="n">chords_to_midi</span><span class="p">(</span>
+</span><span id="line-256">        <span class="n">chord_sequence</span><span class="p">,</span>
+</span><span id="line-257">        <span class="n">chord_definitions</span><span class="o">=</span><span class="n">chord_definitions</span><span class="p">,</span>
+</span><span id="line-258">        <span class="n">output_file</span><span class="o">=</span><span class="n">midi_file</span><span class="p">,</span>
+</span><span id="line-259">        <span class="n">render_chord</span><span class="o">=</span><span class="n">render_chord</span><span class="p">,</span>
+</span><span id="line-260">    <span class="p">)</span>
+</span><span id="line-261">    <span class="n">midi_to_wav</span><span class="p">(</span><span class="n">midi_file</span><span class="o">=</span><span class="n">midi_file</span><span class="p">,</span> <span class="n">output_wav</span><span class="o">=</span><span class="n">wav_file</span><span class="p">,</span> <span class="n">soundfont</span><span class="o">=</span><span class="n">soundfont</span><span class="p">)</span>
+</span><span id="line-262">    <span class="k">return</span> <span class="n">wav_file</span></div>
 
 </span></code></pre></div>
     </div></div>
@@ -448,7 +464,7 @@
 </footer>
     </div>
     
-    <script src="../../_static/documentation_options.js?v=96ec9c95"></script>
+    <script src="../../_static/documentation_options.js?v=3294188c"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>

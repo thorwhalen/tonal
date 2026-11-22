@@ -123,8 +123,8 @@
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_pattern_aliases</span></code>(quality_extensions)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.util.add_pattern_aliases" title="tonal.util.add_pattern_aliases"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_pattern_aliases</span></code></a>(quality_extensions)</p></td>
+<td><p>Yield <code class="docutils literal notranslate"><span class="pre">(alias,</span> <span class="pre">value)</span></code> pairs for <code class="docutils literal notranslate"><span class="pre">maj</span></code>/<code class="docutils literal notranslate"><span class="pre">min</span></code>/<code class="docutils literal notranslate"><span class="pre">dim</span></code> keys, using <code class="docutils literal notranslate"><span class="pre">M</span></code>/<code class="docutils literal notranslate"><span class="pre">m</span></code>/<code class="docutils literal notranslate"><span class="pre">°</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.add_streams" title="tonal.util.add_streams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_streams</span></code></a>(list_of_streams)</p></td>
 <td><p>Concatenates multiple streams into a single stream.</p></td>
@@ -141,8 +141,8 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.ensure_iterable_of_notes" title="tonal.util.ensure_iterable_of_notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_iterable_of_notes</span></code></a>(notes[, str_to_note])</p></td>
 <td><p>Ensures the input is an iterable of Note objects.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_part_filter</span></code>(part_filter)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.util.ensure_part_filter" title="tonal.util.ensure_part_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_part_filter</span></code></a>(part_filter)</p></td>
+<td><p>Turn an int, a container of indices, <code class="docutils literal notranslate"><span class="pre">None</span></code> or a callable into <code class="docutils literal notranslate"><span class="pre">f(index,</span> <span class="pre">part)</span> <span class="pre">-&gt;</span> <span class="pre">bool</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.ensure_scale" title="tonal.util.ensure_scale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_scale</span></code></a>(input_scale[, scale_creator])</p></td>
 <td><p>Ensures the input is a Scale object.</p></td>
@@ -153,8 +153,8 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.get_scale_notes" title="tonal.util.get_scale_notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_scale_notes</span></code></a>(input_note, input_scale)</p></td>
 <td><p>Returns the names of the pitches in the scale within one octave around the input note.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">identity_func</span></code>(x)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.util.identity_func" title="tonal.util.identity_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">identity_func</span></code></a>(x)</p></td>
+<td><p>Return <code class="docutils literal notranslate"><span class="pre">x</span></code> unchanged.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.is_existing_filepath" title="tonal.util.is_existing_filepath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_existing_filepath</span></code></a>(obj)</p></td>
 <td><p>Returns True if the input object is a string representing an existing file path.</p></td>
@@ -171,8 +171,8 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.note_names" title="tonal.util.note_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">note_names</span></code></a>(notes[, name_attr])</p></td>
 <td><p>Returns the names of the notes in the input iterable.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_note_name</span></code>(note_str)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.util.parse_note_name" title="tonal.util.parse_note_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_note_name</span></code></a>(note_str)</p></td>
+<td><p>The note-name part of <code class="docutils literal notranslate"><span class="pre">note_str</span></code> (<code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if it does not parse).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#tonal.util.play_music21_object" title="tonal.util.play_music21_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">play_music21_object</span></code></a>(music21_obj)</p></td>
 <td><p>Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.</p></td>
@@ -185,6 +185,15 @@
 </tr>
 </tbody>
 </table>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.add_pattern_aliases">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">add_pattern_aliases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quality_extensions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#add_pattern_aliases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.add_pattern_aliases" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.add_pattern_aliases'">¶</a></dt>
+<dd><p>Yield <code class="docutils literal notranslate"><span class="pre">(alias,</span> <span class="pre">value)</span></code> pairs for <code class="docutils literal notranslate"><span class="pre">maj</span></code>/<code class="docutils literal notranslate"><span class="pre">min</span></code>/<code class="docutils literal notranslate"><span class="pre">dim</span></code> keys, using <code class="docutils literal notranslate"><span class="pre">M</span></code>/<code class="docutils literal notranslate"><span class="pre">m</span></code>/<code class="docutils literal notranslate"><span class="pre">°</span></code>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">(</span><span class="n">add_pattern_aliases</span><span class="p">({</span><span class="s2">"maj7"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"min"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"dim"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"sus"</span><span class="p">:</span> <span class="mi">4</span><span class="p">}))</span>
+</span><span id="line-2"><span class="go">{'M7': 1, 'm': 2, '°': 3}</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="tonal.util.add_streams">
 <span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">add_streams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_of_streams</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#add_streams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.add_streams" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.add_streams'">¶</a></dt>
@@ -321,6 +330,16 @@ The file path to save the modified score. Default is None.</p></li>
 </div>
 </dd></dl>
 <dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.ensure_part_filter">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">ensure_part_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part_filter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#ensure_part_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.ensure_part_filter" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.ensure_part_filter'">¶</a></dt>
+<dd><p>Turn an int, a container of indices, <code class="docutils literal notranslate"><span class="pre">None</span></code> or a callable into <code class="docutils literal notranslate"><span class="pre">f(index,</span> <span class="pre">part)</span> <span class="pre">-&gt;</span> <span class="pre">bool</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" rel="nofollow noopener" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">Part</span></code>], <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" rel="nofollow noopener" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
 <dt class="sig sig-object py" id="tonal.util.ensure_scale">
 <span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">ensure_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_creator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;class</span> <span class="pre">'music21.scale.MajorScale'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#ensure_scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.ensure_scale" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.ensure_scale'">¶</a></dt>
 <dd><p>Ensures the input is a Scale object. Converts a string to a Scale using the provided scale creator.</p>
@@ -400,6 +419,15 @@ The file path to save the modified score. Default is None.</p></li>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" rel="nofollow noopener" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</span></p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.identity_func">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">identity_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#identity_func"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.identity_func" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.identity_func'">¶</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">x</span></code> unchanged.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">identity_func</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="line-2"><span class="go">3</span>
+</span></code></pre></div>
+</div>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="tonal.util.is_existing_filepath">
@@ -523,6 +551,16 @@ The file path to save the modified score. Default is None.</p></li>
 </div>
 </dd></dl>
 <dl class="py function">
+<dt class="sig sig-object py" id="tonal.util.parse_note_name">
+<span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">parse_note_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#parse_note_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.parse_note_name" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.parse_note_name'">¶</a></dt>
+<dd><p>The note-name part of <code class="docutils literal notranslate"><span class="pre">note_str</span></code> (<code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if it does not parse).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="nofollow noopener" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
 <dt class="sig sig-object py" id="tonal.util.play_music21_object">
 <span class="sig-prename descclassname"><span class="pre">tonal.util.</span></span><span class="sig-name descname"><span class="pre">play_music21_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">music21_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/util.html#play_music21_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.util.play_music21_object" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.util.play_music21_object'">¶</a></dt>
 <dd><p>Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.</p>
@@ -591,19 +629,23 @@ strings.</p>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
+<li><a :data-current="activeSection === '#tonal.util.add_pattern_aliases'" class="reference internal" href="#tonal.util.add_pattern_aliases"><code class="docutils literal notranslate"><span class="pre">add_pattern_aliases()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.add_streams'" class="reference internal" href="#tonal.util.add_streams"><code class="docutils literal notranslate"><span class="pre">add_streams()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.concatenate_streams'" class="reference internal" href="#tonal.util.concatenate_streams"><code class="docutils literal notranslate"><span class="pre">concatenate_streams()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.create_score_from_tracks'" class="reference internal" href="#tonal.util.create_score_from_tracks"><code class="docutils literal notranslate"><span class="pre">create_score_from_tracks()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.delete_parts'" class="reference internal" href="#tonal.util.delete_parts"><code class="docutils literal notranslate"><span class="pre">delete_parts()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.ensure_iterable_of_notes'" class="reference internal" href="#tonal.util.ensure_iterable_of_notes"><code class="docutils literal notranslate"><span class="pre">ensure_iterable_of_notes()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.ensure_part_filter'" class="reference internal" href="#tonal.util.ensure_part_filter"><code class="docutils literal notranslate"><span class="pre">ensure_part_filter()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.ensure_scale'" class="reference internal" href="#tonal.util.ensure_scale"><code class="docutils literal notranslate"><span class="pre">ensure_scale()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.filter_parts'" class="reference internal" href="#tonal.util.filter_parts"><code class="docutils literal notranslate"><span class="pre">filter_parts()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.get_scale_notes'" class="reference internal" href="#tonal.util.get_scale_notes"><code class="docutils literal notranslate"><span class="pre">get_scale_notes()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.identity_func'" class="reference internal" href="#tonal.util.identity_func"><code class="docutils literal notranslate"><span class="pre">identity_func()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.is_existing_filepath'" class="reference internal" href="#tonal.util.is_existing_filepath"><code class="docutils literal notranslate"><span class="pre">is_existing_filepath()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.mk_score'" class="reference internal" href="#tonal.util.mk_score"><code class="docutils literal notranslate"><span class="pre">mk_score()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.mk_stream'" class="reference internal" href="#tonal.util.mk_stream"><code class="docutils literal notranslate"><span class="pre">mk_stream()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.multi_note_names'" class="reference internal" href="#tonal.util.multi_note_names"><code class="docutils literal notranslate"><span class="pre">multi_note_names()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.note_names'" class="reference internal" href="#tonal.util.note_names"><code class="docutils literal notranslate"><span class="pre">note_names()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.util.parse_note_name'" class="reference internal" href="#tonal.util.parse_note_name"><code class="docutils literal notranslate"><span class="pre">parse_note_name()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.play_music21_object'" class="reference internal" href="#tonal.util.play_music21_object"><code class="docutils literal notranslate"><span class="pre">play_music21_object()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.resolve_format_from_filepath'" class="reference internal" href="#tonal.util.resolve_format_from_filepath"><code class="docutils literal notranslate"><span class="pre">resolve_format_from_filepath()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.util.string_to_note'" class="reference internal" href="#tonal.util.string_to_note"><code class="docutils literal notranslate"><span class="pre">string_to_note()</span></code></a></li>
@@ -620,7 +662,7 @@ strings.</p>
 </div>
 </footer>
 </div>
-<script src="../_static/documentation_options.js?v=96ec9c95"></script>
+<script src="../_static/documentation_options.js?v=3294188c"></script>
 <script src="../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../_static/clipboard.min.js?v=a7894cd8"></script>

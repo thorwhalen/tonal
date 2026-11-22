@@ -4,27 +4,36 @@ Utils for sonification.
 
 ### Functions
 
-| `add_pattern_aliases`(quality_extensions)                                                          |                                                                                        |
-|----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
-| [`add_streams`](#tonal.util.add_streams)(list_of_streams)                      | Concatenates multiple streams into a single stream.                                    |
-| [`concatenate_streams`](#tonal.util.concatenate_streams)(streams_list)                 | Concatenates corresponding streams from a list of lists of streams.                    |
-| [`create_score_from_tracks`](#tonal.util.create_score_from_tracks)(tracks)                  | Creates a music21 Score from a list of tracks (Stream objects).                        |
-| [`delete_parts`](#tonal.util.delete_parts)(part_idx, score_input, \*[, ...])    | Delete parts from a score based on the provided part indices.                          |
-| [`ensure_iterable_of_notes`](#tonal.util.ensure_iterable_of_notes)(notes[, str_to_note])    | Ensures the input is an iterable of Note objects.                                      |
-| `ensure_part_filter`(part_filter)                                                                  |                                                                                        |
-| [`ensure_scale`](#tonal.util.ensure_scale)(input_scale[, scale_creator])        | Ensures the input is a Scale object.                                                   |
-| [`filter_parts`](#tonal.util.filter_parts)(part_filter, score_input, \*[, ...]) | Filter parts from a score based on the provided filter function or part indices.       |
-| [`get_scale_notes`](#tonal.util.get_scale_notes)(input_note, input_scale)          | Returns the names of the pitches in the scale within one octave around the input note. |
-| `identity_func`(x)                                                                                 |                                                                                        |
-| [`is_existing_filepath`](#tonal.util.is_existing_filepath)(obj)                         | Returns True if the input object is a string representing an existing file path.       |
-| [`mk_score`](#tonal.util.mk_score)(obj, \*\*kwargs)                         | Creates a music21 Score object from the input object.                                  |
-| [`mk_stream`](#tonal.util.mk_stream)(obj, \*\*kwargs)                        | Creates a music21 Stream object from the input object.                                 |
-| [`multi_note_names`](#tonal.util.multi_note_names)(tracks)                          | Returns the names of the notes in the input iterable.                                  |
-| [`note_names`](#tonal.util.note_names)(notes[, name_attr])                    | Returns the names of the notes in the input iterable.                                  |
-| `parse_note_name`(note_str)                                                                        |                                                                                        |
-| [`play_music21_object`](#tonal.util.play_music21_object)(music21_obj)                  | Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.             |
-| [`resolve_format_from_filepath`](#tonal.util.resolve_format_from_filepath)(filepath)            | Resolves the format of a file from the file extension.                                 |
-| [`string_to_note`](#tonal.util.string_to_note)([note_or_notes, egress])           | Converts a string representation of a note to a music21 Note object.                   |
+| [`add_pattern_aliases`](#tonal.util.add_pattern_aliases)(quality_extensions)           | Yield `(alias, value)` pairs for `maj`/`min`/`dim` keys, using `M`/`m`/`°`.              |
+|----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| [`add_streams`](#tonal.util.add_streams)(list_of_streams)                      | Concatenates multiple streams into a single stream.                                      |
+| [`concatenate_streams`](#tonal.util.concatenate_streams)(streams_list)                 | Concatenates corresponding streams from a list of lists of streams.                      |
+| [`create_score_from_tracks`](#tonal.util.create_score_from_tracks)(tracks)                  | Creates a music21 Score from a list of tracks (Stream objects).                          |
+| [`delete_parts`](#tonal.util.delete_parts)(part_idx, score_input, \*[, ...])    | Delete parts from a score based on the provided part indices.                            |
+| [`ensure_iterable_of_notes`](#tonal.util.ensure_iterable_of_notes)(notes[, str_to_note])    | Ensures the input is an iterable of Note objects.                                        |
+| [`ensure_part_filter`](#tonal.util.ensure_part_filter)(part_filter)                   | Turn an int, a container of indices, `None` or a callable into `f(index, part) -> bool`. |
+| [`ensure_scale`](#tonal.util.ensure_scale)(input_scale[, scale_creator])        | Ensures the input is a Scale object.                                                     |
+| [`filter_parts`](#tonal.util.filter_parts)(part_filter, score_input, \*[, ...]) | Filter parts from a score based on the provided filter function or part indices.         |
+| [`get_scale_notes`](#tonal.util.get_scale_notes)(input_note, input_scale)          | Returns the names of the pitches in the scale within one octave around the input note.   |
+| [`identity_func`](#tonal.util.identity_func)(x)                                  | Return `x` unchanged.                                                                    |
+| [`is_existing_filepath`](#tonal.util.is_existing_filepath)(obj)                         | Returns True if the input object is a string representing an existing file path.         |
+| [`mk_score`](#tonal.util.mk_score)(obj, \*\*kwargs)                         | Creates a music21 Score object from the input object.                                    |
+| [`mk_stream`](#tonal.util.mk_stream)(obj, \*\*kwargs)                        | Creates a music21 Stream object from the input object.                                   |
+| [`multi_note_names`](#tonal.util.multi_note_names)(tracks)                          | Returns the names of the notes in the input iterable.                                    |
+| [`note_names`](#tonal.util.note_names)(notes[, name_attr])                    | Returns the names of the notes in the input iterable.                                    |
+| [`parse_note_name`](#tonal.util.parse_note_name)(note_str)                         | The note-name part of `note_str` (`ValueError` if it does not parse).                    |
+| [`play_music21_object`](#tonal.util.play_music21_object)(music21_obj)                  | Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.               |
+| [`resolve_format_from_filepath`](#tonal.util.resolve_format_from_filepath)(filepath)            | Resolves the format of a file from the file extension.                                   |
+| [`string_to_note`](#tonal.util.string_to_note)([note_or_notes, egress])           | Converts a string representation of a note to a music21 Note object.                     |
+
+### tonal.util.add_pattern_aliases(quality_extensions)
+
+Yield `(alias, value)` pairs for `maj`/`min`/`dim` keys, using `M`/`m`/`°`.
+
+```pycon
+>>> dict(add_pattern_aliases({"maj7": 1, "min": 2, "dim": 3, "sus": 4}))
+{'M7': 1, 'm': 2, '°': 3}
+```
 
 ### tonal.util.add_streams(list_of_streams)
 
@@ -144,6 +153,13 @@ Ensures the input is an iterable of Note objects.
 [<music21.note.Note C>, <music21.note.Note E>, <music21.note.Note G>]
 ```
 
+### tonal.util.ensure_part_filter(part_filter)
+
+Turn an int, a container of indices, `None` or a callable into `f(index, part) -> bool`.
+
+* **Return type:**
+  [`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[`Part`], [`bool`](https://docs.python.org/3/builtins/functions.html#bool)]
+
 ### tonal.util.ensure_scale(input_scale, scale_creator=<class 'music21.scale.MajorScale'>)
 
 Ensures the input is a Scale object. Converts a string to a Scale using the provided scale creator.
@@ -203,6 +219,15 @@ Returns the names of the pitches in the scale within one octave around the input
   A list of pitch names within the scale.
 * **Return type:**
   [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)]
+
+### tonal.util.identity_func(x)
+
+Return `x` unchanged.
+
+```pycon
+>>> identity_func(3)
+3
+```
 
 ### tonal.util.is_existing_filepath(obj)
 
@@ -302,6 +327,13 @@ Returns the names of the notes in the input iterable.
 
 #### SEE ALSO
 multi_note_names
+
+### tonal.util.parse_note_name(note_str)
+
+The note-name part of `note_str` (`ValueError` if it does not parse).
+
+* **Return type:**
+  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
 
 ### tonal.util.play_music21_object(music21_obj)
 

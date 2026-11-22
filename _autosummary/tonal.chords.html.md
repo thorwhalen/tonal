@@ -4,15 +4,15 @@ Tools for chords and chord progressions.
 
 ### Functions
 
-| [`chord_to_notes`](#tonal.chords.chord_to_notes)(chord)                         | Parse a chord string and return the corresponding sequence of MIDI note numbers.   |
-|------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
-| [`chords_to_midi`](#tonal.chords.chords_to_midi)([chord_sequence, ...])         | Generate a MIDI file from a chord sequence.                                        |
-| [`chords_to_wav`](#tonal.chords.chords_to_wav)([chord_sequence, name, ...])    | Generate a WAV file directly from a chord sequence.                                |
-| `play_arpeggio`(notes, track, duration, \*[, ...])                                             |                                                                                    |
-| `play_simultaneously`(notes, track, duration, \*)                                              |                                                                                    |
-| [`process_chord_sequence`](#tonal.chords.process_chord_sequence)(chord_sequence[, ...]) | Preprocess a chord sequence, to make sure to add time, etc.                        |
-| `register_chord_render`(chord_renderer[, name])                                                |                                                                                    |
-| `resolve_chord_render`(chord_renderer)                                                         |                                                                                    |
+| [`chord_to_notes`](#tonal.chords.chord_to_notes)(chord)                            | Parse a chord string and return the corresponding sequence of MIDI note numbers.          |
+|---------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| [`chords_to_midi`](#tonal.chords.chords_to_midi)([chord_sequence, ...])            | Generate a MIDI file from a chord sequence.                                               |
+| [`chords_to_wav`](#tonal.chords.chords_to_wav)([chord_sequence, name, ...])       | Generate a WAV file directly from a chord sequence.                                       |
+| [`play_arpeggio`](#tonal.chords.play_arpeggio)(notes, track, duration, \*[, ...]) | Play `notes` one after the other, sharing `duration` ticks equally.                       |
+| [`play_simultaneously`](#tonal.chords.play_simultaneously)(notes, track, duration, \*)  | Play all `notes` at once, releasing them together after `duration` ticks.                 |
+| [`process_chord_sequence`](#tonal.chords.process_chord_sequence)(chord_sequence[, ...])    | Preprocess a chord sequence, to make sure to add time, etc.                               |
+| [`register_chord_render`](#tonal.chords.register_chord_render)(chord_renderer[, name])    | Register a chord renderer (usable as a decorator) so it can be named in `chords_to_midi`. |
+| [`resolve_chord_render`](#tonal.chords.resolve_chord_render)(chord_renderer)             | Return a chord renderer given its registered name, or the callable itself.                |
 
 ### tonal.chords.chord_to_notes(chord)
 
@@ -46,6 +46,25 @@ Generate a WAV file directly from a chord sequence.
   * **soundfont** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – Path to the SoundFont file.
   * **render_chord** ([`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)], `any`, [`int`](https://docs.python.org/3/builtins/functions.html#int)], [`None`](https://docs.python.org/3/builtins/constants.html#None)]) – Function defining how the chords should be played.
 
+### tonal.chords.play_arpeggio(notes, track, duration, , velocity=64)
+
+Play `notes` one after the other, sharing `duration` ticks equally.
+
+### tonal.chords.play_simultaneously(notes, track, duration, , velocity=64)
+
+Play all `notes` at once, releasing them together after `duration` ticks.
+
 ### tonal.chords.process_chord_sequence(chord_sequence, default_duration=960)
 
 Preprocess a chord sequence, to make sure to add time, etc.
+
+### tonal.chords.register_chord_render(chord_renderer, name=None)
+
+Register a chord renderer (usable as a decorator) so it can be named in `chords_to_midi`.
+
+### tonal.chords.resolve_chord_render(chord_renderer)
+
+Return a chord renderer given its registered name, or the callable itself.
+
+* **Return type:**
+  [`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)], `any`, [`int`](https://docs.python.org/3/builtins/functions.html#int)], [`None`](https://docs.python.org/3/builtins/constants.html#None)]

@@ -240,570 +240,594 @@
 </span><span id="line-73"><span class="kn">from</span><span class="w"> </span><span class="nn">music21</span><span class="w"> </span><span class="kn">import</span> <span class="n">converter</span>
 </span><span id="line-74">
 </span><span id="line-75">
+<div class="viewcode-block" id="identity_func">
+<a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.identity_func">[docs]</a>
 </span><span id="line-76"><span class="k">def</span><span class="w"> </span><span class="nf">identity_func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-</span><span id="line-77">    <span class="k">return</span> <span class="n">x</span>
+</span><span id="line-77"><span class="w">    </span><span class="sd">"""Return ``x`` unchanged.</span>
 </span><span id="line-78">
-</span><span id="line-79">
+</span><span id="line-79"><span class="sd">    &gt;&gt;&gt; identity_func(3)</span>
+</span><span id="line-80"><span class="sd">    3</span>
+</span><span id="line-81"><span class="sd">    """</span>
+</span><span id="line-82">    <span class="k">return</span> <span class="n">x</span></div>
+
+</span><span id="line-83">
+</span><span id="line-84">
 <div class="viewcode-block" id="play_music21_object">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.play_music21_object">[docs]</a>
-</span><span id="line-80"><span class="k">def</span><span class="w"> </span><span class="nf">play_music21_object</span><span class="p">(</span><span class="n">music21_obj</span><span class="p">):</span>
-</span><span id="line-81"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-82"><span class="sd">    Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.</span>
-</span><span id="line-83">
-</span><span id="line-84"><span class="sd">    Args:</span>
-</span><span id="line-85"><span class="sd">        music21_obj: A music21 object (Chord, Part, Stream, etc.) to be played.</span>
-</span><span id="line-86"><span class="sd">    """</span>
-</span><span id="line-87">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">music21_obj</span><span class="p">,</span> <span class="n">Score</span><span class="p">):</span>
-</span><span id="line-88">        <span class="n">s</span> <span class="o">=</span> <span class="n">music21_obj</span>
-</span><span id="line-89">    <span class="k">else</span><span class="p">:</span>
-</span><span id="line-90">        <span class="c1"># Create a Stream object</span>
-</span><span id="line-91">        <span class="n">s</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">()</span>
-</span><span id="line-92">        <span class="c1"># Add the music21 object to the Stream</span>
-</span><span id="line-93">        <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">music21_obj</span><span class="p">)</span>
-</span><span id="line-94">
-</span><span id="line-95">    <span class="c1"># Play the Stream using StreamPlayer</span>
-</span><span id="line-96">    <span class="n">sp</span> <span class="o">=</span> <span class="n">StreamPlayer</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-</span><span id="line-97">    <span class="n">sp</span><span class="o">.</span><span class="n">play</span><span class="p">()</span></div>
-
-</span><span id="line-98">
+</span><span id="line-85"><span class="k">def</span><span class="w"> </span><span class="nf">play_music21_object</span><span class="p">(</span><span class="n">music21_obj</span><span class="p">):</span>
+</span><span id="line-86"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-87"><span class="sd">    Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.</span>
+</span><span id="line-88">
+</span><span id="line-89"><span class="sd">    Args:</span>
+</span><span id="line-90"><span class="sd">        music21_obj: A music21 object (Chord, Part, Stream, etc.) to be played.</span>
+</span><span id="line-91"><span class="sd">    """</span>
+</span><span id="line-92">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">music21_obj</span><span class="p">,</span> <span class="n">Score</span><span class="p">):</span>
+</span><span id="line-93">        <span class="n">s</span> <span class="o">=</span> <span class="n">music21_obj</span>
+</span><span id="line-94">    <span class="k">else</span><span class="p">:</span>
+</span><span id="line-95">        <span class="c1"># Create a Stream object</span>
+</span><span id="line-96">        <span class="n">s</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">()</span>
+</span><span id="line-97">        <span class="c1"># Add the music21 object to the Stream</span>
+</span><span id="line-98">        <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">music21_obj</span><span class="p">)</span>
 </span><span id="line-99">
-</span><span id="line-100"><span class="n">NoteString</span> <span class="o">=</span> <span class="nb">str</span>
-</span><span id="line-101"><span class="n">NoteSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">NoteString</span><span class="p">,</span> <span class="n">Note</span><span class="p">]</span>
-</span><span id="line-102"><span class="n">NotesSpec</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">NoteSpec</span><span class="p">]</span>
-</span><span id="line-103"><span class="n">TrackSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Stream</span><span class="p">,</span> <span class="n">NotesSpec</span><span class="p">]</span>
-</span><span id="line-104"><span class="n">TracksSpec</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="n">TrackSpec</span><span class="p">]</span>
-</span><span id="line-105"><span class="n">ScaleCreator</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Scale</span><span class="p">]</span>
-</span><span id="line-106"><span class="n">StreamSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Note</span><span class="p">],</span> <span class="n">Stream</span><span class="p">]</span>
-</span><span id="line-107"><span class="n">Streams</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Stream</span><span class="p">]</span>
-</span><span id="line-108">
-</span><span id="line-109"><span class="n">StrToNote</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Note</span><span class="p">]</span>
-</span><span id="line-110">
-</span><span id="line-111"><span class="n">Filepath</span> <span class="o">=</span> <span class="nb">str</span>
-</span><span id="line-112"><span class="n">ScoreSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Filepath</span><span class="p">,</span> <span class="n">Score</span><span class="p">]</span>
-</span><span id="line-113"><span class="n">PartFilter</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Part</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span>
-</span><span id="line-114"><span class="n">PartIdx</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
-</span><span id="line-115"><span class="n">PartFilterSpec</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">PartIdx</span><span class="p">,</span> <span class="n">PartFilter</span><span class="p">]]</span>
-</span><span id="line-116">
-</span><span id="line-117"><span class="c1"># Regex for note names (e.g., C, C#, Db, etc.)</span>
-</span><span id="line-118"><span class="n">note_name_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"([A-Ga-g][#b]?)"</span><span class="p">)</span>
-</span><span id="line-119">
-</span><span id="line-120">
-</span><span id="line-121"><span class="k">def</span><span class="w"> </span><span class="nf">parse_note_name</span><span class="p">(</span><span class="n">note_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="line-122">    <span class="n">match</span> <span class="o">=</span> <span class="n">note_name_pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">note_str</span><span class="p">)</span>
-</span><span id="line-123">    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
-</span><span id="line-124">        <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="line-125">    <span class="k">else</span><span class="p">:</span>
-</span><span id="line-126">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid note string: </span><span class="si">{</span><span class="n">note_str</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</span><span id="line-127">
-</span><span id="line-128">
-</span><span id="line-129"><span class="c1"># General utility to add pattern-based aliases to a dictionary</span>
-</span><span id="line-130"><span class="k">def</span><span class="w"> </span><span class="nf">add_pattern_aliases</span><span class="p">(</span><span class="n">quality_extensions</span><span class="p">):</span>
-</span><span id="line-131">    <span class="k">for</span> <span class="n">_qe</span> <span class="ow">in</span> <span class="n">quality_extensions</span><span class="p">:</span>
-</span><span id="line-132">        <span class="k">if</span> <span class="n">_qe</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"maj"</span><span class="p">):</span>
-</span><span id="line-133">            <span class="k">yield</span> <span class="n">_qe</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"maj"</span><span class="p">,</span> <span class="s2">"M"</span><span class="p">),</span> <span class="n">quality_extensions</span><span class="p">[</span><span class="n">_qe</span><span class="p">]</span>
-</span><span id="line-134">        <span class="k">elif</span> <span class="n">_qe</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"min"</span><span class="p">):</span>
-</span><span id="line-135">            <span class="k">yield</span> <span class="n">_qe</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"min"</span><span class="p">,</span> <span class="s2">"m"</span><span class="p">),</span> <span class="n">quality_extensions</span><span class="p">[</span><span class="n">_qe</span><span class="p">]</span>
-</span><span id="line-136">        <span class="k">elif</span> <span class="n">_qe</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"dim"</span><span class="p">):</span>
-</span><span id="line-137">            <span class="k">yield</span> <span class="n">_qe</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"dim"</span><span class="p">,</span> <span class="s2">"°"</span><span class="p">),</span> <span class="n">quality_extensions</span><span class="p">[</span><span class="n">_qe</span><span class="p">]</span>
+</span><span id="line-100">    <span class="c1"># Play the Stream using StreamPlayer</span>
+</span><span id="line-101">    <span class="n">sp</span> <span class="o">=</span> <span class="n">StreamPlayer</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span id="line-102">    <span class="n">sp</span><span class="o">.</span><span class="n">play</span><span class="p">()</span></div>
+
+</span><span id="line-103">
+</span><span id="line-104">
+</span><span id="line-105"><span class="n">NoteString</span> <span class="o">=</span> <span class="nb">str</span>
+</span><span id="line-106"><span class="n">NoteSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">NoteString</span><span class="p">,</span> <span class="n">Note</span><span class="p">]</span>
+</span><span id="line-107"><span class="n">NotesSpec</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">NoteSpec</span><span class="p">]</span>
+</span><span id="line-108"><span class="n">TrackSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Stream</span><span class="p">,</span> <span class="n">NotesSpec</span><span class="p">]</span>
+</span><span id="line-109"><span class="n">TracksSpec</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="n">TrackSpec</span><span class="p">]</span>
+</span><span id="line-110"><span class="n">ScaleCreator</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Scale</span><span class="p">]</span>
+</span><span id="line-111"><span class="n">StreamSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Note</span><span class="p">],</span> <span class="n">Stream</span><span class="p">]</span>
+</span><span id="line-112"><span class="n">Streams</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Stream</span><span class="p">]</span>
+</span><span id="line-113">
+</span><span id="line-114"><span class="n">StrToNote</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Note</span><span class="p">]</span>
+</span><span id="line-115">
+</span><span id="line-116"><span class="n">Filepath</span> <span class="o">=</span> <span class="nb">str</span>
+</span><span id="line-117"><span class="n">ScoreSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Filepath</span><span class="p">,</span> <span class="n">Score</span><span class="p">]</span>
+</span><span id="line-118"><span class="n">PartFilter</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Part</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span>
+</span><span id="line-119"><span class="n">PartIdx</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+</span><span id="line-120"><span class="n">PartFilterSpec</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">PartIdx</span><span class="p">,</span> <span class="n">PartFilter</span><span class="p">]]</span>
+</span><span id="line-121">
+</span><span id="line-122"><span class="c1"># Regex for note names (e.g., C, C#, Db, etc.)</span>
+</span><span id="line-123"><span class="n">note_name_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"([A-Ga-g][#b]?)"</span><span class="p">)</span>
+</span><span id="line-124">
+</span><span id="line-125">
+<div class="viewcode-block" id="parse_note_name">
+<a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.parse_note_name">[docs]</a>
+</span><span id="line-126"><span class="k">def</span><span class="w"> </span><span class="nf">parse_note_name</span><span class="p">(</span><span class="n">note_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="line-127"><span class="w">    </span><span class="sd">"""The note-name part of ``note_str`` (``ValueError`` if it does not parse)."""</span>
+</span><span id="line-128">    <span class="n">match</span> <span class="o">=</span> <span class="n">note_name_pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">note_str</span><span class="p">)</span>
+</span><span id="line-129">    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+</span><span id="line-130">        <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="line-131">    <span class="k">else</span><span class="p">:</span>
+</span><span id="line-132">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid note string: </span><span class="si">{</span><span class="n">note_str</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
+
+</span><span id="line-133">
+</span><span id="line-134">
+</span><span id="line-135"><span class="c1"># General utility to add pattern-based aliases to a dictionary</span>
+<div class="viewcode-block" id="add_pattern_aliases">
+<a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.add_pattern_aliases">[docs]</a>
+</span><span id="line-136"><span class="k">def</span><span class="w"> </span><span class="nf">add_pattern_aliases</span><span class="p">(</span><span class="n">quality_extensions</span><span class="p">):</span>
+</span><span id="line-137"><span class="w">    </span><span class="sd">"""Yield ``(alias, value)`` pairs for ``maj``/``min``/``dim`` keys, using ``M``/``m``/``°``.</span>
 </span><span id="line-138">
-</span><span id="line-139">
+</span><span id="line-139"><span class="sd">    &gt;&gt;&gt; dict(add_pattern_aliases({"maj7": 1, "min": 2, "dim": 3, "sus": 4}))</span>
+</span><span id="line-140"><span class="sd">    {'M7': 1, 'm': 2, '°': 3}</span>
+</span><span id="line-141"><span class="sd">    """</span>
+</span><span id="line-142">    <span class="k">for</span> <span class="n">_qe</span> <span class="ow">in</span> <span class="n">quality_extensions</span><span class="p">:</span>
+</span><span id="line-143">        <span class="k">if</span> <span class="n">_qe</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"maj"</span><span class="p">):</span>
+</span><span id="line-144">            <span class="k">yield</span> <span class="n">_qe</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"maj"</span><span class="p">,</span> <span class="s2">"M"</span><span class="p">),</span> <span class="n">quality_extensions</span><span class="p">[</span><span class="n">_qe</span><span class="p">]</span>
+</span><span id="line-145">        <span class="k">elif</span> <span class="n">_qe</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"min"</span><span class="p">):</span>
+</span><span id="line-146">            <span class="k">yield</span> <span class="n">_qe</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"min"</span><span class="p">,</span> <span class="s2">"m"</span><span class="p">),</span> <span class="n">quality_extensions</span><span class="p">[</span><span class="n">_qe</span><span class="p">]</span>
+</span><span id="line-147">        <span class="k">elif</span> <span class="n">_qe</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"dim"</span><span class="p">):</span>
+</span><span id="line-148">            <span class="k">yield</span> <span class="n">_qe</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"dim"</span><span class="p">,</span> <span class="s2">"°"</span><span class="p">),</span> <span class="n">quality_extensions</span><span class="p">[</span><span class="n">_qe</span><span class="p">]</span></div>
+
+</span><span id="line-149">
+</span><span id="line-150">
 <div class="viewcode-block" id="string_to_note">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.string_to_note">[docs]</a>
-</span><span id="line-140"><span class="k">def</span><span class="w"> </span><span class="nf">string_to_note</span><span class="p">(</span>
-</span><span id="line-141">    <span class="n">note_or_notes</span><span class="p">:</span> <span class="n">NoteString</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">NoteString</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="line-142">    <span class="n">egress</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="nb">list</span><span class="p">,</span>
-</span><span id="line-143">    <span class="o">**</span><span class="n">note_kwargs</span><span class="p">,</span>
-</span><span id="line-144"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Note</span><span class="p">:</span>
-</span><span id="line-145"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-146"><span class="sd">    Converts a string representation of a note to a music21 Note object.</span>
-</span><span id="line-147">
-</span><span id="line-148"><span class="sd">    Args:</span>
-</span><span id="line-149"><span class="sd">        note_or_notes (str or iterable of str): String representation of the note(s).</span>
-</span><span id="line-150">
-</span><span id="line-151"><span class="sd">    Returns:</span>
-</span><span id="line-152"><span class="sd">        Note: The music21 Note object.</span>
-</span><span id="line-153">
-</span><span id="line-154"><span class="sd">    Examples:</span>
-</span><span id="line-155"><span class="sd">        &gt;&gt;&gt; string_to_note('C4')</span>
-</span><span id="line-156"><span class="sd">        &lt;music21.note.Note C&gt;</span>
-</span><span id="line-157">
-</span><span id="line-158"><span class="sd">        If you don't specify a string (only keyword arguments), you get a partial</span>
-</span><span id="line-159"><span class="sd">        function. This is especially useful when you want to convert multiple strings.</span>
-</span><span id="line-160"><span class="sd">        Note also, in the example below, that the function is applied to a list of</span>
-</span><span id="line-161"><span class="sd">        strings.</span>
-</span><span id="line-162">
-</span><span id="line-163"><span class="sd">        &gt;&gt;&gt; my_str_to_note = string_to_note(quarterLength=2, microtone=50)</span>
-</span><span id="line-164"><span class="sd">        &gt;&gt;&gt; notes = list(my_str_to_note(['C4', 'D4', 'E4']))</span>
-</span><span id="line-165"><span class="sd">        &gt;&gt;&gt; note = notes[-1]</span>
-</span><span id="line-166"><span class="sd">        &gt;&gt;&gt; print(f"{note.nameWithOctave=}, {note.duration.type=}, {note.pitch.microtone=}")</span>
-</span><span id="line-167"><span class="sd">        note.nameWithOctave='E4', note.duration.type='half', note.pitch.microtone=&lt;music21.pitch.Microtone (+50c)&gt;</span>
+</span><span id="line-151"><span class="k">def</span><span class="w"> </span><span class="nf">string_to_note</span><span class="p">(</span>
+</span><span id="line-152">    <span class="n">note_or_notes</span><span class="p">:</span> <span class="n">NoteString</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">NoteString</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="line-153">    <span class="n">egress</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="nb">list</span><span class="p">,</span>
+</span><span id="line-154">    <span class="o">**</span><span class="n">note_kwargs</span><span class="p">,</span>
+</span><span id="line-155"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Note</span><span class="p">:</span>
+</span><span id="line-156"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-157"><span class="sd">    Converts a string representation of a note to a music21 Note object.</span>
+</span><span id="line-158">
+</span><span id="line-159"><span class="sd">    Args:</span>
+</span><span id="line-160"><span class="sd">        note_or_notes (str or iterable of str): String representation of the note(s).</span>
+</span><span id="line-161">
+</span><span id="line-162"><span class="sd">    Returns:</span>
+</span><span id="line-163"><span class="sd">        Note: The music21 Note object.</span>
+</span><span id="line-164">
+</span><span id="line-165"><span class="sd">    Examples:</span>
+</span><span id="line-166"><span class="sd">        &gt;&gt;&gt; string_to_note('C4')</span>
+</span><span id="line-167"><span class="sd">        &lt;music21.note.Note C&gt;</span>
 </span><span id="line-168">
-</span><span id="line-169"><span class="sd">    """</span>
-</span><span id="line-170">    <span class="k">if</span> <span class="n">note_or_notes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-171">        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">string_to_note</span><span class="p">,</span> <span class="o">**</span><span class="n">note_kwargs</span><span class="p">,</span> <span class="n">egress</span><span class="o">=</span><span class="n">egress</span><span class="p">)</span>
-</span><span id="line-172">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">note_or_notes</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-173">        <span class="k">return</span> <span class="n">Note</span><span class="p">(</span><span class="n">note_or_notes</span><span class="p">,</span> <span class="o">**</span><span class="n">note_kwargs</span><span class="p">)</span>
-</span><span id="line-174">    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">note_or_notes</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
-</span><span id="line-175">        <span class="k">return</span> <span class="n">egress</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">string_to_note</span><span class="p">,</span> <span class="o">**</span><span class="n">note_kwargs</span><span class="p">),</span> <span class="n">note_or_notes</span><span class="p">))</span></div>
+</span><span id="line-169"><span class="sd">        If you don't specify a string (only keyword arguments), you get a partial</span>
+</span><span id="line-170"><span class="sd">        function. This is especially useful when you want to convert multiple strings.</span>
+</span><span id="line-171"><span class="sd">        Note also, in the example below, that the function is applied to a list of</span>
+</span><span id="line-172"><span class="sd">        strings.</span>
+</span><span id="line-173">
+</span><span id="line-174"><span class="sd">        &gt;&gt;&gt; my_str_to_note = string_to_note(quarterLength=2, microtone=50)</span>
+</span><span id="line-175"><span class="sd">        &gt;&gt;&gt; notes = list(my_str_to_note(['C4', 'D4', 'E4']))</span>
+</span><span id="line-176"><span class="sd">        &gt;&gt;&gt; note = notes[-1]</span>
+</span><span id="line-177"><span class="sd">        &gt;&gt;&gt; print(f"{note.nameWithOctave=}, {note.duration.type=}, {note.pitch.microtone=}")</span>
+</span><span id="line-178"><span class="sd">        note.nameWithOctave='E4', note.duration.type='half', note.pitch.microtone=&lt;music21.pitch.Microtone (+50c)&gt;</span>
+</span><span id="line-179">
+</span><span id="line-180"><span class="sd">    """</span>
+</span><span id="line-181">    <span class="k">if</span> <span class="n">note_or_notes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-182">        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">string_to_note</span><span class="p">,</span> <span class="o">**</span><span class="n">note_kwargs</span><span class="p">,</span> <span class="n">egress</span><span class="o">=</span><span class="n">egress</span><span class="p">)</span>
+</span><span id="line-183">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">note_or_notes</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-184">        <span class="k">return</span> <span class="n">Note</span><span class="p">(</span><span class="n">note_or_notes</span><span class="p">,</span> <span class="o">**</span><span class="n">note_kwargs</span><span class="p">)</span>
+</span><span id="line-185">    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">note_or_notes</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+</span><span id="line-186">        <span class="k">return</span> <span class="n">egress</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">string_to_note</span><span class="p">,</span> <span class="o">**</span><span class="n">note_kwargs</span><span class="p">),</span> <span class="n">note_or_notes</span><span class="p">))</span></div>
 
-</span><span id="line-176">
-</span><span id="line-177">
+</span><span id="line-187">
+</span><span id="line-188">
 <div class="viewcode-block" id="is_existing_filepath">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.is_existing_filepath">[docs]</a>
-</span><span id="line-178"><span class="k">def</span><span class="w"> </span><span class="nf">is_existing_filepath</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="line-179"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-180"><span class="sd">    Returns True if the input object is a string representing an existing file path.</span>
-</span><span id="line-181"><span class="sd">    """</span>
-</span><span id="line-182">    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+</span><span id="line-189"><span class="k">def</span><span class="w"> </span><span class="nf">is_existing_filepath</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="line-190"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-191"><span class="sd">    Returns True if the input object is a string representing an existing file path.</span>
+</span><span id="line-192"><span class="sd">    """</span>
+</span><span id="line-193">    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
 
-</span><span id="line-183">
-</span><span id="line-184">
+</span><span id="line-194">
+</span><span id="line-195">
 <div class="viewcode-block" id="mk_score">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.mk_score">[docs]</a>
-</span><span id="line-185"><span class="k">def</span><span class="w"> </span><span class="nf">mk_score</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">ScoreSpec</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-</span><span id="line-186"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-187"><span class="sd">    Creates a music21 Score object from the input object.</span>
-</span><span id="line-188">
-</span><span id="line-189"><span class="sd">    Args:</span>
-</span><span id="line-190"><span class="sd">        obj (ScoreSpec): The input object.</span>
-</span><span id="line-191"><span class="sd">        **kwargs: Additional keyword arguments to pass to the Score constructor.</span>
-</span><span id="line-192">
-</span><span id="line-193"><span class="sd">    Returns:</span>
-</span><span id="line-194"><span class="sd">        Score: The corresponding Score object.</span>
-</span><span id="line-195">
-</span><span id="line-196"><span class="sd">    &gt;&gt;&gt; score = mk_score([['C4 B4'], ['E4'], ['G4']])</span>
-</span><span id="line-197"><span class="sd">    &gt;&gt;&gt; score.show('text')  # doctest: +ELLIPSIS</span>
-</span><span id="line-198"><span class="sd">    {0.0} &lt;music21.stream.Part 0x...&gt;</span>
-</span><span id="line-199"><span class="sd">        {0.0} &lt;music21.note.Note C&gt;</span>
-</span><span id="line-200"><span class="sd">        {1.0} &lt;music21.note.Note B&gt;</span>
-</span><span id="line-201"><span class="sd">    {2.0} &lt;music21.stream.Part 0x...&gt;</span>
-</span><span id="line-202"><span class="sd">        {0.0} &lt;music21.note.Note E&gt;</span>
-</span><span id="line-203"><span class="sd">    {3.0} &lt;music21.stream.Part 0x...&gt;</span>
-</span><span id="line-204"><span class="sd">        {0.0} &lt;music21.note.Note G&gt;</span>
-</span><span id="line-205"><span class="sd">    """</span>
-</span><span id="line-206">    <span class="k">if</span> <span class="n">is_existing_filepath</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-</span><span id="line-207">        <span class="k">return</span> <span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-</span><span id="line-208">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">obj</span><span class="p">:</span>
-</span><span id="line-209">        <span class="c1"># assume we have a list of lists, i.e. we have multiple parts</span>
-</span><span id="line-210">        <span class="n">parts</span> <span class="o">=</span> <span class="n">obj</span>
-</span><span id="line-211">        <span class="n">score</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span id="line-212">        <span class="k">if</span> <span class="ow">not</span> <span class="n">parts</span><span class="p">:</span>  <span class="c1"># empty list</span>
-</span><span id="line-213">            <span class="k">return</span> <span class="n">score</span>
-</span><span id="line-214">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
-</span><span id="line-215">            <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">parts</span><span class="p">]</span>
-</span><span id="line-216">        <span class="k">for</span> <span class="n">stream_spec</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
-</span><span id="line-217">            <span class="n">part</span> <span class="o">=</span> <span class="n">Part</span><span class="p">()</span>
-</span><span id="line-218">            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stream_spec</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-</span><span id="line-219">                <span class="k">for</span> <span class="n">note_spec</span> <span class="ow">in</span> <span class="n">stream_spec</span><span class="p">:</span>
-</span><span id="line-220">                    <span class="k">for</span> <span class="n">note_name</span> <span class="ow">in</span> <span class="n">note_spec</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
-</span><span id="line-221">                        <span class="n">note</span> <span class="o">=</span> <span class="n">Note</span><span class="p">(</span><span class="n">note_name</span><span class="p">)</span>
-</span><span id="line-222">                        <span class="n">part</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
-</span><span id="line-223">            <span class="k">else</span><span class="p">:</span>
-</span><span id="line-224">                <span class="n">stream</span> <span class="o">=</span> <span class="n">mk_stream</span><span class="p">(</span><span class="n">stream_spec</span><span class="p">)</span>
-</span><span id="line-225">                <span class="n">part</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
-</span><span id="line-226">            <span class="n">score</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
-</span><span id="line-227">        <span class="k">return</span> <span class="n">score</span>
-</span><span id="line-228">    <span class="k">else</span><span class="p">:</span>
-</span><span id="line-229">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cannot create a Score from </span><span class="si">{</span><span class="n">obj</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span></div>
+</span><span id="line-196"><span class="k">def</span><span class="w"> </span><span class="nf">mk_score</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">ScoreSpec</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
+</span><span id="line-197"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-198"><span class="sd">    Creates a music21 Score object from the input object.</span>
+</span><span id="line-199">
+</span><span id="line-200"><span class="sd">    Args:</span>
+</span><span id="line-201"><span class="sd">        obj (ScoreSpec): The input object.</span>
+</span><span id="line-202"><span class="sd">        **kwargs: Additional keyword arguments to pass to the Score constructor.</span>
+</span><span id="line-203">
+</span><span id="line-204"><span class="sd">    Returns:</span>
+</span><span id="line-205"><span class="sd">        Score: The corresponding Score object.</span>
+</span><span id="line-206">
+</span><span id="line-207"><span class="sd">    &gt;&gt;&gt; score = mk_score([['C4 B4'], ['E4'], ['G4']])</span>
+</span><span id="line-208"><span class="sd">    &gt;&gt;&gt; score.show('text')  # doctest: +ELLIPSIS</span>
+</span><span id="line-209"><span class="sd">    {0.0} &lt;music21.stream.Part 0x...&gt;</span>
+</span><span id="line-210"><span class="sd">        {0.0} &lt;music21.note.Note C&gt;</span>
+</span><span id="line-211"><span class="sd">        {1.0} &lt;music21.note.Note B&gt;</span>
+</span><span id="line-212"><span class="sd">    {2.0} &lt;music21.stream.Part 0x...&gt;</span>
+</span><span id="line-213"><span class="sd">        {0.0} &lt;music21.note.Note E&gt;</span>
+</span><span id="line-214"><span class="sd">    {3.0} &lt;music21.stream.Part 0x...&gt;</span>
+</span><span id="line-215"><span class="sd">        {0.0} &lt;music21.note.Note G&gt;</span>
+</span><span id="line-216"><span class="sd">    """</span>
+</span><span id="line-217">    <span class="k">if</span> <span class="n">is_existing_filepath</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+</span><span id="line-218">        <span class="k">return</span> <span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</span><span id="line-219">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">obj</span><span class="p">:</span>
+</span><span id="line-220">        <span class="c1"># assume we have a list of lists, i.e. we have multiple parts</span>
+</span><span id="line-221">        <span class="n">parts</span> <span class="o">=</span> <span class="n">obj</span>
+</span><span id="line-222">        <span class="n">score</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="line-223">        <span class="k">if</span> <span class="ow">not</span> <span class="n">parts</span><span class="p">:</span>  <span class="c1"># empty list</span>
+</span><span id="line-224">            <span class="k">return</span> <span class="n">score</span>
+</span><span id="line-225">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+</span><span id="line-226">            <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">parts</span><span class="p">]</span>
+</span><span id="line-227">        <span class="k">for</span> <span class="n">stream_spec</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+</span><span id="line-228">            <span class="n">part</span> <span class="o">=</span> <span class="n">Part</span><span class="p">()</span>
+</span><span id="line-229">            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stream_spec</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+</span><span id="line-230">                <span class="k">for</span> <span class="n">note_spec</span> <span class="ow">in</span> <span class="n">stream_spec</span><span class="p">:</span>
+</span><span id="line-231">                    <span class="k">for</span> <span class="n">note_name</span> <span class="ow">in</span> <span class="n">note_spec</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+</span><span id="line-232">                        <span class="n">note</span> <span class="o">=</span> <span class="n">Note</span><span class="p">(</span><span class="n">note_name</span><span class="p">)</span>
+</span><span id="line-233">                        <span class="n">part</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+</span><span id="line-234">            <span class="k">else</span><span class="p">:</span>
+</span><span id="line-235">                <span class="n">stream</span> <span class="o">=</span> <span class="n">mk_stream</span><span class="p">(</span><span class="n">stream_spec</span><span class="p">)</span>
+</span><span id="line-236">                <span class="n">part</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+</span><span id="line-237">            <span class="n">score</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+</span><span id="line-238">        <span class="k">return</span> <span class="n">score</span>
+</span><span id="line-239">    <span class="k">else</span><span class="p">:</span>
+</span><span id="line-240">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cannot create a Score from </span><span class="si">{</span><span class="n">obj</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span></div>
 
-</span><span id="line-230">
-</span><span id="line-231">
+</span><span id="line-241">
+</span><span id="line-242">
 <div class="viewcode-block" id="mk_stream">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.mk_stream">[docs]</a>
-</span><span id="line-232"><span class="k">def</span><span class="w"> </span><span class="nf">mk_stream</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">StreamSpec</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Stream</span><span class="p">:</span>
-</span><span id="line-233"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-234"><span class="sd">    Creates a music21 Stream object from the input object.</span>
-</span><span id="line-235">
-</span><span id="line-236"><span class="sd">    Args:</span>
-</span><span id="line-237"><span class="sd">        obj (StreamSpec): The input object.</span>
-</span><span id="line-238"><span class="sd">        **kwargs: Additional keyword arguments to pass to the Stream constructor.</span>
-</span><span id="line-239">
-</span><span id="line-240"><span class="sd">    Returns:</span>
-</span><span id="line-241"><span class="sd">        Stream: The corresponding Stream object.</span>
-</span><span id="line-242">
-</span><span id="line-243"><span class="sd">    &gt;&gt;&gt; stream = mk_stream('C4 E4 G4')</span>
-</span><span id="line-244"><span class="sd">    &gt;&gt;&gt; note_names(stream)</span>
-</span><span id="line-245"><span class="sd">    ['C4', 'E4', 'G4']</span>
-</span><span id="line-246"><span class="sd">    """</span>
-</span><span id="line-247">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-248">        <span class="c1"># if the list has a single string, assume it's a list of note names</span>
-</span><span id="line-249">        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># get the single string of the list (process it in the next step)</span>
-</span><span id="line-250">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-251">        <span class="c1"># first argument is a string, split into list of note names</span>
-</span><span id="line-252">        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-</span><span id="line-253">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">obj</span><span class="p">:</span>
-</span><span id="line-254">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-255">            <span class="c1"># first argument is a list of note names, convert to list of Note objs</span>
-</span><span id="line-256">            <span class="n">list_of_note_names</span> <span class="o">=</span> <span class="n">obj</span>
-</span><span id="line-257">            <span class="n">list_of_note_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">Note</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">list_of_note_names</span><span class="p">]</span>
-</span><span id="line-258">            <span class="n">obj</span> <span class="o">=</span> <span class="n">list_of_note_objs</span>
-</span><span id="line-259">
-</span><span id="line-260">    <span class="k">return</span> <span class="n">Stream</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</span><span id="line-243"><span class="k">def</span><span class="w"> </span><span class="nf">mk_stream</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">StreamSpec</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Stream</span><span class="p">:</span>
+</span><span id="line-244"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-245"><span class="sd">    Creates a music21 Stream object from the input object.</span>
+</span><span id="line-246">
+</span><span id="line-247"><span class="sd">    Args:</span>
+</span><span id="line-248"><span class="sd">        obj (StreamSpec): The input object.</span>
+</span><span id="line-249"><span class="sd">        **kwargs: Additional keyword arguments to pass to the Stream constructor.</span>
+</span><span id="line-250">
+</span><span id="line-251"><span class="sd">    Returns:</span>
+</span><span id="line-252"><span class="sd">        Stream: The corresponding Stream object.</span>
+</span><span id="line-253">
+</span><span id="line-254"><span class="sd">    &gt;&gt;&gt; stream = mk_stream('C4 E4 G4')</span>
+</span><span id="line-255"><span class="sd">    &gt;&gt;&gt; note_names(stream)</span>
+</span><span id="line-256"><span class="sd">    ['C4', 'E4', 'G4']</span>
+</span><span id="line-257"><span class="sd">    """</span>
+</span><span id="line-258">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-259">        <span class="c1"># if the list has a single string, assume it's a list of note names</span>
+</span><span id="line-260">        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># get the single string of the list (process it in the next step)</span>
+</span><span id="line-261">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-262">        <span class="c1"># first argument is a string, split into list of note names</span>
+</span><span id="line-263">        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</span><span id="line-264">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">obj</span><span class="p">:</span>
+</span><span id="line-265">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-266">            <span class="c1"># first argument is a list of note names, convert to list of Note objs</span>
+</span><span id="line-267">            <span class="n">list_of_note_names</span> <span class="o">=</span> <span class="n">obj</span>
+</span><span id="line-268">            <span class="n">list_of_note_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">Note</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">list_of_note_names</span><span class="p">]</span>
+</span><span id="line-269">            <span class="n">obj</span> <span class="o">=</span> <span class="n">list_of_note_objs</span>
+</span><span id="line-270">
+</span><span id="line-271">    <span class="k">return</span> <span class="n">Stream</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-</span><span id="line-261">
-</span><span id="line-262">
+</span><span id="line-272">
+</span><span id="line-273">
 <div class="viewcode-block" id="ensure_scale">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.ensure_scale">[docs]</a>
-</span><span id="line-263"><span class="k">def</span><span class="w"> </span><span class="nf">ensure_scale</span><span class="p">(</span>
-</span><span id="line-264">    <span class="n">input_scale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Scale</span><span class="p">,</span> <span class="n">scale_creator</span><span class="p">:</span> <span class="n">ScaleCreator</span> <span class="o">=</span> <span class="n">MajorScale</span>
-</span><span id="line-265"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Scale</span><span class="p">:</span>
-</span><span id="line-266"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-267"><span class="sd">    Ensures the input is a Scale object. Converts a string to a Scale using the provided scale creator.</span>
-</span><span id="line-268">
-</span><span id="line-269"><span class="sd">    Args:</span>
-</span><span id="line-270"><span class="sd">        input_scale (Union[str, Scale]): The input scale.</span>
-</span><span id="line-271"><span class="sd">        scale_creator (Callable[[str], Scale]): A function to create a Scale from a string.</span>
-</span><span id="line-272">
-</span><span id="line-273"><span class="sd">    Returns:</span>
-</span><span id="line-274"><span class="sd">        Scale: The corresponding Scale object.</span>
-</span><span id="line-275">
-</span><span id="line-276"><span class="sd">    Raises:</span>
-</span><span id="line-277"><span class="sd">        AssertionError: If the input cannot be converted to a Scale.</span>
-</span><span id="line-278"><span class="sd">    """</span>
-</span><span id="line-279">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_scale</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-280">        <span class="n">input_scale</span> <span class="o">=</span> <span class="n">scale_creator</span><span class="p">(</span><span class="n">input_scale</span><span class="p">)</span>
-</span><span id="line-281">    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_scale</span><span class="p">,</span> <span class="n">Scale</span><span class="p">),</span> <span class="p">(</span>
-</span><span id="line-282">        <span class="sa">f</span><span class="s2">"The input scale must be a music21.scale.Scale object: </span><span class="si">{</span><span class="n">input_scale</span><span class="si">=}</span><span class="s2">"</span>
-</span><span id="line-283">    <span class="p">)</span>
-</span><span id="line-284">    <span class="k">return</span> <span class="n">input_scale</span></div>
-
-</span><span id="line-285">
+</span><span id="line-274"><span class="k">def</span><span class="w"> </span><span class="nf">ensure_scale</span><span class="p">(</span>
+</span><span id="line-275">    <span class="n">input_scale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Scale</span><span class="p">,</span> <span class="n">scale_creator</span><span class="p">:</span> <span class="n">ScaleCreator</span> <span class="o">=</span> <span class="n">MajorScale</span>
+</span><span id="line-276"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Scale</span><span class="p">:</span>
+</span><span id="line-277"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-278"><span class="sd">    Ensures the input is a Scale object. Converts a string to a Scale using the provided scale creator.</span>
+</span><span id="line-279">
+</span><span id="line-280"><span class="sd">    Args:</span>
+</span><span id="line-281"><span class="sd">        input_scale (Union[str, Scale]): The input scale.</span>
+</span><span id="line-282"><span class="sd">        scale_creator (Callable[[str], Scale]): A function to create a Scale from a string.</span>
+</span><span id="line-283">
+</span><span id="line-284"><span class="sd">    Returns:</span>
+</span><span id="line-285"><span class="sd">        Scale: The corresponding Scale object.</span>
 </span><span id="line-286">
+</span><span id="line-287"><span class="sd">    Raises:</span>
+</span><span id="line-288"><span class="sd">        AssertionError: If the input cannot be converted to a Scale.</span>
+</span><span id="line-289"><span class="sd">    """</span>
+</span><span id="line-290">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_scale</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-291">        <span class="n">input_scale</span> <span class="o">=</span> <span class="n">scale_creator</span><span class="p">(</span><span class="n">input_scale</span><span class="p">)</span>
+</span><span id="line-292">    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_scale</span><span class="p">,</span> <span class="n">Scale</span><span class="p">),</span> <span class="p">(</span>
+</span><span id="line-293">        <span class="sa">f</span><span class="s2">"The input scale must be a music21.scale.Scale object: </span><span class="si">{</span><span class="n">input_scale</span><span class="si">=}</span><span class="s2">"</span>
+</span><span id="line-294">    <span class="p">)</span>
+</span><span id="line-295">    <span class="k">return</span> <span class="n">input_scale</span></div>
+
+</span><span id="line-296">
+</span><span id="line-297">
 <div class="viewcode-block" id="get_scale_notes">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.get_scale_notes">[docs]</a>
-</span><span id="line-287"><span class="k">def</span><span class="w"> </span><span class="nf">get_scale_notes</span><span class="p">(</span><span class="n">input_note</span><span class="p">:</span> <span class="n">Note</span><span class="p">,</span> <span class="n">input_scale</span><span class="p">:</span> <span class="n">Scale</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-288"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-289"><span class="sd">    Returns the names of the pitches in the scale within one octave around the input note.</span>
-</span><span id="line-290">
-</span><span id="line-291"><span class="sd">    Args:</span>
-</span><span id="line-292"><span class="sd">        input_note (Note): The input note.</span>
-</span><span id="line-293"><span class="sd">        input_scale (Scale): The scale in which to find the pitches.</span>
-</span><span id="line-294">
-</span><span id="line-295"><span class="sd">    Returns:</span>
-</span><span id="line-296"><span class="sd">        List[str]: A list of pitch names within the scale.</span>
-</span><span id="line-297"><span class="sd">    """</span>
-</span><span id="line-298">    <span class="n">scale_notes</span> <span class="o">=</span> <span class="n">input_scale</span><span class="o">.</span><span class="n">getPitches</span><span class="p">(</span>
-</span><span id="line-299">        <span class="n">input_note</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">48</span><span class="p">),</span> <span class="n">input_note</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">48</span><span class="p">)</span>
-</span><span id="line-300">    <span class="p">)</span>
-</span><span id="line-301">    <span class="k">return</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">nameWithOctave</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">scale_notes</span><span class="p">]</span></div>
+</span><span id="line-298"><span class="k">def</span><span class="w"> </span><span class="nf">get_scale_notes</span><span class="p">(</span><span class="n">input_note</span><span class="p">:</span> <span class="n">Note</span><span class="p">,</span> <span class="n">input_scale</span><span class="p">:</span> <span class="n">Scale</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-299"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-300"><span class="sd">    Returns the names of the pitches in the scale within one octave around the input note.</span>
+</span><span id="line-301">
+</span><span id="line-302"><span class="sd">    Args:</span>
+</span><span id="line-303"><span class="sd">        input_note (Note): The input note.</span>
+</span><span id="line-304"><span class="sd">        input_scale (Scale): The scale in which to find the pitches.</span>
+</span><span id="line-305">
+</span><span id="line-306"><span class="sd">    Returns:</span>
+</span><span id="line-307"><span class="sd">        List[str]: A list of pitch names within the scale.</span>
+</span><span id="line-308"><span class="sd">    """</span>
+</span><span id="line-309">    <span class="n">scale_notes</span> <span class="o">=</span> <span class="n">input_scale</span><span class="o">.</span><span class="n">getPitches</span><span class="p">(</span>
+</span><span id="line-310">        <span class="n">input_note</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">48</span><span class="p">),</span> <span class="n">input_note</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">48</span><span class="p">)</span>
+</span><span id="line-311">    <span class="p">)</span>
+</span><span id="line-312">    <span class="k">return</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">nameWithOctave</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">scale_notes</span><span class="p">]</span></div>
 
-</span><span id="line-302">
-</span><span id="line-303">
+</span><span id="line-313">
+</span><span id="line-314">
 <div class="viewcode-block" id="ensure_iterable_of_notes">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.ensure_iterable_of_notes">[docs]</a>
-</span><span id="line-304"><span class="k">def</span><span class="w"> </span><span class="nf">ensure_iterable_of_notes</span><span class="p">(</span>
-</span><span id="line-305">    <span class="n">notes</span><span class="p">:</span> <span class="n">TrackSpec</span><span class="p">,</span> <span class="n">str_to_note</span><span class="p">:</span> <span class="n">StrToNote</span> <span class="o">=</span> <span class="n">Note</span>
-</span><span id="line-306"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Note</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-</span><span id="line-307"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-308"><span class="sd">    Ensures the input is an iterable of Note objects.</span>
-</span><span id="line-309">
-</span><span id="line-310"><span class="sd">    Args:</span>
-</span><span id="line-311"><span class="sd">        notes (TrackSpec): The input notes.</span>
-</span><span id="line-312">
-</span><span id="line-313"><span class="sd">    Returns:</span>
-</span><span id="line-314"><span class="sd">        Generator[Note, None, None]: A generator of Note objects.</span>
-</span><span id="line-315">
-</span><span id="line-316"><span class="sd">    Examples:</span>
-</span><span id="line-317">
-</span><span id="line-318"><span class="sd">    &gt;&gt;&gt; list(ensure_iterable_of_notes(['C4', 'E4', 'G4']))</span>
-</span><span id="line-319"><span class="sd">    [&lt;music21.note.Note C&gt;, &lt;music21.note.Note E&gt;, &lt;music21.note.Note G&gt;]</span>
-</span><span id="line-320"><span class="sd">    &gt;&gt;&gt; s = Stream([Note('C4'), Note('E4'), Note('G4')])</span>
-</span><span id="line-321"><span class="sd">    &gt;&gt;&gt; list(ensure_iterable_of_notes(s))</span>
-</span><span id="line-322"><span class="sd">    [&lt;music21.note.Note C&gt;, &lt;music21.note.Note E&gt;, &lt;music21.note.Note G&gt;]</span>
+</span><span id="line-315"><span class="k">def</span><span class="w"> </span><span class="nf">ensure_iterable_of_notes</span><span class="p">(</span>
+</span><span id="line-316">    <span class="n">notes</span><span class="p">:</span> <span class="n">TrackSpec</span><span class="p">,</span> <span class="n">str_to_note</span><span class="p">:</span> <span class="n">StrToNote</span> <span class="o">=</span> <span class="n">Note</span>
+</span><span id="line-317"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Note</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+</span><span id="line-318"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-319"><span class="sd">    Ensures the input is an iterable of Note objects.</span>
+</span><span id="line-320">
+</span><span id="line-321"><span class="sd">    Args:</span>
+</span><span id="line-322"><span class="sd">        notes (TrackSpec): The input notes.</span>
 </span><span id="line-323">
-</span><span id="line-324"><span class="sd">    """</span>
-</span><span id="line-325">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">Stream</span><span class="p">):</span>
-</span><span id="line-326">        <span class="k">return</span> <span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">notes</span><span class="o">.</span><span class="n">notes</span><span class="p">)</span>
-</span><span id="line-327">
-</span><span id="line-328">    <span class="k">def</span><span class="w"> </span><span class="nf">_notes</span><span class="p">():</span>
-</span><span id="line-329">        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
-</span><span id="line-330">            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-331">                <span class="n">n</span> <span class="o">=</span> <span class="n">str_to_note</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-</span><span id="line-332">            <span class="k">yield</span> <span class="n">n</span>
-</span><span id="line-333">
-</span><span id="line-334">    <span class="k">return</span> <span class="n">_notes</span><span class="p">()</span></div>
+</span><span id="line-324"><span class="sd">    Returns:</span>
+</span><span id="line-325"><span class="sd">        Generator[Note, None, None]: A generator of Note objects.</span>
+</span><span id="line-326">
+</span><span id="line-327"><span class="sd">    Examples:</span>
+</span><span id="line-328">
+</span><span id="line-329"><span class="sd">    &gt;&gt;&gt; list(ensure_iterable_of_notes(['C4', 'E4', 'G4']))</span>
+</span><span id="line-330"><span class="sd">    [&lt;music21.note.Note C&gt;, &lt;music21.note.Note E&gt;, &lt;music21.note.Note G&gt;]</span>
+</span><span id="line-331"><span class="sd">    &gt;&gt;&gt; s = Stream([Note('C4'), Note('E4'), Note('G4')])</span>
+</span><span id="line-332"><span class="sd">    &gt;&gt;&gt; list(ensure_iterable_of_notes(s))</span>
+</span><span id="line-333"><span class="sd">    [&lt;music21.note.Note C&gt;, &lt;music21.note.Note E&gt;, &lt;music21.note.Note G&gt;]</span>
+</span><span id="line-334">
+</span><span id="line-335"><span class="sd">    """</span>
+</span><span id="line-336">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">Stream</span><span class="p">):</span>
+</span><span id="line-337">        <span class="k">return</span> <span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">notes</span><span class="o">.</span><span class="n">notes</span><span class="p">)</span>
+</span><span id="line-338">
+</span><span id="line-339">    <span class="k">def</span><span class="w"> </span><span class="nf">_notes</span><span class="p">():</span>
+</span><span id="line-340">        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
+</span><span id="line-341">            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-342">                <span class="n">n</span> <span class="o">=</span> <span class="n">str_to_note</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</span><span id="line-343">            <span class="k">yield</span> <span class="n">n</span>
+</span><span id="line-344">
+</span><span id="line-345">    <span class="k">return</span> <span class="n">_notes</span><span class="p">()</span></div>
 
-</span><span id="line-335">
-</span><span id="line-336">
+</span><span id="line-346">
+</span><span id="line-347">
 <div class="viewcode-block" id="note_names">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.note_names">[docs]</a>
-</span><span id="line-337"><span class="k">def</span><span class="w"> </span><span class="nf">note_names</span><span class="p">(</span><span class="n">notes</span><span class="p">:</span> <span class="n">TrackSpec</span><span class="p">,</span> <span class="n">name_attr</span><span class="o">=</span><span class="s2">"nameWithOctave"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-338"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-339"><span class="sd">    Returns the names of the notes in the input iterable.</span>
-</span><span id="line-340">
-</span><span id="line-341"><span class="sd">    Args:</span>
-</span><span id="line-342"><span class="sd">        notes (TrackSpec): The input notes.</span>
-</span><span id="line-343">
-</span><span id="line-344"><span class="sd">    Returns:</span>
-</span><span id="line-345"><span class="sd">        List[str]: A list of note names.</span>
-</span><span id="line-346">
-</span><span id="line-347"><span class="sd">    Examples:</span>
-</span><span id="line-348"><span class="sd">        &gt;&gt;&gt; note_names(['C4', 'E4', 'G4'])</span>
-</span><span id="line-349"><span class="sd">        ['C4', 'E4', 'G4']</span>
-</span><span id="line-350"><span class="sd">        &gt;&gt;&gt; s = Stream([Note('C4'), Note('E4'), Note('G4')])</span>
-</span><span id="line-351"><span class="sd">        &gt;&gt;&gt; note_names(s)</span>
-</span><span id="line-352"><span class="sd">        ['C4', 'E4', 'G4']</span>
-</span><span id="line-353"><span class="sd">        &gt;&gt;&gt; score = mk_score([['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']])</span>
-</span><span id="line-354"><span class="sd">        &gt;&gt;&gt; note_names(score)</span>
-</span><span id="line-355"><span class="sd">        [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]</span>
-</span><span id="line-356">
-</span><span id="line-357"><span class="sd">    See Also:</span>
-</span><span id="line-358"><span class="sd">        multi_note_names</span>
-</span><span id="line-359">
-</span><span id="line-360"><span class="sd">    """</span>
-</span><span id="line-361">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">Score</span><span class="p">):</span>
-</span><span id="line-362">        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">note_names</span><span class="p">,</span> <span class="n">name_attr</span><span class="o">=</span><span class="n">name_attr</span><span class="p">),</span> <span class="n">notes</span><span class="o">.</span><span class="n">parts</span><span class="p">))</span>
-</span><span id="line-363">    <span class="k">else</span><span class="p">:</span>
-</span><span id="line-364">        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">attrgetter</span><span class="p">(</span><span class="n">name_attr</span><span class="p">),</span> <span class="n">ensure_iterable_of_notes</span><span class="p">(</span><span class="n">notes</span><span class="p">)))</span></div>
+</span><span id="line-348"><span class="k">def</span><span class="w"> </span><span class="nf">note_names</span><span class="p">(</span><span class="n">notes</span><span class="p">:</span> <span class="n">TrackSpec</span><span class="p">,</span> <span class="n">name_attr</span><span class="o">=</span><span class="s2">"nameWithOctave"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-349"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-350"><span class="sd">    Returns the names of the notes in the input iterable.</span>
+</span><span id="line-351">
+</span><span id="line-352"><span class="sd">    Args:</span>
+</span><span id="line-353"><span class="sd">        notes (TrackSpec): The input notes.</span>
+</span><span id="line-354">
+</span><span id="line-355"><span class="sd">    Returns:</span>
+</span><span id="line-356"><span class="sd">        List[str]: A list of note names.</span>
+</span><span id="line-357">
+</span><span id="line-358"><span class="sd">    Examples:</span>
+</span><span id="line-359"><span class="sd">        &gt;&gt;&gt; note_names(['C4', 'E4', 'G4'])</span>
+</span><span id="line-360"><span class="sd">        ['C4', 'E4', 'G4']</span>
+</span><span id="line-361"><span class="sd">        &gt;&gt;&gt; s = Stream([Note('C4'), Note('E4'), Note('G4')])</span>
+</span><span id="line-362"><span class="sd">        &gt;&gt;&gt; note_names(s)</span>
+</span><span id="line-363"><span class="sd">        ['C4', 'E4', 'G4']</span>
+</span><span id="line-364"><span class="sd">        &gt;&gt;&gt; score = mk_score([['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']])</span>
+</span><span id="line-365"><span class="sd">        &gt;&gt;&gt; note_names(score)</span>
+</span><span id="line-366"><span class="sd">        [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]</span>
+</span><span id="line-367">
+</span><span id="line-368"><span class="sd">    See Also:</span>
+</span><span id="line-369"><span class="sd">        multi_note_names</span>
+</span><span id="line-370">
+</span><span id="line-371"><span class="sd">    """</span>
+</span><span id="line-372">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">Score</span><span class="p">):</span>
+</span><span id="line-373">        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">note_names</span><span class="p">,</span> <span class="n">name_attr</span><span class="o">=</span><span class="n">name_attr</span><span class="p">),</span> <span class="n">notes</span><span class="o">.</span><span class="n">parts</span><span class="p">))</span>
+</span><span id="line-374">    <span class="k">else</span><span class="p">:</span>
+</span><span id="line-375">        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">attrgetter</span><span class="p">(</span><span class="n">name_attr</span><span class="p">),</span> <span class="n">ensure_iterable_of_notes</span><span class="p">(</span><span class="n">notes</span><span class="p">)))</span></div>
 
-</span><span id="line-365">
-</span><span id="line-366">
+</span><span id="line-376">
+</span><span id="line-377">
 <div class="viewcode-block" id="multi_note_names">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.multi_note_names">[docs]</a>
-</span><span id="line-367"><span class="k">def</span><span class="w"> </span><span class="nf">multi_note_names</span><span class="p">(</span><span class="n">tracks</span><span class="p">:</span> <span class="n">TracksSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">NoteString</span><span class="p">]]:</span>
-</span><span id="line-368"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-369"><span class="sd">    Returns the names of the notes in the input iterable.</span>
-</span><span id="line-370">
-</span><span id="line-371"><span class="sd">    Args:</span>
-</span><span id="line-372"><span class="sd">        tracks (TracksSpec): The input tracks.</span>
-</span><span id="line-373">
-</span><span id="line-374"><span class="sd">    Returns:</span>
-</span><span id="line-375"><span class="sd">        List[List[NoteString]]: A list of lists of note names.</span>
-</span><span id="line-376">
-</span><span id="line-377"><span class="sd">    Examples:</span>
-</span><span id="line-378"><span class="sd">        &gt;&gt;&gt; tracks = [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]</span>
-</span><span id="line-379"><span class="sd">        &gt;&gt;&gt; multi_note_names(tracks)</span>
-</span><span id="line-380"><span class="sd">        [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]</span>
-</span><span id="line-381"><span class="sd">        &gt;&gt;&gt; stream1 = Stream([Note('C4'), Note('E4'), Note('G4')])</span>
-</span><span id="line-382"><span class="sd">        &gt;&gt;&gt; stream2 = Stream([Note('A4'), Note('C5'), Note('E5')])</span>
-</span><span id="line-383"><span class="sd">        &gt;&gt;&gt; multi_note_names([stream1, stream2])</span>
-</span><span id="line-384"><span class="sd">        [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]</span>
-</span><span id="line-385"><span class="sd">    """</span>
-</span><span id="line-386">    <span class="k">return</span> <span class="p">[</span><span class="n">note_names</span><span class="p">(</span><span class="n">track</span><span class="p">)</span> <span class="k">for</span> <span class="n">track</span> <span class="ow">in</span> <span class="n">tracks</span><span class="p">]</span></div>
-
+</span><span id="line-378"><span class="k">def</span><span class="w"> </span><span class="nf">multi_note_names</span><span class="p">(</span><span class="n">tracks</span><span class="p">:</span> <span class="n">TracksSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">NoteString</span><span class="p">]]:</span>
+</span><span id="line-379"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-380"><span class="sd">    Returns the names of the notes in the input iterable.</span>
+</span><span id="line-381">
+</span><span id="line-382"><span class="sd">    Args:</span>
+</span><span id="line-383"><span class="sd">        tracks (TracksSpec): The input tracks.</span>
+</span><span id="line-384">
+</span><span id="line-385"><span class="sd">    Returns:</span>
+</span><span id="line-386"><span class="sd">        List[List[NoteString]]: A list of lists of note names.</span>
 </span><span id="line-387">
-</span><span id="line-388">
+</span><span id="line-388"><span class="sd">    Examples:</span>
+</span><span id="line-389"><span class="sd">        &gt;&gt;&gt; tracks = [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]</span>
+</span><span id="line-390"><span class="sd">        &gt;&gt;&gt; multi_note_names(tracks)</span>
+</span><span id="line-391"><span class="sd">        [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]</span>
+</span><span id="line-392"><span class="sd">        &gt;&gt;&gt; stream1 = Stream([Note('C4'), Note('E4'), Note('G4')])</span>
+</span><span id="line-393"><span class="sd">        &gt;&gt;&gt; stream2 = Stream([Note('A4'), Note('C5'), Note('E5')])</span>
+</span><span id="line-394"><span class="sd">        &gt;&gt;&gt; multi_note_names([stream1, stream2])</span>
+</span><span id="line-395"><span class="sd">        [['C4', 'E4', 'G4'], ['A4', 'C5', 'E5']]</span>
+</span><span id="line-396"><span class="sd">    """</span>
+</span><span id="line-397">    <span class="k">return</span> <span class="p">[</span><span class="n">note_names</span><span class="p">(</span><span class="n">track</span><span class="p">)</span> <span class="k">for</span> <span class="n">track</span> <span class="ow">in</span> <span class="n">tracks</span><span class="p">]</span></div>
+
+</span><span id="line-398">
+</span><span id="line-399">
 <div class="viewcode-block" id="add_streams">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.add_streams">[docs]</a>
-</span><span id="line-389"><span class="k">def</span><span class="w"> </span><span class="nf">add_streams</span><span class="p">(</span><span class="n">list_of_streams</span><span class="p">:</span> <span class="n">Streams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Stream</span><span class="p">:</span>
-</span><span id="line-390"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-391"><span class="sd">    Concatenates multiple streams into a single stream.</span>
-</span><span id="line-392">
-</span><span id="line-393"><span class="sd">    Args:</span>
-</span><span id="line-394"><span class="sd">        list_of_streams (List[Stream]): The list of streams to concatenate.</span>
-</span><span id="line-395">
-</span><span id="line-396"><span class="sd">    Returns:</span>
-</span><span id="line-397"><span class="sd">        Stream: A single stream containing all the concatenated streams.</span>
-</span><span id="line-398">
-</span><span id="line-399"><span class="sd">    Examples:</span>
-</span><span id="line-400">
-</span><span id="line-401"><span class="sd">    &gt;&gt;&gt; s1 = Stream([Note('C4'), Note('E4'), Note('G4')])</span>
-</span><span id="line-402"><span class="sd">    &gt;&gt;&gt; s2 = Stream([Note('A4'), Note('C5'), Note('E5')])</span>
-</span><span id="line-403"><span class="sd">    &gt;&gt;&gt; result_stream = add_streams([s1, s2])</span>
-</span><span id="line-404"><span class="sd">    &gt;&gt;&gt; note_names(result_stream)</span>
-</span><span id="line-405"><span class="sd">    ['C4', 'E4', 'G4', 'A4', 'C5', 'E5']</span>
-</span><span id="line-406"><span class="sd">    """</span>
-</span><span id="line-407">    <span class="n">combined_stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">()</span>
-</span><span id="line-408">    <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="n">list_of_streams</span><span class="p">:</span>
-</span><span id="line-409">        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
-</span><span id="line-410">            <span class="n">combined_stream</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-</span><span id="line-411">    <span class="k">return</span> <span class="n">combined_stream</span></div>
+</span><span id="line-400"><span class="k">def</span><span class="w"> </span><span class="nf">add_streams</span><span class="p">(</span><span class="n">list_of_streams</span><span class="p">:</span> <span class="n">Streams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Stream</span><span class="p">:</span>
+</span><span id="line-401"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-402"><span class="sd">    Concatenates multiple streams into a single stream.</span>
+</span><span id="line-403">
+</span><span id="line-404"><span class="sd">    Args:</span>
+</span><span id="line-405"><span class="sd">        list_of_streams (List[Stream]): The list of streams to concatenate.</span>
+</span><span id="line-406">
+</span><span id="line-407"><span class="sd">    Returns:</span>
+</span><span id="line-408"><span class="sd">        Stream: A single stream containing all the concatenated streams.</span>
+</span><span id="line-409">
+</span><span id="line-410"><span class="sd">    Examples:</span>
+</span><span id="line-411">
+</span><span id="line-412"><span class="sd">    &gt;&gt;&gt; s1 = Stream([Note('C4'), Note('E4'), Note('G4')])</span>
+</span><span id="line-413"><span class="sd">    &gt;&gt;&gt; s2 = Stream([Note('A4'), Note('C5'), Note('E5')])</span>
+</span><span id="line-414"><span class="sd">    &gt;&gt;&gt; result_stream = add_streams([s1, s2])</span>
+</span><span id="line-415"><span class="sd">    &gt;&gt;&gt; note_names(result_stream)</span>
+</span><span id="line-416"><span class="sd">    ['C4', 'E4', 'G4', 'A4', 'C5', 'E5']</span>
+</span><span id="line-417"><span class="sd">    """</span>
+</span><span id="line-418">    <span class="n">combined_stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">()</span>
+</span><span id="line-419">    <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="n">list_of_streams</span><span class="p">:</span>
+</span><span id="line-420">        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
+</span><span id="line-421">            <span class="n">combined_stream</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+</span><span id="line-422">    <span class="k">return</span> <span class="n">combined_stream</span></div>
 
-</span><span id="line-412">
-</span><span id="line-413">
+</span><span id="line-423">
+</span><span id="line-424">
 <div class="viewcode-block" id="concatenate_streams">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.concatenate_streams">[docs]</a>
-</span><span id="line-414"><span class="k">def</span><span class="w"> </span><span class="nf">concatenate_streams</span><span class="p">(</span><span class="n">streams_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Streams</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Streams</span><span class="p">:</span>
-</span><span id="line-415"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-416"><span class="sd">    Concatenates corresponding streams from a list of lists of streams.</span>
-</span><span id="line-417">
-</span><span id="line-418"><span class="sd">    Args:</span>
-</span><span id="line-419"><span class="sd">        streams_list (List[List[Stream]]): The list of lists of streams to concatenate.</span>
-</span><span id="line-420">
-</span><span id="line-421"><span class="sd">    Returns:</span>
-</span><span id="line-422"><span class="sd">        List[Stream]: A list of concatenated streams.</span>
-</span><span id="line-423">
-</span><span id="line-424"><span class="sd">    Examples:</span>
-</span><span id="line-425"><span class="sd">        &gt;&gt;&gt; s11 = Stream([Note('C4'), Note('E4')])</span>
-</span><span id="line-426"><span class="sd">        &gt;&gt;&gt; s12 = Stream([Note('G4')])</span>
-</span><span id="line-427"><span class="sd">        &gt;&gt;&gt; s21 = Stream([Note('A4')])</span>
-</span><span id="line-428"><span class="sd">        &gt;&gt;&gt; s22 = Stream([Note('C5'), Note('E5')])</span>
-</span><span id="line-429"><span class="sd">        &gt;&gt;&gt; result_streams = concatenate_streams([[s11, s12], [s21, s22]])</span>
-</span><span id="line-430"><span class="sd">        &gt;&gt;&gt; len(result_streams)</span>
-</span><span id="line-431"><span class="sd">        2</span>
-</span><span id="line-432"><span class="sd">        &gt;&gt;&gt; note_names(result_streams[0])</span>
-</span><span id="line-433"><span class="sd">        ['C4', 'E4', 'A4']</span>
-</span><span id="line-434"><span class="sd">        &gt;&gt;&gt; note_names(result_streams[1])</span>
-</span><span id="line-435"><span class="sd">        ['G4', 'C5', 'E5']</span>
-</span><span id="line-436"><span class="sd">    """</span>
-</span><span id="line-437">    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">add_streams</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">streams_list</span><span class="p">)))</span></div>
+</span><span id="line-425"><span class="k">def</span><span class="w"> </span><span class="nf">concatenate_streams</span><span class="p">(</span><span class="n">streams_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Streams</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Streams</span><span class="p">:</span>
+</span><span id="line-426"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-427"><span class="sd">    Concatenates corresponding streams from a list of lists of streams.</span>
+</span><span id="line-428">
+</span><span id="line-429"><span class="sd">    Args:</span>
+</span><span id="line-430"><span class="sd">        streams_list (List[List[Stream]]): The list of lists of streams to concatenate.</span>
+</span><span id="line-431">
+</span><span id="line-432"><span class="sd">    Returns:</span>
+</span><span id="line-433"><span class="sd">        List[Stream]: A list of concatenated streams.</span>
+</span><span id="line-434">
+</span><span id="line-435"><span class="sd">    Examples:</span>
+</span><span id="line-436"><span class="sd">        &gt;&gt;&gt; s11 = Stream([Note('C4'), Note('E4')])</span>
+</span><span id="line-437"><span class="sd">        &gt;&gt;&gt; s12 = Stream([Note('G4')])</span>
+</span><span id="line-438"><span class="sd">        &gt;&gt;&gt; s21 = Stream([Note('A4')])</span>
+</span><span id="line-439"><span class="sd">        &gt;&gt;&gt; s22 = Stream([Note('C5'), Note('E5')])</span>
+</span><span id="line-440"><span class="sd">        &gt;&gt;&gt; result_streams = concatenate_streams([[s11, s12], [s21, s22]])</span>
+</span><span id="line-441"><span class="sd">        &gt;&gt;&gt; len(result_streams)</span>
+</span><span id="line-442"><span class="sd">        2</span>
+</span><span id="line-443"><span class="sd">        &gt;&gt;&gt; note_names(result_streams[0])</span>
+</span><span id="line-444"><span class="sd">        ['C4', 'E4', 'A4']</span>
+</span><span id="line-445"><span class="sd">        &gt;&gt;&gt; note_names(result_streams[1])</span>
+</span><span id="line-446"><span class="sd">        ['G4', 'C5', 'E5']</span>
+</span><span id="line-447"><span class="sd">    """</span>
+</span><span id="line-448">    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">add_streams</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">streams_list</span><span class="p">)))</span></div>
 
-</span><span id="line-438">
-</span><span id="line-439">
+</span><span id="line-449">
+</span><span id="line-450">
 <div class="viewcode-block" id="create_score_from_tracks">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.create_score_from_tracks">[docs]</a>
-</span><span id="line-440"><span class="k">def</span><span class="w"> </span><span class="nf">create_score_from_tracks</span><span class="p">(</span><span class="n">tracks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Stream</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-</span><span id="line-441"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-442"><span class="sd">    Creates a music21 Score from a list of tracks (Stream objects).</span>
-</span><span id="line-443">
-</span><span id="line-444"><span class="sd">    Args:</span>
-</span><span id="line-445"><span class="sd">        tracks (List[Stream]): A list of Stream objects, each representing a track (voice).</span>
-</span><span id="line-446">
-</span><span id="line-447"><span class="sd">    Returns:</span>
-</span><span id="line-448"><span class="sd">        Score: A Score object containing the tracks as separate parts.</span>
-</span><span id="line-449">
-</span><span id="line-450"><span class="sd">    Examples:</span>
-</span><span id="line-451"><span class="sd">        &gt;&gt;&gt; stream1 = Stream([Note('C4'), Note('E4'), Note('G4')])</span>
-</span><span id="line-452"><span class="sd">        &gt;&gt;&gt; stream2 = Stream([Note('A4'), Note('C5'), Note('E5')])</span>
-</span><span id="line-453"><span class="sd">        &gt;&gt;&gt; score = create_score_from_tracks([stream1, stream2])</span>
-</span><span id="line-454"><span class="sd">        &gt;&gt;&gt; len(score.parts)</span>
-</span><span id="line-455"><span class="sd">        2</span>
-</span><span id="line-456"><span class="sd">    """</span>
-</span><span id="line-457">    <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">Part</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">track</span><span class="p">))</span> <span class="k">for</span> <span class="n">track</span> <span class="ow">in</span> <span class="n">tracks</span><span class="p">]</span>
-</span><span id="line-458">    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span></div>
-
-</span><span id="line-459">
+</span><span id="line-451"><span class="k">def</span><span class="w"> </span><span class="nf">create_score_from_tracks</span><span class="p">(</span><span class="n">tracks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Stream</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
+</span><span id="line-452"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-453"><span class="sd">    Creates a music21 Score from a list of tracks (Stream objects).</span>
+</span><span id="line-454">
+</span><span id="line-455"><span class="sd">    Args:</span>
+</span><span id="line-456"><span class="sd">        tracks (List[Stream]): A list of Stream objects, each representing a track (voice).</span>
+</span><span id="line-457">
+</span><span id="line-458"><span class="sd">    Returns:</span>
+</span><span id="line-459"><span class="sd">        Score: A Score object containing the tracks as separate parts.</span>
 </span><span id="line-460">
-</span><span id="line-461"><span class="k">def</span><span class="w"> </span><span class="nf">ensure_part_filter</span><span class="p">(</span><span class="n">part_filter</span><span class="p">:</span> <span class="n">PartFilterSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PartFilter</span><span class="p">:</span>
-</span><span id="line-462">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part_filter</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-</span><span id="line-463">        <span class="n">part_filter</span> <span class="o">=</span> <span class="p">[</span><span class="n">part_filter</span><span class="p">]</span>
-</span><span id="line-464">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part_filter</span><span class="p">,</span> <span class="n">Container</span><span class="p">):</span>
-</span><span id="line-465">        <span class="c1"># make it into a PartFilter function</span>
-</span><span id="line-466">        <span class="n">desired_parts</span> <span class="o">=</span> <span class="n">part_filter</span>
-</span><span id="line-467">        <span class="n">part_filter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">desired_parts</span>
-</span><span id="line-468">    <span class="k">elif</span> <span class="n">part_filter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-469">        <span class="n">part_filter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="kc">True</span>
-</span><span id="line-470">    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">part_filter</span><span class="p">):</span>
-</span><span id="line-471">        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-</span><span id="line-472">            <span class="s2">"part_filter must be an int, list of ints, a callable, or None."</span>
-</span><span id="line-473">            <span class="sa">f</span><span class="s2">"Was: </span><span class="si">{</span><span class="n">part_filter</span><span class="si">}</span><span class="s2">"</span>
-</span><span id="line-474">        <span class="p">)</span>
-</span><span id="line-475">    <span class="k">return</span> <span class="n">part_filter</span>
-</span><span id="line-476">
-</span><span id="line-477">
+</span><span id="line-461"><span class="sd">    Examples:</span>
+</span><span id="line-462"><span class="sd">        &gt;&gt;&gt; stream1 = Stream([Note('C4'), Note('E4'), Note('G4')])</span>
+</span><span id="line-463"><span class="sd">        &gt;&gt;&gt; stream2 = Stream([Note('A4'), Note('C5'), Note('E5')])</span>
+</span><span id="line-464"><span class="sd">        &gt;&gt;&gt; score = create_score_from_tracks([stream1, stream2])</span>
+</span><span id="line-465"><span class="sd">        &gt;&gt;&gt; len(score.parts)</span>
+</span><span id="line-466"><span class="sd">        2</span>
+</span><span id="line-467"><span class="sd">    """</span>
+</span><span id="line-468">    <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">Part</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">track</span><span class="p">))</span> <span class="k">for</span> <span class="n">track</span> <span class="ow">in</span> <span class="n">tracks</span><span class="p">]</span>
+</span><span id="line-469">    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span></div>
+
+</span><span id="line-470">
+</span><span id="line-471">
+<div class="viewcode-block" id="ensure_part_filter">
+<a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.ensure_part_filter">[docs]</a>
+</span><span id="line-472"><span class="k">def</span><span class="w"> </span><span class="nf">ensure_part_filter</span><span class="p">(</span><span class="n">part_filter</span><span class="p">:</span> <span class="n">PartFilterSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PartFilter</span><span class="p">:</span>
+</span><span id="line-473"><span class="w">    </span><span class="sd">"""Turn an int, a container of indices, ``None`` or a callable into ``f(index, part) -&gt; bool``."""</span>
+</span><span id="line-474">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part_filter</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="line-475">        <span class="n">part_filter</span> <span class="o">=</span> <span class="p">[</span><span class="n">part_filter</span><span class="p">]</span>
+</span><span id="line-476">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part_filter</span><span class="p">,</span> <span class="n">Container</span><span class="p">):</span>
+</span><span id="line-477">        <span class="c1"># make it into a PartFilter function</span>
+</span><span id="line-478">        <span class="n">desired_parts</span> <span class="o">=</span> <span class="n">part_filter</span>
+</span><span id="line-479">        <span class="n">part_filter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">desired_parts</span>
+</span><span id="line-480">    <span class="k">elif</span> <span class="n">part_filter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-481">        <span class="n">part_filter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="kc">True</span>
+</span><span id="line-482">    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">part_filter</span><span class="p">):</span>
+</span><span id="line-483">        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+</span><span id="line-484">            <span class="s2">"part_filter must be an int, list of ints, a callable, or None."</span>
+</span><span id="line-485">            <span class="sa">f</span><span class="s2">"Was: </span><span class="si">{</span><span class="n">part_filter</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="line-486">        <span class="p">)</span>
+</span><span id="line-487">    <span class="k">return</span> <span class="n">part_filter</span></div>
+
+</span><span id="line-488">
+</span><span id="line-489">
 <div class="viewcode-block" id="resolve_format_from_filepath">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.resolve_format_from_filepath">[docs]</a>
-</span><span id="line-478"><span class="k">def</span><span class="w"> </span><span class="nf">resolve_format_from_filepath</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span> <span class="n">Filepath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="line-479"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-480"><span class="sd">    Resolves the format of a file from the file extension.</span>
-</span><span id="line-481">
-</span><span id="line-482"><span class="sd">    Args:</span>
-</span><span id="line-483"><span class="sd">        filepath (Filepath): The file path.</span>
-</span><span id="line-484">
-</span><span id="line-485"><span class="sd">    Returns:</span>
-</span><span id="line-486"><span class="sd">        str: The format of the file.</span>
-</span><span id="line-487">
-</span><span id="line-488"><span class="sd">    Examples:</span>
-</span><span id="line-489"><span class="sd">        &gt;&gt;&gt; resolve_format_from_filepath('output.mid')</span>
-</span><span id="line-490"><span class="sd">        'mid'</span>
-</span><span id="line-491"><span class="sd">        &gt;&gt;&gt; resolve_format_from_filepath('output.wav')</span>
-</span><span id="line-492"><span class="sd">        'wav'</span>
-</span><span id="line-493"><span class="sd">    """</span>
-</span><span id="line-494">    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filepath</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span></div>
-
-</span><span id="line-495">
+</span><span id="line-490"><span class="k">def</span><span class="w"> </span><span class="nf">resolve_format_from_filepath</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span> <span class="n">Filepath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="line-491"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-492"><span class="sd">    Resolves the format of a file from the file extension.</span>
+</span><span id="line-493">
+</span><span id="line-494"><span class="sd">    Args:</span>
+</span><span id="line-495"><span class="sd">        filepath (Filepath): The file path.</span>
 </span><span id="line-496">
+</span><span id="line-497"><span class="sd">    Returns:</span>
+</span><span id="line-498"><span class="sd">        str: The format of the file.</span>
+</span><span id="line-499">
+</span><span id="line-500"><span class="sd">    Examples:</span>
+</span><span id="line-501"><span class="sd">        &gt;&gt;&gt; resolve_format_from_filepath('output.mid')</span>
+</span><span id="line-502"><span class="sd">        'mid'</span>
+</span><span id="line-503"><span class="sd">        &gt;&gt;&gt; resolve_format_from_filepath('output.wav')</span>
+</span><span id="line-504"><span class="sd">        'wav'</span>
+</span><span id="line-505"><span class="sd">    """</span>
+</span><span id="line-506">    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filepath</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span></div>
+
+</span><span id="line-507">
+</span><span id="line-508">
 <div class="viewcode-block" id="filter_parts">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.filter_parts">[docs]</a>
-</span><span id="line-497"><span class="k">def</span><span class="w"> </span><span class="nf">filter_parts</span><span class="p">(</span>
-</span><span id="line-498">    <span class="n">part_filter</span><span class="p">:</span> <span class="n">PartFilterSpec</span><span class="p">,</span>
-</span><span id="line-499">    <span class="n">score_input</span><span class="p">:</span> <span class="n">ScoreSpec</span><span class="p">,</span>
-</span><span id="line-500">    <span class="o">*</span><span class="p">,</span>
-</span><span id="line-501">    <span class="n">save_to_filepath</span><span class="p">:</span> <span class="n">Filepath</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="line-502"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-</span><span id="line-503"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-504"><span class="sd">    Filter parts from a score based on the provided filter function or part indices.</span>
-</span><span id="line-505">
-</span><span id="line-506"><span class="sd">    Parameters:</span>
-</span><span id="line-507"><span class="sd">        part_filter: PartFilterSpec</span>
-</span><span id="line-508"><span class="sd">            A function that takes a music21 Part object and returns a boolean value.</span>
-</span><span id="line-509"><span class="sd">            If an integer or list of integers is provided, the function will filter in</span>
-</span><span id="line-510"><span class="sd">            parts based on the indices.</span>
-</span><span id="line-511"><span class="sd">        score_input: Union[str, Score]</span>
-</span><span id="line-512"><span class="sd">            The input score, either as a file path or a music21 Score instance.</span>
-</span><span id="line-513"><span class="sd">        save_to_filepath: str</span>
-</span><span id="line-514"><span class="sd">            The file path to save the modified score. Default is None.</span>
-</span><span id="line-515">
-</span><span id="line-516"><span class="sd">    Returns:</span>
-</span><span id="line-517"><span class="sd">        Score: The score with the subset of parts that were filtered in.</span>
-</span><span id="line-518">
-</span><span id="line-519"><span class="sd">    &gt;&gt;&gt; s = mk_score([['C4'], ['D4'], ['E4']])</span>
-</span><span id="line-520"><span class="sd">    &gt;&gt;&gt; # Test filtering by index</span>
-</span><span id="line-521"><span class="sd">    &gt;&gt;&gt; filtered_score = filter_parts([0, 2], s)</span>
-</span><span id="line-522"><span class="sd">    &gt;&gt;&gt; note_names(filtered_score)</span>
-</span><span id="line-523"><span class="sd">    [['C4'], ['E4']]</span>
-</span><span id="line-524"><span class="sd">    &gt;&gt;&gt; # Test filtering by function</span>
-</span><span id="line-525"><span class="sd">    &gt;&gt;&gt; filtered_score = filter_parts(lambda i, part: part.notes[0].name != 'D', s)</span>
-</span><span id="line-526"><span class="sd">    &gt;&gt;&gt; note_names(filtered_score)</span>
-</span><span id="line-527"><span class="sd">    [['C4'], ['E4']]</span>
-</span><span id="line-528"><span class="sd">    &gt;&gt;&gt; # Test no filtering (return all parts)</span>
-</span><span id="line-529"><span class="sd">    &gt;&gt;&gt; filtered_score = filter_parts(None, s)</span>
-</span><span id="line-530"><span class="sd">    &gt;&gt;&gt; note_names(filtered_score)</span>
-</span><span id="line-531"><span class="sd">    [['C4'], ['D4'], ['E4']]</span>
-</span><span id="line-532"><span class="sd">    """</span>
-</span><span id="line-533">    <span class="n">filter_func</span> <span class="o">=</span> <span class="n">ensure_part_filter</span><span class="p">(</span><span class="n">part_filter</span><span class="p">)</span>
-</span><span id="line-534">
-</span><span id="line-535">    <span class="c1"># Load the score if a file path is provided</span>
-</span><span id="line-536">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">score_input</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-537">        <span class="n">score</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">score_input</span><span class="p">)</span>
-</span><span id="line-538">    <span class="k">else</span><span class="p">:</span>
-</span><span id="line-539">        <span class="n">score</span> <span class="o">=</span> <span class="n">score_input</span>
-</span><span id="line-540">
-</span><span id="line-541">    <span class="c1"># Create a new score and add the remaining parts</span>
-</span><span id="line-542">    <span class="n">new_score</span> <span class="o">=</span> <span class="n">Score</span><span class="p">()</span>
-</span><span id="line-543">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">score</span><span class="o">.</span><span class="n">parts</span><span class="p">):</span>
-</span><span id="line-544">        <span class="k">if</span> <span class="n">filter_func</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">part</span><span class="p">):</span>
-</span><span id="line-545">            <span class="n">new_score</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+</span><span id="line-509"><span class="k">def</span><span class="w"> </span><span class="nf">filter_parts</span><span class="p">(</span>
+</span><span id="line-510">    <span class="n">part_filter</span><span class="p">:</span> <span class="n">PartFilterSpec</span><span class="p">,</span>
+</span><span id="line-511">    <span class="n">score_input</span><span class="p">:</span> <span class="n">ScoreSpec</span><span class="p">,</span>
+</span><span id="line-512">    <span class="o">*</span><span class="p">,</span>
+</span><span id="line-513">    <span class="n">save_to_filepath</span><span class="p">:</span> <span class="n">Filepath</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="line-514"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
+</span><span id="line-515"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-516"><span class="sd">    Filter parts from a score based on the provided filter function or part indices.</span>
+</span><span id="line-517">
+</span><span id="line-518"><span class="sd">    Parameters:</span>
+</span><span id="line-519"><span class="sd">        part_filter: PartFilterSpec</span>
+</span><span id="line-520"><span class="sd">            A function that takes a music21 Part object and returns a boolean value.</span>
+</span><span id="line-521"><span class="sd">            If an integer or list of integers is provided, the function will filter in</span>
+</span><span id="line-522"><span class="sd">            parts based on the indices.</span>
+</span><span id="line-523"><span class="sd">        score_input: Union[str, Score]</span>
+</span><span id="line-524"><span class="sd">            The input score, either as a file path or a music21 Score instance.</span>
+</span><span id="line-525"><span class="sd">        save_to_filepath: str</span>
+</span><span id="line-526"><span class="sd">            The file path to save the modified score. Default is None.</span>
+</span><span id="line-527">
+</span><span id="line-528"><span class="sd">    Returns:</span>
+</span><span id="line-529"><span class="sd">        Score: The score with the subset of parts that were filtered in.</span>
+</span><span id="line-530">
+</span><span id="line-531"><span class="sd">    &gt;&gt;&gt; s = mk_score([['C4'], ['D4'], ['E4']])</span>
+</span><span id="line-532"><span class="sd">    &gt;&gt;&gt; # Test filtering by index</span>
+</span><span id="line-533"><span class="sd">    &gt;&gt;&gt; filtered_score = filter_parts([0, 2], s)</span>
+</span><span id="line-534"><span class="sd">    &gt;&gt;&gt; note_names(filtered_score)</span>
+</span><span id="line-535"><span class="sd">    [['C4'], ['E4']]</span>
+</span><span id="line-536"><span class="sd">    &gt;&gt;&gt; # Test filtering by function</span>
+</span><span id="line-537"><span class="sd">    &gt;&gt;&gt; filtered_score = filter_parts(lambda i, part: part.notes[0].name != 'D', s)</span>
+</span><span id="line-538"><span class="sd">    &gt;&gt;&gt; note_names(filtered_score)</span>
+</span><span id="line-539"><span class="sd">    [['C4'], ['E4']]</span>
+</span><span id="line-540"><span class="sd">    &gt;&gt;&gt; # Test no filtering (return all parts)</span>
+</span><span id="line-541"><span class="sd">    &gt;&gt;&gt; filtered_score = filter_parts(None, s)</span>
+</span><span id="line-542"><span class="sd">    &gt;&gt;&gt; note_names(filtered_score)</span>
+</span><span id="line-543"><span class="sd">    [['C4'], ['D4'], ['E4']]</span>
+</span><span id="line-544"><span class="sd">    """</span>
+</span><span id="line-545">    <span class="n">filter_func</span> <span class="o">=</span> <span class="n">ensure_part_filter</span><span class="p">(</span><span class="n">part_filter</span><span class="p">)</span>
 </span><span id="line-546">
-</span><span id="line-547">    <span class="c1"># Save the modified score if a file path is provided</span>
-</span><span id="line-548">    <span class="k">if</span> <span class="n">save_to_filepath</span><span class="p">:</span>
-</span><span id="line-549">        <span class="c1"># resolve the fmt from the file extension</span>
-</span><span id="line-550">        <span class="n">fmt</span> <span class="o">=</span> <span class="n">resolve_format_from_filepath</span><span class="p">(</span><span class="n">save_to_filepath</span><span class="p">)</span>
-</span><span id="line-551">        <span class="n">new_score</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="n">save_to_filepath</span><span class="p">)</span>
+</span><span id="line-547">    <span class="c1"># Load the score if a file path is provided</span>
+</span><span id="line-548">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">score_input</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-549">        <span class="n">score</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">score_input</span><span class="p">)</span>
+</span><span id="line-550">    <span class="k">else</span><span class="p">:</span>
+</span><span id="line-551">        <span class="n">score</span> <span class="o">=</span> <span class="n">score_input</span>
 </span><span id="line-552">
-</span><span id="line-553">    <span class="k">return</span> <span class="n">new_score</span></div>
+</span><span id="line-553">    <span class="c1"># Create a new score and add the remaining parts</span>
+</span><span id="line-554">    <span class="n">new_score</span> <span class="o">=</span> <span class="n">Score</span><span class="p">()</span>
+</span><span id="line-555">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">score</span><span class="o">.</span><span class="n">parts</span><span class="p">):</span>
+</span><span id="line-556">        <span class="k">if</span> <span class="n">filter_func</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">part</span><span class="p">):</span>
+</span><span id="line-557">            <span class="n">new_score</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+</span><span id="line-558">
+</span><span id="line-559">    <span class="c1"># Save the modified score if a file path is provided</span>
+</span><span id="line-560">    <span class="k">if</span> <span class="n">save_to_filepath</span><span class="p">:</span>
+</span><span id="line-561">        <span class="c1"># resolve the fmt from the file extension</span>
+</span><span id="line-562">        <span class="n">fmt</span> <span class="o">=</span> <span class="n">resolve_format_from_filepath</span><span class="p">(</span><span class="n">save_to_filepath</span><span class="p">)</span>
+</span><span id="line-563">        <span class="n">new_score</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="n">save_to_filepath</span><span class="p">)</span>
+</span><span id="line-564">
+</span><span id="line-565">    <span class="k">return</span> <span class="n">new_score</span></div>
 
-</span><span id="line-554">
-</span><span id="line-555">
+</span><span id="line-566">
+</span><span id="line-567">
 <div class="viewcode-block" id="delete_parts">
 <a class="viewcode-back" href="../../_autosummary/tonal.util.html#tonal.util.delete_parts">[docs]</a>
-</span><span id="line-556"><span class="k">def</span><span class="w"> </span><span class="nf">delete_parts</span><span class="p">(</span>
-</span><span id="line-557">    <span class="n">part_idx</span><span class="p">:</span> <span class="n">PartIdx</span><span class="p">,</span> <span class="n">score_input</span><span class="p">:</span> <span class="n">ScoreSpec</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">save_to_filepath</span><span class="p">:</span> <span class="n">Filepath</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="line-558"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-</span><span id="line-559"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-560"><span class="sd">    Delete parts from a score based on the provided part indices.</span>
-</span><span id="line-561">
-</span><span id="line-562"><span class="sd">    Parameters:</span>
-</span><span id="line-563"><span class="sd">        part_idx: Union[int, List[int]]</span>
-</span><span id="line-564"><span class="sd">            An integer or a list of integers representing the indices of parts to be deleted.</span>
-</span><span id="line-565"><span class="sd">        score_input: Union[str, Score]</span>
-</span><span id="line-566"><span class="sd">            The input score, either as a file path or a music21 Score instance.</span>
-</span><span id="line-567"><span class="sd">        save_to_filepath: str</span>
-</span><span id="line-568"><span class="sd">            The file path to save the modified score. Default is None.</span>
-</span><span id="line-569">
-</span><span id="line-570"><span class="sd">    Returns:</span>
-</span><span id="line-571"><span class="sd">        Score: The score with specified parts deleted.</span>
-</span><span id="line-572">
-</span><span id="line-573"><span class="sd">    Examples:</span>
-</span><span id="line-574"><span class="sd">        &gt;&gt;&gt; score = mk_score([['C4'], ['D4'], ['E4']])</span>
-</span><span id="line-575"><span class="sd">        &gt;&gt;&gt; modified_score = delete_parts([1], score)</span>
-</span><span id="line-576"><span class="sd">        &gt;&gt;&gt; note_names(modified_score)</span>
-</span><span id="line-577"><span class="sd">        [['C4'], ['E4']]</span>
-</span><span id="line-578"><span class="sd">        &gt;&gt;&gt; modified_score = delete_parts([0, 2], score)</span>
-</span><span id="line-579"><span class="sd">        &gt;&gt;&gt; note_names(modified_score)</span>
-</span><span id="line-580"><span class="sd">        [['D4']]</span>
-</span><span id="line-581"><span class="sd">    """</span>
-</span><span id="line-582">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part_idx</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-</span><span id="line-583">        <span class="n">part_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">part_idx</span><span class="p">]</span>
+</span><span id="line-568"><span class="k">def</span><span class="w"> </span><span class="nf">delete_parts</span><span class="p">(</span>
+</span><span id="line-569">    <span class="n">part_idx</span><span class="p">:</span> <span class="n">PartIdx</span><span class="p">,</span> <span class="n">score_input</span><span class="p">:</span> <span class="n">ScoreSpec</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">save_to_filepath</span><span class="p">:</span> <span class="n">Filepath</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="line-570"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
+</span><span id="line-571"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-572"><span class="sd">    Delete parts from a score based on the provided part indices.</span>
+</span><span id="line-573">
+</span><span id="line-574"><span class="sd">    Parameters:</span>
+</span><span id="line-575"><span class="sd">        part_idx: Union[int, List[int]]</span>
+</span><span id="line-576"><span class="sd">            An integer or a list of integers representing the indices of parts to be deleted.</span>
+</span><span id="line-577"><span class="sd">        score_input: Union[str, Score]</span>
+</span><span id="line-578"><span class="sd">            The input score, either as a file path or a music21 Score instance.</span>
+</span><span id="line-579"><span class="sd">        save_to_filepath: str</span>
+</span><span id="line-580"><span class="sd">            The file path to save the modified score. Default is None.</span>
+</span><span id="line-581">
+</span><span id="line-582"><span class="sd">    Returns:</span>
+</span><span id="line-583"><span class="sd">        Score: The score with specified parts deleted.</span>
 </span><span id="line-584">
-</span><span id="line-585">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part_idx</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">Container</span><span class="p">,</span> <span class="n">Callable</span><span class="p">)):</span>
-</span><span id="line-586">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-</span><span id="line-587">            <span class="sa">f</span><span class="s2">"part_idx must be an integer or a list of integers. Was: </span><span class="si">{</span><span class="n">part_idx</span><span class="si">}</span><span class="s2">"</span>
-</span><span id="line-588">        <span class="p">)</span>
-</span><span id="line-589">
-</span><span id="line-590">    <span class="n">part_filter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">part_idx</span>
-</span><span id="line-591">
-</span><span id="line-592">    <span class="k">return</span> <span class="n">filter_parts</span><span class="p">(</span><span class="n">part_filter</span><span class="p">,</span> <span class="n">score_input</span><span class="p">,</span> <span class="n">save_to_filepath</span><span class="o">=</span><span class="n">save_to_filepath</span><span class="p">)</span></div>
+</span><span id="line-585"><span class="sd">    Examples:</span>
+</span><span id="line-586"><span class="sd">        &gt;&gt;&gt; score = mk_score([['C4'], ['D4'], ['E4']])</span>
+</span><span id="line-587"><span class="sd">        &gt;&gt;&gt; modified_score = delete_parts([1], score)</span>
+</span><span id="line-588"><span class="sd">        &gt;&gt;&gt; note_names(modified_score)</span>
+</span><span id="line-589"><span class="sd">        [['C4'], ['E4']]</span>
+</span><span id="line-590"><span class="sd">        &gt;&gt;&gt; modified_score = delete_parts([0, 2], score)</span>
+</span><span id="line-591"><span class="sd">        &gt;&gt;&gt; note_names(modified_score)</span>
+</span><span id="line-592"><span class="sd">        [['D4']]</span>
+</span><span id="line-593"><span class="sd">    """</span>
+</span><span id="line-594">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part_idx</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="line-595">        <span class="n">part_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">part_idx</span><span class="p">]</span>
+</span><span id="line-596">
+</span><span id="line-597">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part_idx</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">Container</span><span class="p">,</span> <span class="n">Callable</span><span class="p">)):</span>
+</span><span id="line-598">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="line-599">            <span class="sa">f</span><span class="s2">"part_idx must be an integer or a list of integers. Was: </span><span class="si">{</span><span class="n">part_idx</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="line-600">        <span class="p">)</span>
+</span><span id="line-601">
+</span><span id="line-602">    <span class="n">part_filter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">part_idx</span>
+</span><span id="line-603">
+</span><span id="line-604">    <span class="k">return</span> <span class="n">filter_parts</span><span class="p">(</span><span class="n">part_filter</span><span class="p">,</span> <span class="n">score_input</span><span class="p">,</span> <span class="n">save_to_filepath</span><span class="o">=</span><span class="n">save_to_filepath</span><span class="p">)</span></div>
 
 </span></code></pre></div>
     </div></div>
@@ -818,7 +842,7 @@
 </footer>
     </div>
     
-    <script src="../../_static/documentation_options.js?v=96ec9c95"></script>
+    <script src="../../_static/documentation_options.js?v=3294188c"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>

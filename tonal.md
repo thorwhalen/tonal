@@ -1,4 +1,4 @@
-> built 2026-11-10 10:00 UTC from d5260d0 (main) · tonal 0.0.22. Details: build_info.json
+> built 2026-11-22 17:35 UTC from d5cb5ae (main) · tonal 0.0.23. Details: build_info.json
 
 # index.html.md
 
@@ -191,15 +191,15 @@ Tools for chords and chord progressions.
 
 ### Functions
 
-| [`chord_to_notes`](_autosummary/tonal.chords.html.md#tonal.chords.chord_to_notes)(chord)                         | Parse a chord string and return the corresponding sequence of MIDI note numbers.   |
-|------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
-| [`chords_to_midi`](_autosummary/tonal.chords.html.md#tonal.chords.chords_to_midi)([chord_sequence, ...])         | Generate a MIDI file from a chord sequence.                                        |
-| [`chords_to_wav`](_autosummary/tonal.chords.html.md#tonal.chords.chords_to_wav)([chord_sequence, name, ...])    | Generate a WAV file directly from a chord sequence.                                |
-| `play_arpeggio`(notes, track, duration, \*[, ...])                                             |                                                                                    |
-| `play_simultaneously`(notes, track, duration, \*)                                              |                                                                                    |
-| [`process_chord_sequence`](_autosummary/tonal.chords.html.md#tonal.chords.process_chord_sequence)(chord_sequence[, ...]) | Preprocess a chord sequence, to make sure to add time, etc.                        |
-| `register_chord_render`(chord_renderer[, name])                                                |                                                                                    |
-| `resolve_chord_render`(chord_renderer)                                                         |                                                                                    |
+| [`chord_to_notes`](_autosummary/tonal.chords.html.md#tonal.chords.chord_to_notes)(chord)                            | Parse a chord string and return the corresponding sequence of MIDI note numbers.          |
+|---------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| [`chords_to_midi`](_autosummary/tonal.chords.html.md#tonal.chords.chords_to_midi)([chord_sequence, ...])            | Generate a MIDI file from a chord sequence.                                               |
+| [`chords_to_wav`](_autosummary/tonal.chords.html.md#tonal.chords.chords_to_wav)([chord_sequence, name, ...])       | Generate a WAV file directly from a chord sequence.                                       |
+| [`play_arpeggio`](_autosummary/tonal.chords.html.md#tonal.chords.play_arpeggio)(notes, track, duration, \*[, ...]) | Play `notes` one after the other, sharing `duration` ticks equally.                       |
+| [`play_simultaneously`](_autosummary/tonal.chords.html.md#tonal.chords.play_simultaneously)(notes, track, duration, \*)  | Play all `notes` at once, releasing them together after `duration` ticks.                 |
+| [`process_chord_sequence`](_autosummary/tonal.chords.html.md#tonal.chords.process_chord_sequence)(chord_sequence[, ...])    | Preprocess a chord sequence, to make sure to add time, etc.                               |
+| [`register_chord_render`](_autosummary/tonal.chords.html.md#tonal.chords.register_chord_render)(chord_renderer[, name])    | Register a chord renderer (usable as a decorator) so it can be named in `chords_to_midi`. |
+| [`resolve_chord_render`](_autosummary/tonal.chords.html.md#tonal.chords.resolve_chord_render)(chord_renderer)             | Return a chord renderer given its registered name, or the callable itself.                |
 
 ### tonal.chords.chord_to_notes(chord)
 
@@ -233,9 +233,28 @@ Generate a WAV file directly from a chord sequence.
   * **soundfont** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – Path to the SoundFont file.
   * **render_chord** ([`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)], `any`, [`int`](https://docs.python.org/3/builtins/functions.html#int)], [`None`](https://docs.python.org/3/builtins/constants.html#None)]) – Function defining how the chords should be played.
 
+### tonal.chords.play_arpeggio(notes, track, duration, , velocity=64)
+
+Play `notes` one after the other, sharing `duration` ticks equally.
+
+### tonal.chords.play_simultaneously(notes, track, duration, , velocity=64)
+
+Play all `notes` at once, releasing them together after `duration` ticks.
+
 ### tonal.chords.process_chord_sequence(chord_sequence, default_duration=960)
 
 Preprocess a chord sequence, to make sure to add time, etc.
+
+### tonal.chords.register_chord_render(chord_renderer, name=None)
+
+Register a chord renderer (usable as a decorator) so it can be named in `chords_to_midi`.
+
+### tonal.chords.resolve_chord_render(chord_renderer)
+
+Return a chord renderer given its registered name, or the callable itself.
+
+* **Return type:**
+  [`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[[`Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)[[`int`](https://docs.python.org/3/builtins/functions.html#int)], `any`, [`int`](https://docs.python.org/3/builtins/functions.html#int)], [`None`](https://docs.python.org/3/builtins/constants.html#None)]
 
 
 # _autosummary/tonal.converters.html.md
@@ -1019,27 +1038,36 @@ Utils for sonification.
 
 ### Functions
 
-| `add_pattern_aliases`(quality_extensions)                                                          |                                                                                        |
-|----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
-| [`add_streams`](_autosummary/tonal.util.html.md#tonal.util.add_streams)(list_of_streams)                      | Concatenates multiple streams into a single stream.                                    |
-| [`concatenate_streams`](_autosummary/tonal.util.html.md#tonal.util.concatenate_streams)(streams_list)                 | Concatenates corresponding streams from a list of lists of streams.                    |
-| [`create_score_from_tracks`](_autosummary/tonal.util.html.md#tonal.util.create_score_from_tracks)(tracks)                  | Creates a music21 Score from a list of tracks (Stream objects).                        |
-| [`delete_parts`](_autosummary/tonal.util.html.md#tonal.util.delete_parts)(part_idx, score_input, \*[, ...])    | Delete parts from a score based on the provided part indices.                          |
-| [`ensure_iterable_of_notes`](_autosummary/tonal.util.html.md#tonal.util.ensure_iterable_of_notes)(notes[, str_to_note])    | Ensures the input is an iterable of Note objects.                                      |
-| `ensure_part_filter`(part_filter)                                                                  |                                                                                        |
-| [`ensure_scale`](_autosummary/tonal.util.html.md#tonal.util.ensure_scale)(input_scale[, scale_creator])        | Ensures the input is a Scale object.                                                   |
-| [`filter_parts`](_autosummary/tonal.util.html.md#tonal.util.filter_parts)(part_filter, score_input, \*[, ...]) | Filter parts from a score based on the provided filter function or part indices.       |
-| [`get_scale_notes`](_autosummary/tonal.util.html.md#tonal.util.get_scale_notes)(input_note, input_scale)          | Returns the names of the pitches in the scale within one octave around the input note. |
-| `identity_func`(x)                                                                                 |                                                                                        |
-| [`is_existing_filepath`](_autosummary/tonal.util.html.md#tonal.util.is_existing_filepath)(obj)                         | Returns True if the input object is a string representing an existing file path.       |
-| [`mk_score`](_autosummary/tonal.util.html.md#tonal.util.mk_score)(obj, \*\*kwargs)                         | Creates a music21 Score object from the input object.                                  |
-| [`mk_stream`](_autosummary/tonal.util.html.md#tonal.util.mk_stream)(obj, \*\*kwargs)                        | Creates a music21 Stream object from the input object.                                 |
-| [`multi_note_names`](_autosummary/tonal.util.html.md#tonal.util.multi_note_names)(tracks)                          | Returns the names of the notes in the input iterable.                                  |
-| [`note_names`](_autosummary/tonal.util.html.md#tonal.util.note_names)(notes[, name_attr])                    | Returns the names of the notes in the input iterable.                                  |
-| `parse_note_name`(note_str)                                                                        |                                                                                        |
-| [`play_music21_object`](_autosummary/tonal.util.html.md#tonal.util.play_music21_object)(music21_obj)                  | Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.             |
-| [`resolve_format_from_filepath`](_autosummary/tonal.util.html.md#tonal.util.resolve_format_from_filepath)(filepath)            | Resolves the format of a file from the file extension.                                 |
-| [`string_to_note`](_autosummary/tonal.util.html.md#tonal.util.string_to_note)([note_or_notes, egress])           | Converts a string representation of a note to a music21 Note object.                   |
+| [`add_pattern_aliases`](_autosummary/tonal.util.html.md#tonal.util.add_pattern_aliases)(quality_extensions)           | Yield `(alias, value)` pairs for `maj`/`min`/`dim` keys, using `M`/`m`/`°`.              |
+|----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| [`add_streams`](_autosummary/tonal.util.html.md#tonal.util.add_streams)(list_of_streams)                      | Concatenates multiple streams into a single stream.                                      |
+| [`concatenate_streams`](_autosummary/tonal.util.html.md#tonal.util.concatenate_streams)(streams_list)                 | Concatenates corresponding streams from a list of lists of streams.                      |
+| [`create_score_from_tracks`](_autosummary/tonal.util.html.md#tonal.util.create_score_from_tracks)(tracks)                  | Creates a music21 Score from a list of tracks (Stream objects).                          |
+| [`delete_parts`](_autosummary/tonal.util.html.md#tonal.util.delete_parts)(part_idx, score_input, \*[, ...])    | Delete parts from a score based on the provided part indices.                            |
+| [`ensure_iterable_of_notes`](_autosummary/tonal.util.html.md#tonal.util.ensure_iterable_of_notes)(notes[, str_to_note])    | Ensures the input is an iterable of Note objects.                                        |
+| [`ensure_part_filter`](_autosummary/tonal.util.html.md#tonal.util.ensure_part_filter)(part_filter)                   | Turn an int, a container of indices, `None` or a callable into `f(index, part) -> bool`. |
+| [`ensure_scale`](_autosummary/tonal.util.html.md#tonal.util.ensure_scale)(input_scale[, scale_creator])        | Ensures the input is a Scale object.                                                     |
+| [`filter_parts`](_autosummary/tonal.util.html.md#tonal.util.filter_parts)(part_filter, score_input, \*[, ...]) | Filter parts from a score based on the provided filter function or part indices.         |
+| [`get_scale_notes`](_autosummary/tonal.util.html.md#tonal.util.get_scale_notes)(input_note, input_scale)          | Returns the names of the pitches in the scale within one octave around the input note.   |
+| [`identity_func`](_autosummary/tonal.util.html.md#tonal.util.identity_func)(x)                                  | Return `x` unchanged.                                                                    |
+| [`is_existing_filepath`](_autosummary/tonal.util.html.md#tonal.util.is_existing_filepath)(obj)                         | Returns True if the input object is a string representing an existing file path.         |
+| [`mk_score`](_autosummary/tonal.util.html.md#tonal.util.mk_score)(obj, \*\*kwargs)                         | Creates a music21 Score object from the input object.                                    |
+| [`mk_stream`](_autosummary/tonal.util.html.md#tonal.util.mk_stream)(obj, \*\*kwargs)                        | Creates a music21 Stream object from the input object.                                   |
+| [`multi_note_names`](_autosummary/tonal.util.html.md#tonal.util.multi_note_names)(tracks)                          | Returns the names of the notes in the input iterable.                                    |
+| [`note_names`](_autosummary/tonal.util.html.md#tonal.util.note_names)(notes[, name_attr])                    | Returns the names of the notes in the input iterable.                                    |
+| [`parse_note_name`](_autosummary/tonal.util.html.md#tonal.util.parse_note_name)(note_str)                         | The note-name part of `note_str` (`ValueError` if it does not parse).                    |
+| [`play_music21_object`](_autosummary/tonal.util.html.md#tonal.util.play_music21_object)(music21_obj)                  | Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.               |
+| [`resolve_format_from_filepath`](_autosummary/tonal.util.html.md#tonal.util.resolve_format_from_filepath)(filepath)            | Resolves the format of a file from the file extension.                                   |
+| [`string_to_note`](_autosummary/tonal.util.html.md#tonal.util.string_to_note)([note_or_notes, egress])           | Converts a string representation of a note to a music21 Note object.                     |
+
+### tonal.util.add_pattern_aliases(quality_extensions)
+
+Yield `(alias, value)` pairs for `maj`/`min`/`dim` keys, using `M`/`m`/`°`.
+
+```pycon
+>>> dict(add_pattern_aliases({"maj7": 1, "min": 2, "dim": 3, "sus": 4}))
+{'M7': 1, 'm': 2, '°': 3}
+```
 
 ### tonal.util.add_streams(list_of_streams)
 
@@ -1159,6 +1187,13 @@ Ensures the input is an iterable of Note objects.
 [<music21.note.Note C>, <music21.note.Note E>, <music21.note.Note G>]
 ```
 
+### tonal.util.ensure_part_filter(part_filter)
+
+Turn an int, a container of indices, `None` or a callable into `f(index, part) -> bool`.
+
+* **Return type:**
+  [`Callable`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable)[[`Part`], [`bool`](https://docs.python.org/3/builtins/functions.html#bool)]
+
 ### tonal.util.ensure_scale(input_scale, scale_creator=<class 'music21.scale.MajorScale'>)
 
 Ensures the input is a Scale object. Converts a string to a Scale using the provided scale creator.
@@ -1218,6 +1253,15 @@ Returns the names of the pitches in the scale within one octave around the input
   A list of pitch names within the scale.
 * **Return type:**
   [`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)]
+
+### tonal.util.identity_func(x)
+
+Return `x` unchanged.
+
+```pycon
+>>> identity_func(3)
+3
+```
 
 ### tonal.util.is_existing_filepath(obj)
 
@@ -1318,6 +1362,13 @@ Returns the names of the notes in the input iterable.
 #### SEE ALSO
 multi_note_names
 
+### tonal.util.parse_note_name(note_str)
+
+The note-name part of `note_str` (`ValueError` if it does not parse).
+
+* **Return type:**
+  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
+
 ### tonal.util.play_music21_object(music21_obj)
 
 Plays a music21 object (Chord, Part, Stream, etc.) using the StreamPlayer.
@@ -1383,7 +1434,7 @@ note.nameWithOctave='E4', note.duration.type='half', note.pitch.microtone=<music
 
 # About this build
 
-This documentation was built on **2026-11-10 10:00 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/d5260d00ccfb0dcf67419bfbc0b9123ac048cb32"><code>d5260d0</code></a> on branch <code>main</code>, for **tonal 0.0.22** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-22 17:35 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/d5cb5aea651c76369810990278ece2616d9f820e"><code>d5cb5ae</code></a> on branch <code>main</code>, for **tonal 0.0.23** (from <code>pyproject.toml</code>).
 
 #### NOTE
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -1392,9 +1443,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/d5260d00ccfb0dcf67419bfbc0b9123ac048cb32"><code>d5260d00ccfb0dcf67419bfbc0b9123ac048cb32</code></a> |
+| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/d5cb5aea651c76369810990278ece2616d9f820e"><code>d5cb5aea651c76369810990278ece2616d9f820e</code></a> |
 | Branch              | <code>main</code>                                                                                                                                       |
-| Tags at this commit | <code>0.0.22</code>                                                                                                                                     |
+| Tags at this commit | <code>0.0.23</code>                                                                                                                                     |
 | Working tree        | clean                                                                                                                                                   |
 | Remote              | <code>https://github.com/thorwhalen/tonal</code>                                                                                                        |
 
@@ -1403,15 +1454,15 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>thorwhalen/tonal</code>                                                              |
-| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/42795086892">42795086892</a>     |
+| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/45050137926">45050137926</a>     |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>df8fe481e37610090ebe56744c5fd277c00722cb</code> (in the history of the built commit) |
+| Event commit | <code>0ee2f2db69c9f4e9bbdadeeec6c2c48ebd5d3f8b</code> (in the history of the built commit) |
 
 ## Tools
 
 |          |         |
 |----------|---------|
-| epythet  | 0.2.22  |
+| epythet  | 0.2.23  |
 | Sphinx   | 9.1.1   |
 | docutils | 0.22.4  |
 | Python   | 3.12.16 |
@@ -1430,14 +1481,14 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/tonal/0.0.22/">0.0.22</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/tonal/0.0.23/">0.0.23</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/tonal && cd tonal
-git checkout d5260d00ccfb0dcf67419bfbc0b9123ac048cb32
-pip install "epythet==0.2.22"
+git checkout d5cb5aea651c76369810990278ece2616d9f820e
+pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
 

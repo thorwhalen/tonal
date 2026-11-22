@@ -132,20 +132,20 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#tonal.chords.chords_to_wav" title="tonal.chords.chords_to_wav"><code class="xref py py-obj docutils literal notranslate"><span class="pre">chords_to_wav</span></code></a>([chord_sequence, name, ...])</p></td>
 <td><p>Generate a WAV file directly from a chord sequence.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">play_arpeggio</span></code>(notes, track, duration, *[, ...])</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.chords.play_arpeggio" title="tonal.chords.play_arpeggio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">play_arpeggio</span></code></a>(notes, track, duration, *[, ...])</p></td>
+<td><p>Play <code class="docutils literal notranslate"><span class="pre">notes</span></code> one after the other, sharing <code class="docutils literal notranslate"><span class="pre">duration</span></code> ticks equally.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">play_simultaneously</span></code>(notes, track, duration, *)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.chords.play_simultaneously" title="tonal.chords.play_simultaneously"><code class="xref py py-obj docutils literal notranslate"><span class="pre">play_simultaneously</span></code></a>(notes, track, duration, *)</p></td>
+<td><p>Play all <code class="docutils literal notranslate"><span class="pre">notes</span></code> at once, releasing them together after <code class="docutils literal notranslate"><span class="pre">duration</span></code> ticks.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#tonal.chords.process_chord_sequence" title="tonal.chords.process_chord_sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_chord_sequence</span></code></a>(chord_sequence[, ...])</p></td>
 <td><p>Preprocess a chord sequence, to make sure to add time, etc.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">register_chord_render</span></code>(chord_renderer[, name])</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tonal.chords.register_chord_render" title="tonal.chords.register_chord_render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register_chord_render</span></code></a>(chord_renderer[, name])</p></td>
+<td><p>Register a chord renderer (usable as a decorator) so it can be named in <code class="docutils literal notranslate"><span class="pre">chords_to_midi</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">resolve_chord_render</span></code>(chord_renderer)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#tonal.chords.resolve_chord_render" title="tonal.chords.resolve_chord_render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resolve_chord_render</span></code></a>(chord_renderer)</p></td>
+<td><p>Return a chord renderer given its registered name, or the callable itself.</p></td>
 </tr>
 </tbody>
 </table>
@@ -197,10 +197,41 @@
 </dl>
 </dd></dl>
 <dl class="py function">
+<dt class="sig sig-object py" id="tonal.chords.play_arpeggio">
+<span class="sig-prename descclassname"><span class="pre">tonal.chords.</span></span><span class="sig-name descname"><span class="pre">play_arpeggio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">track</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/chords.html#play_arpeggio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.chords.play_arpeggio" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.chords.play_arpeggio'">¶</a></dt>
+<dd><p>Play <code class="docutils literal notranslate"><span class="pre">notes</span></code> one after the other, sharing <code class="docutils literal notranslate"><span class="pre">duration</span></code> ticks equally.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.chords.play_simultaneously">
+<span class="sig-prename descclassname"><span class="pre">tonal.chords.</span></span><span class="sig-name descname"><span class="pre">play_simultaneously</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">track</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/chords.html#play_simultaneously"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.chords.play_simultaneously" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.chords.play_simultaneously'">¶</a></dt>
+<dd><p>Play all <code class="docutils literal notranslate"><span class="pre">notes</span></code> at once, releasing them together after <code class="docutils literal notranslate"><span class="pre">duration</span></code> ticks.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+<dl class="py function">
 <dt class="sig sig-object py" id="tonal.chords.process_chord_sequence">
 <span class="sig-prename descclassname"><span class="pre">tonal.chords.</span></span><span class="sig-name descname"><span class="pre">process_chord_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chord_sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">960</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/chords.html#process_chord_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.chords.process_chord_sequence" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.chords.process_chord_sequence'">¶</a></dt>
 <dd><p>Preprocess a chord sequence, to make sure to add time, etc.</p>
 <dl class="field-list simple">
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.chords.register_chord_render">
+<span class="sig-prename descclassname"><span class="pre">tonal.chords.</span></span><span class="sig-name descname"><span class="pre">register_chord_render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chord_renderer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/chords.html#register_chord_render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.chords.register_chord_render" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.chords.register_chord_render'">¶</a></dt>
+<dd><p>Register a chord renderer (usable as a decorator) so it can be named in <code class="docutils literal notranslate"><span class="pre">chords_to_midi</span></code>.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="tonal.chords.resolve_chord_render">
+<span class="sig-prename descclassname"><span class="pre">tonal.chords.</span></span><span class="sig-name descname"><span class="pre">resolve_chord_render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chord_renderer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tonal/chords.html#resolve_chord_render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#tonal.chords.resolve_chord_render" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tonal.chords.resolve_chord_render'">¶</a></dt>
+<dd><p>Return a chord renderer given its registered name, or the callable itself.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" rel="nofollow noopener" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[[<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" rel="nofollow noopener" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" rel="nofollow noopener" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">any</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" rel="nofollow noopener" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>], <span class="highlight sphinx_autodoc_typehints-value"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" rel="nofollow noopener" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="kc"><span class="pre">None</span></span></code><svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></span>]</span></p>
+</dd>
 </dl>
 </dd></dl>
 </section>
@@ -210,7 +241,11 @@
 <li><a :data-current="activeSection === '#tonal.chords.chord_to_notes'" class="reference internal" href="#tonal.chords.chord_to_notes"><code class="docutils literal notranslate"><span class="pre">chord_to_notes()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.chords.chords_to_midi'" class="reference internal" href="#tonal.chords.chords_to_midi"><code class="docutils literal notranslate"><span class="pre">chords_to_midi()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.chords.chords_to_wav'" class="reference internal" href="#tonal.chords.chords_to_wav"><code class="docutils literal notranslate"><span class="pre">chords_to_wav()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.chords.play_arpeggio'" class="reference internal" href="#tonal.chords.play_arpeggio"><code class="docutils literal notranslate"><span class="pre">play_arpeggio()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.chords.play_simultaneously'" class="reference internal" href="#tonal.chords.play_simultaneously"><code class="docutils literal notranslate"><span class="pre">play_simultaneously()</span></code></a></li>
 <li><a :data-current="activeSection === '#tonal.chords.process_chord_sequence'" class="reference internal" href="#tonal.chords.process_chord_sequence"><code class="docutils literal notranslate"><span class="pre">process_chord_sequence()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.chords.register_chord_render'" class="reference internal" href="#tonal.chords.register_chord_render"><code class="docutils literal notranslate"><span class="pre">register_chord_render()</span></code></a></li>
+<li><a :data-current="activeSection === '#tonal.chords.resolve_chord_render'" class="reference internal" href="#tonal.chords.resolve_chord_render"><code class="docutils literal notranslate"><span class="pre">resolve_chord_render()</span></code></a></li>
 </ul>
 </div>
 </aside>
@@ -224,7 +259,7 @@
 </div>
 </footer>
 </div>
-<script src="../_static/documentation_options.js?v=96ec9c95"></script>
+<script src="../_static/documentation_options.js?v=3294188c"></script>
 <script src="../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
