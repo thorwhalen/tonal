@@ -55,18 +55,10 @@ def test_replace_extension_and_ensure_dest_filepath():
     assert cv.ensure_dest_filepath("a.x", None, dest_format="zzz") == "a.zzz"
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="https://github.com/thorwhalen/tonal/issues/13: str.replace hits every occurrence",
-)
 def test_replace_extension_only_touches_the_suffix():
     assert cv.replace_extension("/t/x.mid/foo.mid", ".wav") == "/t/x.mid/foo.wav"
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="https://github.com/thorwhalen/tonal/issues/13: an empty extension matches everywhere",
-)
 def test_replace_extension_of_an_extensionless_path_appends():
     assert cv.replace_extension("noext", ".wav") == "noext.wav"
 

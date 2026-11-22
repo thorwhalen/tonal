@@ -130,7 +130,7 @@ def register_chord_render(chord_renderer: ChordRenderer, name=None):
     """Register a chord renderer (usable as a decorator) so it can be named in ``chords_to_midi``."""
     if name is None:
         name = chord_renderer.__name__
-    chord_renders[chord_renderer.__name__] = chord_renderer
+    chord_renders[name] = chord_renderer
     return chord_renderer
 
 
@@ -171,7 +171,7 @@ def resolve_chord_render(chord_renderer: ChordRenderer) -> ChordRenderer:
         if chord_renderer is None:
             raise ValueError(
                 f"Unknown chord renderer: {name}. "
-                '(Available: {", ".join(chord_renders)}). '
+                f'(Available: {", ".join(chord_renders)}). '
                 "You can register a new chord renderer with `register_chord_render`."
             )
         return chord_renderer

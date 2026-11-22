@@ -51,7 +51,7 @@ def format_of_filepath(
 
 def replace_extension(src: str, dest_extension: str) -> str:
     """Replace the extension of a filepath with a new one."""
-    return src.replace(os.path.splitext(src)[-1], dest_extension)
+    return os.path.splitext(src)[0] + dest_extension
 
 
 def ensure_dest_filepath(
@@ -63,9 +63,8 @@ def ensure_dest_filepath(
 ) -> str:
     """Ensure that a destination filepath is given."""
     if dest is None:
-        src_ext = os.path.splitext(src)[-1]
         dest_ext = extension_for_format.get(dest_format, f".{dest_format}")
-        dest = src.replace(src_ext, dest_ext)
+        dest = replace_extension(src, dest_ext)
     return dest
 
 
