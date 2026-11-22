@@ -1,34 +1,34 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-22T20:53:29Z",
+  "built_at": "2026-11-22T23:26:32Z",
   "package": {
     "name": "tonal",
-    "version": "0.0.25",
+    "version": "0.0.26",
     "display_name": "tonal",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "ffa53db92355cca9fdfe02bfd695841b73ff181b",
-    "short_commit": "ffa53db",
+    "commit": "9934bd0d181c8f285b0c4ea16b182b31a8e597ad",
+    "short_commit": "9934bd0",
     "branch": "main",
     "tags": [
-      "0.0.25"
+      "0.0.26"
     ],
     "dirty": false,
     "remote_url": "https://github.com/thorwhalen/tonal",
-    "commit_url": "https://github.com/thorwhalen/tonal/commit/ffa53db92355cca9fdfe02bfd695841b73ff181b",
+    "commit_url": "https://github.com/thorwhalen/tonal/commit/9934bd0d181c8f285b0c4ea16b182b31a8e597ad",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "thorwhalen/tonal",
-    "sha": "9904f0c0b09a970412e31918960503bfa6378dcb",
+    "sha": "6ff073588fbb34d3c58b1c8ea4b2d12a8fb08ac6",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "45068770592",
-    "run_url": "https://github.com/thorwhalen/tonal/actions/runs/45068770592",
+    "run_id": "45083090666",
+    "run_url": "https://github.com/thorwhalen/tonal/actions/runs/45083090666",
     "server_url": "https://github.com"
   },
   "tools": {
@@ -62,11 +62,11 @@
   },
   "pypi": {
     "checked": true,
-    "latest": "0.0.25",
+    "latest": "0.0.26",
     "relation": "same",
     "error": null
   },
-  "reproduce": "git clone https://github.com/thorwhalen/tonal && cd tonal\ngit checkout ffa53db92355cca9fdfe02bfd695841b73ff181b\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/thorwhalen/tonal && cd tonal\ngit checkout 9934bd0d181c8f285b0c4ea16b182b31a8e597ad\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
     "aligned": true,

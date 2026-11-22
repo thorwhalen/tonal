@@ -2,11 +2,23 @@
 
 # tonal
 
-Tools for music analysis and generation
+Tools for music analysis and generation: scales and MIDI notes, chords rendered to audio, and counterpoint on top of [music21](https://pypi.org/project/music21/).
 
-To install:	`pip install tonal`
+```default
+pip install tonal
+```
 
-# Examples
+## Quick example
+
+Turn a scale name into MIDI note numbers:
+
+```python
+from tonal.notes import scale_midi_notes
+
+scale_midi_notes("C major", midi_range=(60, 72))  # (60, 62, 64, 65, 67, 69, 71, 72)
+```
+
+The rest of this page goes module by module: [`notes`]() (scales and MIDI), [`chords`]() (chord names to a wav file), and [`counterpoint`]() (translating note streams within a scale).
 
 ## notes
 
@@ -112,14 +124,14 @@ Sound.from_file(
 
 ## counterpoint
 
-```python
-The `translate_in_scale` allows you to translate a sequence of notes, or multiple 
+The `translate_in_scale` allows you to translate a sequence of notes, or multiple
 tracks of notes by the given number of steps within the given scale.
 
+```python
 >>> from tonal.counterpoint import translate_in_scale
 >>> from tonal.util import note_names, multi_note_names
 >>> stream = translate_in_scale(['C4', 'E4', 'B3', 'C4'], -2, 'C')
->>> stream  # doctest: +ELLIPSIS
+>>> stream
 <music21.stream.Stream ...>
 >>> note_names(stream)
 ['A3', 'C4', 'G3', 'A3']

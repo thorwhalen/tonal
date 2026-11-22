@@ -1,4 +1,4 @@
-> built 2026-11-22 20:53 UTC from ffa53db (main) · tonal 0.0.25. Details: build_info.json
+> built 2026-11-22 23:26 UTC from 9934bd0 (main) · tonal 0.0.26. Details: build_info.json
 
 # index.html.md
 
@@ -6,11 +6,23 @@
 
 # tonal
 
-Tools for music analysis and generation
+Tools for music analysis and generation: scales and MIDI notes, chords rendered to audio, and counterpoint on top of [music21](https://pypi.org/project/music21/).
 
-To install:	`pip install tonal`
+```default
+pip install tonal
+```
 
-# Examples
+## Quick example
+
+Turn a scale name into MIDI note numbers:
+
+```python
+from tonal.notes import scale_midi_notes
+
+scale_midi_notes("C major", midi_range=(60, 72))  # (60, 62, 64, 65, 67, 69, 71, 72)
+```
+
+The rest of this page goes module by module: [`notes`]() (scales and MIDI), [`chords`]() (chord names to a wav file), and [`counterpoint`]() (translating note streams within a scale).
 
 ## notes
 
@@ -116,14 +128,14 @@ Sound.from_file(
 
 ## counterpoint
 
-```python
-The `translate_in_scale` allows you to translate a sequence of notes, or multiple 
+The `translate_in_scale` allows you to translate a sequence of notes, or multiple
 tracks of notes by the given number of steps within the given scale.
 
+```python
 >>> from tonal.counterpoint import translate_in_scale
 >>> from tonal.util import note_names, multi_note_names
 >>> stream = translate_in_scale(['C4', 'E4', 'B3', 'C4'], -2, 'C')
->>> stream  # doctest: +ELLIPSIS
+>>> stream
 <music21.stream.Stream ...>
 >>> note_names(stream)
 ['A3', 'C4', 'G3', 'A3']
@@ -1439,7 +1451,7 @@ note.nameWithOctave='E4', note.duration.type='half', note.pitch.microtone=<music
 
 # About this build
 
-This documentation was built on **2026-11-22 20:53 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/ffa53db92355cca9fdfe02bfd695841b73ff181b"><code>ffa53db</code></a> on branch <code>main</code>, for **tonal 0.0.25** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-22 23:26 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/9934bd0d181c8f285b0c4ea16b182b31a8e597ad"><code>9934bd0</code></a> on branch <code>main</code>, for **tonal 0.0.26** (from <code>pyproject.toml</code>).
 
 #### NOTE
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -1448,9 +1460,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/ffa53db92355cca9fdfe02bfd695841b73ff181b"><code>ffa53db92355cca9fdfe02bfd695841b73ff181b</code></a> |
+| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/9934bd0d181c8f285b0c4ea16b182b31a8e597ad"><code>9934bd0d181c8f285b0c4ea16b182b31a8e597ad</code></a> |
 | Branch              | <code>main</code>                                                                                                                                       |
-| Tags at this commit | <code>0.0.25</code>                                                                                                                                     |
+| Tags at this commit | <code>0.0.26</code>                                                                                                                                     |
 | Working tree        | clean                                                                                                                                                   |
 | Remote              | <code>https://github.com/thorwhalen/tonal</code>                                                                                                        |
 
@@ -1459,9 +1471,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>thorwhalen/tonal</code>                                                              |
-| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/45068770592">45068770592</a>     |
+| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/45083090666">45083090666</a>     |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>9904f0c0b09a970412e31918960503bfa6378dcb</code> (in the history of the built commit) |
+| Event commit | <code>6ff073588fbb34d3c58b1c8ea4b2d12a8fb08ac6</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -1486,13 +1498,13 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/tonal/0.0.25/">0.0.25</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/tonal/0.0.26/">0.0.26</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/tonal && cd tonal
-git checkout ffa53db92355cca9fdfe02bfd695841b73ff181b
+git checkout 9934bd0d181c8f285b0c4ea16b182b31a8e597ad
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
