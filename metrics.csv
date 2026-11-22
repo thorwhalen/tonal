@@ -1,24 +1,24 @@
 metric,value
 schema_version,1.0
-timestamp,2026-11-22T17:29:57.310065Z
+timestamp,2026-11-22T17:30:01.979737Z
 commit_sha,8ecbe80bbfe37f33732f899f969e80b1527b161a
 commit_message,"tonal: coverage and docstring pass (converters, chords, util; 8 docstrings) [skip publish]"
 python_version,3.10
-metrics.umpyre_stats.num_functions,35266
-metrics.umpyre_stats.num_classes,5836
-metrics.umpyre_stats.total_lines,1137894
-metrics.umpyre_stats.empty_lines,162589
-metrics.umpyre_stats.comment_lines,68748
-metrics.umpyre_stats.docs_lines,243479
-metrics.umpyre_stats.function_lines,735823
-metrics.umpyre_stats.empty_lines_ratio,0.1428858927105688
-metrics.umpyre_stats.comment_lines_ratio,0.06041687538558073
-metrics.umpyre_stats.function_lines_ratio,0.646653378961485
-metrics.umpyre_stats.mean_lines_per_function,20.864940736119774
-metrics.umpyre_stats.files_analyzed,1983
+metrics.umpyre_stats.num_functions,36187
+metrics.umpyre_stats.num_classes,6076
+metrics.umpyre_stats.total_lines,1143569
+metrics.umpyre_stats.empty_lines,165821
+metrics.umpyre_stats.comment_lines,70072
+metrics.umpyre_stats.docs_lines,244587
+metrics.umpyre_stats.function_lines,740024
+metrics.umpyre_stats.empty_lines_ratio,0.14500305622135612
+metrics.umpyre_stats.comment_lines_ratio,0.06127483343812223
+metrics.umpyre_stats.function_lines_ratio,0.6471179264215802
+metrics.umpyre_stats.mean_lines_per_function,20.44999585486501
+metrics.umpyre_stats.files_analyzed,2053
 metrics.umpyre_stats.pypi_version,0.0.22
-metrics.umpyre_stats.errors,"['testFiles.py: invalid non-printable character U+FEFF (testFiles.py, line 1)', '_shape.py: invalid syntax (_shape.py, line 4)', '_array_like.py: invalid syntax (_array_like.py, line 15)', '_nbit.py: invalid syntax (_nbit.py, line 6)', '_scalars.py: invalid syntax (_scalars.py, line 7)', '_char_codes.py: invalid syntax (_char_codes.py, line 3)', '_dtype_like.py: invalid syntax (_dtype_like.py, line 21)', 'mypy_plugin.py: invalid syntax (mypy_plugin.py, line 118)', ""test_func_inspect_special_encoding.py: 'utf-8' codec can't decode byte 0xa4 in position 64: invalid start byte""]"
-metrics.umpyre_stats.total_errors,9
+metrics.umpyre_stats.errors,"['testFiles.py: invalid non-printable character U+FEFF (testFiles.py, line 1)', ""test_func_inspect_special_encoding.py: 'utf-8' codec can't decode byte 0xa4 in position 64: invalid start byte""]"
+metrics.umpyre_stats.total_errors,2
 metrics.workflow_status.last_run_status,success
 metrics.workflow_status.last_success_timestamp,2026-11-10T10:03:25Z
 metrics.workflow_status.recent_failure_count,0
@@ -38,4 +38,4 @@ metrics.coverage.branch_coverage,0.0
 metrics.coverage.statements_covered,0
 metrics.coverage.statements_total,0
 metrics.coverage.error,No coverage file found
-collection_duration_seconds,9.936666250228882
+collection_duration_seconds,11.13240385055542
