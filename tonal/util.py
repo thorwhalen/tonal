@@ -74,6 +74,11 @@ from music21 import converter
 
 
 def identity_func(x):
+    """Return ``x`` unchanged.
+
+    >>> identity_func(3)
+    3
+    """
     return x
 
 
@@ -119,6 +124,7 @@ note_name_pattern = re.compile(r"([A-Ga-g][#b]?)")
 
 
 def parse_note_name(note_str: str) -> str:
+    """The note-name part of ``note_str`` (``ValueError`` if it does not parse)."""
     match = note_name_pattern.match(note_str)
     if match:
         return match.group(1)
@@ -128,6 +134,11 @@ def parse_note_name(note_str: str) -> str:
 
 # General utility to add pattern-based aliases to a dictionary
 def add_pattern_aliases(quality_extensions):
+    """Yield ``(alias, value)`` pairs for ``maj``/``min``/``dim`` keys, using ``M``/``m``/``°``.
+
+    >>> dict(add_pattern_aliases({"maj7": 1, "min": 2, "dim": 3, "sus": 4}))
+    {'M7': 1, 'm': 2, '°': 3}
+    """
     for _qe in quality_extensions:
         if _qe.startswith("maj"):
             yield _qe.replace("maj", "M"), quality_extensions[_qe]
@@ -459,6 +470,7 @@ def create_score_from_tracks(tracks: list[Stream]) -> Score:
 
 
 def ensure_part_filter(part_filter: PartFilterSpec) -> PartFilter:
+    """Turn an int, a container of indices, ``None`` or a callable into ``f(index, part) -> bool``."""
     if isinstance(part_filter, int):
         part_filter = [part_filter]
     if isinstance(part_filter, Container):

@@ -127,6 +127,7 @@ chord_renders = {}
 
 
 def register_chord_render(chord_renderer: ChordRenderer, name=None):
+    """Register a chord renderer (usable as a decorator) so it can be named in ``chords_to_midi``."""
     if name is None:
         name = chord_renderer.__name__
     chord_renders[chord_renderer.__name__] = chord_renderer
@@ -137,6 +138,7 @@ def register_chord_render(chord_renderer: ChordRenderer, name=None):
 def play_simultaneously(
     notes: Sequence[int], track: MidiTrack, duration: int, *, velocity=64
 ):
+    """Play all ``notes`` at once, releasing them together after ``duration`` ticks."""
     v = velocity
     for note in notes:
         track.append(Message("note_on", note=note, velocity=v, time=0))
@@ -151,6 +153,7 @@ def play_simultaneously(
 def play_arpeggio(
     notes: Sequence[int], track: MidiTrack, duration: int, *, velocity=64
 ):
+    """Play ``notes`` one after the other, sharing ``duration`` ticks equally."""
     v = velocity
     note_duration = duration // len(notes)
     current_time = 0
@@ -161,6 +164,7 @@ def play_arpeggio(
 
 
 def resolve_chord_render(chord_renderer: ChordRenderer) -> ChordRenderer:
+    """Return a chord renderer given its registered name, or the callable itself."""
     if isinstance(chord_renderer, str):
         name = chord_renderer
         chord_renderer = chord_renders.get(name)
