@@ -247,7 +247,7 @@ def chords_to_wav(
     :param soundfont: Path to the SoundFont file.
     :param render_chord: Function defining how the chords should be played.
     """
-    from sonification.converters import midi_to_wav
+    from tonal.converters import midi_to_wav
 
     midi_file = f"{name}.mid"
     wav_file = f"{name}.wav"
