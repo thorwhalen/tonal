@@ -1,5 +1,5 @@
 {
-  "collection_duration_seconds": 8.069573163986206,
+  "collection_duration_seconds": 9.437451839447021,
   "commit_message": "Merge 9f5d084488ddca524c850c1897e76d0fd870c450 into 983fc9b570d87232ba34202a90ff1dfffda10f0c",
   "commit_sha": "87cfa5a70040088fb284b5573306e2164c47912d",
   "metrics": {
@@ -11,31 +11,24 @@
       "statements_total": 0
     },
     "umpyre_stats": {
-      "comment_lines": 68769,
-      "comment_lines_ratio": 0.06036450968154778,
-      "docs_lines": 243798,
-      "empty_lines": 162836,
-      "empty_lines_ratio": 0.1429352658684075,
+      "comment_lines": 70076,
+      "comment_lines_ratio": 0.06120816155404933,
+      "docs_lines": 244907,
+      "empty_lines": 166069,
+      "empty_lines_ratio": 0.14505363007476765,
       "errors": [
         "testFiles.py: invalid non-printable character U+FEFF (testFiles.py, line 1)",
-        "mypy_plugin.py: invalid syntax (mypy_plugin.py, line 118)",
-        "_scalars.py: invalid syntax (_scalars.py, line 7)",
-        "_shape.py: invalid syntax (_shape.py, line 4)",
-        "_nbit.py: invalid syntax (_nbit.py, line 6)",
-        "_array_like.py: invalid syntax (_array_like.py, line 15)",
-        "_dtype_like.py: invalid syntax (_dtype_like.py, line 21)",
-        "_char_codes.py: invalid syntax (_char_codes.py, line 3)",
         "test_func_inspect_special_encoding.py: 'utf-8' codec can't decode byte 0xa4 in position 64: invalid start byte"
       ],
-      "files_analyzed": 1983,
-      "function_lines": 736670,
-      "function_lines_ratio": 0.6466390866103303,
-      "mean_lines_per_function": 20.864110116687435,
-      "num_classes": 5838,
-      "num_functions": 35308,
+      "files_analyzed": 2053,
+      "function_lines": 740846,
+      "function_lines_ratio": 0.6470948920410873,
+      "mean_lines_per_function": 20.448412917471707,
+      "num_classes": 6078,
+      "num_functions": 36230,
       "pypi_version": "0.0.27",
-      "total_errors": 9,
-      "total_lines": 1139229
+      "total_errors": 2,
+      "total_lines": 1144880
     },
     "wily": {
       "cyclomatic_avg": 0.0,
@@ -54,6 +47,6 @@
   },
   "python_version": "3.10",
   "schema_version": "1.0",
-  "timestamp": "2026-11-24T01:26:05.794894Z",
+  "timestamp": "2026-11-24T01:26:07.779204Z",
   "workflow_status": {}
 }
