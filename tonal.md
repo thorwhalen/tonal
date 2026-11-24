@@ -1,4 +1,4 @@
-> built 2026-11-23 02:25 UTC from 983fc9b (main) · tonal 0.0.27. Details: build_info.json
+> built 2026-11-24 01:29 UTC from cbf58bd (main) · tonal 0.0.28. Details: build_info.json
 
 # index.html.md
 
@@ -1451,7 +1451,7 @@ note.nameWithOctave='E4', note.duration.type='half', note.pitch.microtone=<music
 
 # About this build
 
-This documentation was built on **2026-11-23 02:25 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/983fc9b570d87232ba34202a90ff1dfffda10f0c"><code>983fc9b</code></a> on branch <code>main</code>, for **tonal 0.0.27** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-24 01:29 UTC** from commit <a href="https://github.com/thorwhalen/tonal/commit/cbf58bde923374a4fd3cc918b87994e218122c58"><code>cbf58bd</code></a> on branch <code>main</code>, for **tonal 0.0.28** (from <code>pyproject.toml</code>).
 
 #### NOTE
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -1460,9 +1460,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/983fc9b570d87232ba34202a90ff1dfffda10f0c"><code>983fc9b570d87232ba34202a90ff1dfffda10f0c</code></a> |
+| Commit              | <a href="https://github.com/thorwhalen/tonal/commit/cbf58bde923374a4fd3cc918b87994e218122c58"><code>cbf58bde923374a4fd3cc918b87994e218122c58</code></a> |
 | Branch              | <code>main</code>                                                                                                                                       |
-| Tags at this commit | <code>0.0.27</code>                                                                                                                                     |
+| Tags at this commit | <code>0.0.28</code>                                                                                                                                     |
 | Working tree        | clean                                                                                                                                                   |
 | Remote              | <code>https://github.com/thorwhalen/tonal</code>                                                                                                        |
 
@@ -1471,15 +1471,15 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>thorwhalen/tonal</code>                                                              |
-| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/45099881339">45099881339</a>     |
+| Run          | <a href="https://github.com/thorwhalen/tonal/actions/runs/45305126050">45305126050</a>     |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>e6c06f84e8c218bd7237fbf6040f4b5dc01f5991</code> (in the history of the built commit) |
+| Event commit | <code>f199975b376e0a452be0d8eb20dc270f53bc3d47</code> (in the history of the built commit) |
 
 ## Tools
 
 |          |         |
 |----------|---------|
-| epythet  | 0.2.23  |
+| epythet  | 0.2.25  |
 | Sphinx   | 9.1.1   |
 | docutils | 0.22.4  |
 | Python   | 3.12.16 |
@@ -1498,14 +1498,14 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/tonal/0.0.27/">0.0.27</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/tonal/0.0.28/">0.0.28</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/tonal && cd tonal
-git checkout 983fc9b570d87232ba34202a90ff1dfffda10f0c
-pip install "epythet==0.2.23"
+git checkout cbf58bde923374a4fd3cc918b87994e218122c58
+pip install "epythet==0.2.25"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
 

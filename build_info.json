@@ -1,38 +1,38 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-23T02:25:08Z",
+  "built_at": "2026-11-24T01:29:13Z",
   "package": {
     "name": "tonal",
-    "version": "0.0.27",
+    "version": "0.0.28",
     "display_name": "tonal",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "983fc9b570d87232ba34202a90ff1dfffda10f0c",
-    "short_commit": "983fc9b",
+    "commit": "cbf58bde923374a4fd3cc918b87994e218122c58",
+    "short_commit": "cbf58bd",
     "branch": "main",
     "tags": [
-      "0.0.27"
+      "0.0.28"
     ],
     "dirty": false,
     "remote_url": "https://github.com/thorwhalen/tonal",
-    "commit_url": "https://github.com/thorwhalen/tonal/commit/983fc9b570d87232ba34202a90ff1dfffda10f0c",
+    "commit_url": "https://github.com/thorwhalen/tonal/commit/cbf58bde923374a4fd3cc918b87994e218122c58",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "thorwhalen/tonal",
-    "sha": "e6c06f84e8c218bd7237fbf6040f4b5dc01f5991",
+    "sha": "f199975b376e0a452be0d8eb20dc270f53bc3d47",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "45099881339",
-    "run_url": "https://github.com/thorwhalen/tonal/actions/runs/45099881339",
+    "run_id": "45305126050",
+    "run_url": "https://github.com/thorwhalen/tonal/actions/runs/45305126050",
     "server_url": "https://github.com"
   },
   "tools": {
-    "epythet": "0.2.23",
+    "epythet": "0.2.25",
     "sphinx": "9.1.1",
     "docutils": "0.22.4",
     "python": "3.12.16"
@@ -62,11 +62,11 @@
   },
   "pypi": {
     "checked": true,
-    "latest": "0.0.27",
+    "latest": "0.0.28",
     "relation": "same",
     "error": null
   },
-  "reproduce": "git clone https://github.com/thorwhalen/tonal && cd tonal\ngit checkout 983fc9b570d87232ba34202a90ff1dfffda10f0c\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/thorwhalen/tonal && cd tonal\ngit checkout cbf58bde923374a4fd3cc918b87994e218122c58\npip install \"epythet==0.2.25\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
     "aligned": true,
