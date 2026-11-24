@@ -148,3 +148,13 @@ def test_chords_to_midi_accepts_a_renderer_name_and_custom_definitions():
 def test_chord_to_notes_rejects_unknown_roots_and_qualities(bad):
     with pytest.raises(ValueError):
         chords.chord_to_notes(bad)
+
+
+def test_13sus_and_9sus_are_suspended_not_major():
+    from tonal.chords import chord_to_notes
+
+    root = chord_to_notes("Ab")[0]
+    assert chord_to_notes("Ab13sus4") == [root + i for i in (0, 5, 7, 10, 14, 21)]
+    assert chord_to_notes("Ab13sus") == chord_to_notes("Ab13sus4")
+    assert chord_to_notes("Ab9sus4") == [root + i for i in (0, 5, 7, 10, 14)]
+    assert chord_to_notes("Ab13sus4") != chord_to_notes("Ab")

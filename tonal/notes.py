@@ -369,6 +369,8 @@ chord_quality: dict[str, Sequence[int]] = {
     "sus": (0, 5, 7),  # Sus4
     "sus2": (0, 2, 7),
     "7sus4": (0, 5, 7, 10),  # Dominant 7th suspended 4th
+    "9sus": (0, 5, 7, 10, 14),  # Dominant 9th suspended 4th (root, 4, 5, b7, 9)
+    "13sus": (0, 5, 7, 10, 14, 21),  # Dominant 13th sus4 (root, 4, 5, b7, 9, 13)
     # Added-tone chords
     "add9": (0, 4, 7, 14),
     "add2": (0, 2, 4, 7),
@@ -401,6 +403,8 @@ _text_chord_quality_aliases: dict[str, str] = {
     "ø7": "hdim7",
     "ø": "hdim7",  # bare half-diminished symbol
     "sus4": "sus",  # explicit Sus4 spelling
+    "9sus4": "9sus",
+    "13sus4": "13sus",
     "mmaj7": "minmaj7",  # Minor major 7th
     "mmaj9": "minmaj9",  # Minor major 9th
     "madd9": "minadd9",  # Minor add 9
